@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skin name="classicLook">
+
+  <template name="scriptBegin" ><![CDATA[
+  <!-- 样式定义 -->
+  <style>
+     .e3table {width:98%; FONT: 9pt  "宋体","tahoma", "arial", "helvetica", "sans-serif";}
+     .e3table .caption{ background-color:#FFFFFF;text-align: center; FONT: 10pt  "宋体","tahoma", "arial", "helvetica", "sans-serif";}
+     /*background-color确定表格边的颜色.*/
+     .e3table table.listPage {width:100%;background-color:#0080C0; FONT: 10pt  "宋体","tahoma", "arial", "helvetica", "sans-serif";}
+     .e3table table.listPage tr.navigation {text-align: left;background-color: #FFFFCC; } 
+     .e3table table.listPage tr.head {text-align: center;background-color: #eeeeee;}
+     .e3table table.listPage tr.row {text-align: center; background-color:#FFFFFF;} 
+     /* 页面字体链接样式*/
+     .e3table A {COLOR: #000000; TEXT-DECORATION: none}
+     .e3table A:visited {COLOR: #000000; TEXT-DECORATION: none}
+     .e3table A:hover {COLOR: #000000;  TEXT-DECORATION: underline}
+     .e3table .disabledText {COLOR: gray;}     
+  </style>
+  
+  <script>
+     //排序
+     function e3_${table.id}_sort(pSortProperty, pSortName,pSortDir){
+        var formID = "${table.id}Form";
+        var formObj = document.getElementById(formID);
+        formObj.net_jcreate_e3_table_html_sortProperty.value = pSortProperty;
+        formObj.net_jcreate_e3_table_html_sortName.value = pSortName;        
+        formObj.net_jcreate_e3_table_html_sortDir.value = pSortDir;
+        formObj.net_jcreate_e3_table_html_start.value = "0";//排序时，显示第一页记录
+        formObj.submit();
+     }
+     
+     //跳转到指定页
+     function e3_${table.id}_goStart(pStart){
+        var formID = "${table.id}Form";
+        var formObj = document.getElementById(formID);
+        formObj.net_jcreate_e3_table_html_start.value = pStart;//修改开始记录的值.
+        formObj.submit();        
+     }
+  </script>
+
+  ]]></template>	
+  <template name="scriptEnd" ><![CDATA[
+  ]]></template>	
+  
+<template name="topNavigation" ><![CDATA[
+            <tr class="navigation">
+            <td colspan="${table.columnSize}" bgcolor="#D8DDF8">
+              <div align="left" style="float:left">
+              #if ( ${pageInfo.hasPrevPage} )
+              <a href="javascript:e3_${table.id}_goStart('${pageInfo.startOfPrevPage}')">&nbsp;上一页&nbsp;</a>
+              #else
+                  <span class="disabledText">上一页&nbsp;</span>
+              #end
+              #if ( ${pageInfo.hasNextPage} )
+              <a href="javascript:e3_${table.id}_goStart('${pageInfo.startOfNextPage}')">下一页&nbsp;</a>
+              #else
+                  <span class="disabledText">下一页&nbsp;</span>              
+              #end
+              #if ( ${pageInfo.firstPage}==false )
+              <a href="javascript:e3_${table.id}_goStart('${pageInfo.startOfFirstPage}')">第一页&nbsp;</a>
+              #else
+               <span class="disabledText">第一页&nbsp;</span>              
+              #end 
+              #if ( ${pageInfo.lastPage}==false )
+              <a href="javascript:e3_${table.id}_goStart('${pageInfo.startOfLastPage}')">最后页&nbsp;</a>
+              #else
+               <span class="disabledText">最后页&nbsp;</span>              
+             #end 
+             </div>
+             <div align="right">
+               ${pageInfo.currPage}/${pageInfo.totalPages}页,总记录数：${pageInfo.total} 条
+             </div>
+             </td>             
+          </tr>
+  ]]></template>	  
+  
+<template name="bottomNavigation" ><![CDATA[
+            <tr class="navigation">
+            <td colspan="${table.columnSize}" bgcolor="#D8DDF8">
+              <div align="left" style="float:left">
+              #if ( ${pageInfo.hasPrevPage} )
+              <a href="javascript:e3_${table.id}_goStart('${pageInfo.startOfPrevPage}')">&nbsp;上一页&nbsp;</a>
+              #else
+                  <span class="disabledText">上一页&nbsp;</span>
+              #end
+              #if ( ${pageInfo.hasNextPage} )
+              <a href="javascript:e3_${table.id}_goStart('${pageInfo.startOfNextPage}')">下一页&nbsp;</a>
+              #else
+                  <span class="disabledText">下一页&nbsp;</span>              
+              #end
+              #if ( ${pageInfo.firstPage}==false )
+              <a href="javascript:e3_${table.id}_goStart('${pageInfo.startOfFirstPage}')">第一页&nbsp;</a>
+              #else
+               <span class="disabledText">第一页&nbsp;</span>              
+              #end 
+              #if ( ${pageInfo.lastPage}==false )
+              <a href="javascript:e3_${table.id}_goStart('${pageInfo.startOfLastPage}')">最后页&nbsp;</a>
+              #else
+               <span class="disabledText">最后页&nbsp;</span>              
+             #end 
+             </div>
+             <div align="right">
+               ${pageInfo.currPage}/${pageInfo.totalPages}页,总记录数：${pageInfo.total} 条
+             </div>
+             </td>             
+          </tr>
+  ]]></template>	  
+  
+  
+  <template name="docBegin" ><![CDATA[
+     <table class="e3table" align="center">
+       <tr>
+          <td>
+  ]]></template>	
+  <template name="docEnd" ><![CDATA[
+         </td>
+       </tr>
+     </table>
+  ]]></template>	
+  
+
+  <template name="caption" ><![CDATA[
+    <table width="100%" border="0">
+      <tr>
+        <td>
+          <div class="caption">用户管理</div>           
+        </td>
+      </tr>
+    </table>
+  ]]></template>	
+
+  <template name="paramsForm" ><![CDATA[
+    <form id="${table.id}Form" name="${table.id}Form" method="post" action="${table.uri}" >
+#foreach ($param in $params)   
+      <input type="hidden" name="${param.name}" value="${param.value}"/>
+#end
+    </form>  
+  ]]></template>	
+
+
+  <template name="tableBegin" ><![CDATA[
+    <table class="listPage" cellspacing="1">
+  ]]></template>	
+  <template name="tableEnd" ><![CDATA[
+    </table>
+  ]]></template>	
+  
+  
+
+
+  <template name="headerBegin" ><![CDATA[
+    <tr class="head">
+  ]]></template>	
+  <template name="headerEnd" ><![CDATA[
+     </tr>
+  ]]></template>	
+  
+  
+  <template name="columnBegin" ><![CDATA[<td>]]></template>	
+  <template name="column" ><![CDATA[
+    #if ( $column.sortable )
+      <a href="javascript:e3_${table.id}_sort('${column.property}','${column.sortName}','${column.nextSortDir}')">${title}&nbsp;<IMG src="${contextPath}/e3/table/img/sort_${column.sortDir}.png"     border=0></a>    
+    #else
+      ${title}
+    #end
+
+  ]]></template>	
+  <template name="columnEnd" ><![CDATA[</td>]]></template>	
+  
+  
+  
+
+  <template name="bodyBegin" ><![CDATA[
+  ]]></template>	
+  <template name="bodyEnd" ><![CDATA[
+  ]]></template>	
+  
+  
+  <template name="rowBegin" ><![CDATA[
+     <tr ${row.AttributesAsString} class="row">
+  ]]></template>	
+  <template name="rowEnd" ><![CDATA[
+     </tr>
+  ]]></template>	  
+  
+  
+  
+  <template name="cellBegin" ><![CDATA[<td ${cell.AttributesAsString}>]]></template>	
+  <template name="cell" ><![CDATA[${cellValue}]]></template>	 
+  <template name="cellEnd" ><![CDATA[</td>]]></template>	
+  
+</skin>

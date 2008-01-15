@@ -1,0 +1,83 @@
+*{ margin:0; padding:0; border:0;}
+
+body{ 
+  height:100%;
+  background-color: #FFFFFF;
+  scrollbar-face-color:#eeeeee;  
+  scrollbar-shadow-color: #999999;
+  scrollbar-highlight-color: #999999;
+  scrollbar-3dlight-color: #ffffff;
+  scrollbar-darkshadow-color: #000000; 
+  scrollbar-track-color: #f1f2ee; 
+  scrollbar-arrow-color: #000000;
+  } 
+  
+
+table.updateTable          {iecn: expression(cellSpacing=1);width:100%;background-color:#76A7CF;height: 24px; font-family:"宋体"}
+table.updateTable td.label {width:22%;text-align: center;background-color: #D9ECFD;	height: 22px; font-weight:bold} 
+table.updateTable td.input {padding-left:4px; width:28%;background-color:#F0F5FA;height: 24px;font-size: 12px; font-family:"宋体"} 
+table.updateTable tr {background-color: #E3F1FD;height: 22px;}
+table.updateTable td.selected {color: #FF3333;text-align: center; background-color:#CAF163;height: 22px;font-size: 12px; font-family:"宋体";cursor: hand} 
+
+
+.font {font-size: 12px;color: #000000;text-decoration: none;line-height: 22px;}
+
+
+A {COLOR: #000000; FONT: 9pt "����", "tahoma", "arial", "helvetica", "sans-serif"; TEXT-DECORATION: none}
+A:visited {COLOR: #000000; FONT: 9pt  "����","tahoma", "arial", "helvetica", "sans-serif"; TEXT-DECORATION: none}
+A:hover {COLOR: #000000; FONT: 9pt  "����","tahoma", "arial", "helvetica", "sans-serif"; TEXT-DECORATION: underline}
+
+
+.button {
+  BORDER-RIGHT: #2C59AA 1px solid; PADDING-RIGHT: 2px; BORDER-TOP: #2C59AA 1px solid; PADDING-LEFT: 2px; FONT-SIZE: 12px; FILTER: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#ffffff, EndColorStr=#C3DAF5); BORDER-LEFT: #2C59AA 1px solid; CURSOR: hand; COLOR: black; PADDING-TOP: 2px; BORDER-BOTTOM: #2C59AA 1px solid
+}
+
+.area {FONT-SIZE: 12px; COLOR: #666666;LINE-HEIGHT: 20px;height: auto;width: auto;border: 1px solid #666666;}
+.select{ background-color: #FFFFFF; cursor: hand; border: 1px solid; text-decoration: none ; font-family:"宋体"}
+.field {background-color: #FFFFFF;border: 1px solid #333333;}
+
+.check{
+star : expression(
+onfocus=function()
+ { 
+   this.style.borderColor = "#FF0000";
+   this.style.borderStyle = "solid";
+   this.style.backgroundColor = "#FFFFFF";
+   this.style.fontFamily = "����";
+ },
+onblur=function(){
+   this.style.borderColor = "";
+   this.style.borderStyle = "";
+   this.style.backgroundColor = "#FFFFFF";
+   this.style.fontFamily = "����";
+}
+)
+}
+.focusCheck{ border-style: dotted; border-color: #FF0000 ;background-color: #FFFFFF;font-family:"宋体";}
+.radio{ 
+star : expression(
+onfocus=function()
+ { 
+   this.style.borderColor = "#FF0000";
+   this.style.borderStyle = "solid";
+   this.style.backgroundColor = "#FFFFFF";
+   this.style.fontFamily = "����";
+ },
+onblur=function(){
+   this.style.borderColor = "";
+   this.style.borderStyle = "";
+   this.style.backgroundColor = "#FFFFFF";
+   this.style.fontFamily = "����";
+}
+)
+
+}
+
+TD{ FONT-SIZE: 12px; FONT-STYLE: normal; LINE-HEIGHT: normal}
+INPUT{ FONT-SIZE: 12px; FONT-STYLE: normal;FONT-WEIGHT: normal; LINE-HEIGHT: normal}
+SELECT{ FONT-SIZE: 12px; FONT-STYLE: normal;  FONT-WEIGHT: normal; LINE-HEIGHT: normal}
+P{ FONT-SIZE: 12px; FONT-STYLE: normal;FONT-WEIGHT: normal; LINE-HEIGHT: normal}
+.subject {text-align: center;FONT-SIZE: 12px; FONT-STYLE: normal; LINE-HEIGHT: normal}
+.selected {color: #FF0000; background-color: #CAF163;font-weight: normal;}
+.focus {FONT-SIZE: 12px; COLOR: #FF0000;background-color: #CAF163; border: 1px solid #333333;}
+.readonlyColor { background-color: #C0C0C0 }

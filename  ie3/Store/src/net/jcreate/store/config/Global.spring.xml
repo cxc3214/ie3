@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="GB2312"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+   			   <value>e3:WEB-INF/config/Store.properties</value>
+			</list>
+		</property>
+	</bean>
+
+
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+		<property name="driverClass">
+			<value>${jdbc.driverClass}</value>
+		</property>
+		<property name="jdbcUrl">
+			<value>${jdbc.jdbcUrl}</value>
+		</property>
+		<property name="user">
+			<value>${jdbc.user}</value>
+		</property>
+		<property name="password">
+			<value>${jdbc.password}</value>
+		</property>				
+		<property name="maxIdleTime"> 
+			<value>${jdbc.maxIdleTime}</value>
+		</property> 		  
+		<property name="minPoolSize">
+			<value>${jdbc.minPoolSize}</value>
+		</property>
+
+		<property name="maxPoolSize">
+			<value>${jdbc.maxPoolSize}</value>
+		</property>
+		
+      <property name="acquireIncrement">
+         <value>5</value>
+       </property>
+       
+	</bean>
+	
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref local="dataSource"/>
+		</property>
+		
+		
+
+		<property name="mappingResources">
+		  <list>
+		    <value>net/jcreate/store/dict/Dict.hbm.xml</value>
+		  </list>
+		</property>
+
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
+   		        <prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+   		        <!--
+   		        <prop key="hibernate.default_schema">${hibernate.default_schema}</prop>		   		        
+   		        -->
+   		        <prop key="hibernate.connection.characterEncoding">${hibernate.connection.characterEncoding}</prop>
+			</props>
+		</property>
+	</bean>
+
+
+	<bean id="transactionManager" singleton="true" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory">
+			<ref local="sessionFactory"/>
+		</property>
+	</bean>
+
+
+	<bean id="baseDAO" lazy-init="true" class="net.jcreate.store.common.BaseDAO">
+		<property name="sessionFactory"><ref local="sessionFactory"/></property>
+	</bean>
+
+
+	<bean id="baseTxProxy"  abstract="true"  class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean" >
+       <property name="proxyTargetClass"> 
+         <value>true</value>
+       </property>
+		<property name="transactionManager">
+			<ref local="transactionManager"/>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+                <prop key="get*">PROPAGATION_SUPPORTS,readOnly,-Exception</prop>									
+                <prop key="find*">PROPAGATION_SUPPORTS,readOnly,-Exception</prop>									                
+                <prop key="query*">PROPAGATION_SUPPORTS,readOnly,-Exception</prop>									                                
+				<prop key="*">PROPAGATION_REQUIRED,-Exception</prop>				
+			</props>
+		</property>
+	</bean>
+    <!-- 用户管理-->
+	<import resource="classpath:net/jcreate/store/dict/Dict.spring.xml" />
+</beans>

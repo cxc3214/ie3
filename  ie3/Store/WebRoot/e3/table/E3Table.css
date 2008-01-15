@@ -1,0 +1,16 @@
+/*最外层表格样式*/
+.e3table {font-family:"宋体";width:60%; FONT: 9pt  "宋体","tahoma", "arial", "helvetica", "sans-serif";}
+/*标题样式*/
+.e3table .caption{ background-color:#FFFFFF;text-align: center; }
+/*background-color确定表格边的颜色.*/
+.e3table table.listPage {width:100%;background-color:#0080C0; }
+/*导航条样式*/
+.e3table table.listPage tr.navigation {text-align: left;background-color: #FFFFCC; } 
+/*表头样式*/
+.e3table table.listPage tr.head {text-align: center;background-color: #eeeeee;}
+/*表体样式*/
+.e3table table.listPage tr.row {text-align: center; background-color:#FFFFFF;} 
+/* 页面字体链接样式*/
+.e3table A {COLOR: #000000; TEXT-DECORATION: none}
+.e3table A:visited {COLOR: #000000; TEXT-DECORATION: none}
+.e3table A:hover {COLOR: #000000;  TEXT-DECORATION: underline}

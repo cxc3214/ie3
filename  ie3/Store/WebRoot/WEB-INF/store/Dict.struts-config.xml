@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="GBK" ?>
+
+<!DOCTYPE struts-config PUBLIC
+          "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+          "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+          
+<struts-config>
+
+  <!-- ========== Form Bean Definitions =================================== -->
+
+  <form-beans>
+    <form-bean name="dictForm" type="net.jcreate.store.dict.DictForm" />
+  </form-beans>
+   <action-mappings>
+   
+    <action  name="dictForm" parameter="method" path="/dictAction" scope="request" 
+      type="net.jcreate.store.dict.DictAction" >
+      <forward name="list" path="/DictList.jsp" />
+    </action>
+   
+  </action-mappings>
+  
+  <controller nocache="true"/>
+  
+    <message-resources 
+     parameter="net.jcreate.store.config.ApplicationResources"
+     />
+     
+</struts-config>
+

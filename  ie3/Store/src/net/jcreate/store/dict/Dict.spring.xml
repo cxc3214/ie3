@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <bean id="dictDAO" singleton="true" class="net.jcreate.store.dict.DictDAO" parent="baseDAO">
+	</bean>
+
+	<bean id="dictServiceTarget" singleton="true" class="net.jcreate.store.dict.DictService">
+	   <property name="dictDAO"><ref local="dictDAO"/></property>
+	</bean>
+	
+	<bean id="dictService" singleton="true" parent="baseTxProxy">
+		<property name="target">
+			<ref local="dictServiceTarget"/>			            
+		</property>
+	</bean>
+</beans>

@@ -1,0 +1,7 @@
+2008-01-12  17:27:21  [net.jcreate.e3.tree.loader.ResourcesLoader]-[INFO]  开始导出E3.Tree资源文件...
+2008-01-12  17:27:22  [net.jcreate.e3.tree.loader.ResourcesLoader]-[INFO]  导出xtree资源文件成功!
+2008-01-12  17:27:22  [net.jcreate.e3.tree.loader.ResourcesLoader]-[INFO]  导出yui资源文件成功!
+2008-01-12  17:27:22  [net.jcreate.e3.tree.loader.ResourcesLoader]-[INFO]  导出ext资源文件成功!
+2008-01-12  17:27:22  [net.jcreate.e3.tree.loader.ResourcesLoader]-[INFO]  导出E3.Tree资源文件成功!
+2008-01-12  17:27:22  [net.jcreate.e3.resource.impl.ResourceServlet]-[INFO]  开始E3创建资源管理器.
+2008-01-12  17:27:23  [net.jcreate.e3.resource.impl.ResourceServlet]-[INFO]  创建E3资源管理器成功.

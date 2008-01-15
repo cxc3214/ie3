@@ -1,0 +1,2655 @@
+
+(object Petal
+    version    	46
+    _written   	"Rose 7.7.0204.3001"
+    charSet    	134)
+
+(object Design "Logical View"
+    is_unit    	TRUE
+    is_loaded  	TRUE
+    attributes 	(list Attribute_Set
+	(object Attribute
+	    tool       	"Java"
+	    name       	"IDE"
+	    value      	"Internal Editor")
+	(object Attribute
+	    tool       	"Java"
+	    name       	"UserDefineTagName1"
+	    value      	"")
+	(object Attribute
+	    tool       	"Java"
+	    name       	"UserDefineTagText1"
+	    value      	"")
+	(object Attribute
+	    tool       	"Java"
+	    name       	"UserDefineTagApply1"
+	    value      	"")
+	(object Attribute
+	    tool       	"Java"
+	    name       	"UserDefineTagName2"
+	    value      	"")
+	(object Attribute
+	    tool       	"Java"
+	    name       	"UserDefineTagText2"
+	    value      	"")
+	(object Attribute
+	    tool       	"Java"
+	    name       	"UserDefineTagApply2"
+	    value      	"")
+	(object Attribute
+	    tool       	"Java"
+	    name       	"UserDefineTagName3"
+	    value      	"")
+	(object Attribute
+	    tool       	"Java"
+	    name       	"UserDefineTagText3"
+	    value      	"")
+	(object Attribute
+	    tool       	"Java"
+	    name       	"UserDefineTagApply3"
+	    value      	""))
+    quid       	"471C95110213"
+    defaults   	(object defaults
+	rightMargin 	0.250000
+	leftMargin 	0.250000
+	topMargin  	0.250000
+	bottomMargin 	0.500000
+	pageOverlap 	0.250000
+	clipIconLabels 	TRUE
+	autoResize 	TRUE
+	snapToGrid 	TRUE
+	gridX      	16
+	gridY      	16
+	defaultFont 	(object Font
+	    size       	10
+	    face       	"Arial"
+	    bold       	FALSE
+	    italics    	FALSE
+	    underline  	FALSE
+	    strike     	FALSE
+	    color      	0
+	    default_color 	TRUE)
+	showMessageNum 	1
+	showClassOfObject 	TRUE
+	notation   	"Unified")
+    root_usecase_package 	(object Class_Category "Use Case View"
+	quid       	"471C95110215"
+	exportControl 	"Public"
+	global     	TRUE
+	logical_models 	(list unit_reference_list)
+	logical_presentations 	(list unit_reference_list
+	    (object UseCaseDiagram "Main"
+		quid       	"471C951502DF"
+		title      	"Main"
+		zoom       	100
+		max_height 	28350
+		max_width  	21600
+		origin_x   	0
+		origin_y   	0
+		items      	(list diagram_item_list))))
+    root_category 	(object Class_Category "Logical View"
+	quid       	"471C95110214"
+	exportControl 	"Public"
+	global     	TRUE
+	subsystem  	"Component View"
+	quidu      	"471C95110216"
+	logical_models 	(list unit_reference_list
+	    (object Class "Node"
+		quid       	"471C953401B5")
+	    (object Class "业务对象"
+		quid       	"471C957500EA")
+	    (object Class "业务数据集"
+		quid       	"471C958E01A5")
+	    (object Class "TreeModel"
+		quid       	"471C96F10119")
+	    (object Class "TreeModelCreator"
+		quid       	"471C97050203"
+		used_nodes 	(list uses_relationship_list
+		    (object Uses_Relationship
+			quid       	"471C9784008C"
+			label      	"create"
+			supplier   	"Logical View::TreeModel"
+			quidu      	"471C96F10119")
+		    (object Uses_Relationship
+			quid       	"471C978701F4"
+			label      	"use"
+			supplier   	"Logical View::UserDataUncoder"
+			quidu      	"471C970601A5")
+		    (object Uses_Relationship
+			quid       	"471C97AC0167"
+			label      	"use"
+			supplier   	"Logical View::业务数据集"
+			quidu      	"471C958E01A5")
+		    (object Uses_Relationship
+			quid       	"471C97D4007D"
+			label      	"create"
+			supplier   	"Logical View::Node"
+			quidu      	"471C953401B5")))
+	    (object Class "TreeDirector"
+		quid       	"471C9706005D"
+		used_nodes 	(list uses_relationship_list
+		    (object Uses_Relationship
+			quid       	"471C9A0200AB"
+			supplier   	"Logical View::TreeModel"
+			quidu      	"471C96F10119")
+		    (object Uses_Relationship
+			quid       	"471C9A0D02BF"
+			label      	"use"
+			supplier   	"Logical View::TreeBuilder"
+			quidu      	"471C9706032C")
+		    (object Uses_Relationship
+			quid       	"471C9E0501C5"
+			label      	"use"
+			supplier   	"Logical View::NodeVisitor"
+			quidu      	"471C9A110109")
+		    (object Uses_Relationship
+			quid       	"471C9E07002E"
+			label      	"use"
+			supplier   	"Logical View::Comparator"
+			quidu      	"471C9A1102AF")))
+	    (object Class "UserDataUncoder"
+		quid       	"471C970601A5")
+	    (object Class "TreeBuilder"
+		quid       	"471C9706032C")
+	    (object Class "NodeVisitor"
+		quid       	"471C9A110109")
+	    (object Class "Comparator"
+		quid       	"471C9A1102AF")
+	    (object Association "$UNNAMED$0"
+		quid       	"471C95A802AF"
+		roles      	(list role_list
+		    (object Role "$UNNAMED$1"
+			quid       	"471C95A901D4"
+			supplier   	"Logical View::业务对象"
+			quidu      	"471C957500EA"
+			client_cardinality 	(value cardinality "1..*")
+			is_navigable 	TRUE)
+		    (object Role "$UNNAMED$2"
+			quid       	"471C95A901D6"
+			supplier   	"Logical View::业务数据集"
+			quidu      	"471C958E01A5")))
+	    (object Association "$UNNAMED$3"
+		quid       	"471C999B006D"
+		roles      	(list role_list
+		    (object Role "$UNNAMED$4"
+			quid       	"471C999C036B"
+			supplier   	"Logical View::Node"
+			quidu      	"471C953401B5"
+			Containment 	"By Value"
+			is_navigable 	TRUE)
+		    (object Role "$UNNAMED$5"
+			quid       	"471C999C036D"
+			supplier   	"Logical View::TreeModel"
+			quidu      	"471C96F10119"
+			is_aggregate 	TRUE)))
+	    (object Class_Category "排序器"
+		quid       	"471F53160109"
+		exportControl 	"Public"
+		logical_models 	(list unit_reference_list
+		    (object Class "Comparator"
+			quid       	"471F532C02AF"
+			stereotype 	"Interface")
+		    (object Class "AbstractNodeComparator"
+			quid       	"471F532D01A5"
+			realized_interfaces 	(list realize_rel_list
+			    (object Realize_Relationship
+				quid       	"471F549901F4"
+				supplier   	"Logical View::排序器::Comparator"
+				quidu      	"471F532C02AF")))
+		    (object Class "DefaultNodeComparator"
+			quid       	"471F532E00EA"
+			superclasses 	(list inheritance_relationship_list
+			    (object Inheritance_Relationship
+				quid       	"471F54B6032C"
+				supplier   	"Logical View::排序器::AbstractNodeComparator"
+				quidu      	"471F532D01A5")))
+		    (object Class "ReverseComparator"
+			quid       	"471F532E03B9"
+			used_nodes 	(list uses_relationship_list
+			    (object Uses_Relationship
+				quid       	"471F54C7007D"
+				supplier   	"Logical View::排序器::Comparator"
+				quidu      	"471F532C02AF"))))
+		logical_presentations 	(list unit_reference_list
+		    (object ClassDiagram "Main"
+			quid       	"471F5319000F"
+			title      	"Main"
+			zoom       	100
+			max_height 	28350
+			max_width  	21600
+			origin_x   	0
+			origin_y   	0
+			items      	(list diagram_item_list
+			    (object ClassView "Class" "Logical View::排序器::Comparator" @1
+				ShowCompartmentStereotypes 	TRUE
+				IncludeAttribute 	TRUE
+				IncludeOperation 	TRUE
+				location   	(1008, 544)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object ItemLabel
+				    Parent_View 	@1
+				    location   	(1007, 652)
+				    anchor_loc 	1
+				    nlines     	2
+				    max_width  	228
+				    justify    	0
+				    label      	"Comparator")
+				icon       	"Interface"
+				icon_style 	"Icon"
+				line_color 	3342489
+				fill_color 	13434879
+				quidu      	"471F532C02AF"
+				width      	58
+				height     	58
+				annotation 	8
+				autoResize 	TRUE)
+			    (object ClassView "Class" "Logical View::排序器::AbstractNodeComparator" @2
+				ShowCompartmentStereotypes 	TRUE
+				IncludeAttribute 	TRUE
+				IncludeOperation 	TRUE
+				location   	(998, 848)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object ItemLabel
+				    Parent_View 	@2
+				    location   	(706, 797)
+				    fill_color 	13434879
+				    nlines     	1
+				    max_width  	584
+				    justify    	0
+				    label      	"AbstractNodeComparator")
+				icon_style 	"Icon"
+				line_color 	3342489
+				fill_color 	13434879
+				quidu      	"471F532D01A5"
+				width      	602
+				height     	126
+				annotation 	8
+				autoResize 	TRUE)
+			    (object ClassView "Class" "Logical View::排序器::DefaultNodeComparator" @3
+				ShowCompartmentStereotypes 	TRUE
+				IncludeAttribute 	TRUE
+				IncludeOperation 	TRUE
+				location   	(999, 1136)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object ItemLabel
+				    Parent_View 	@3
+				    location   	(728, 1085)
+				    fill_color 	13434879
+				    nlines     	1
+				    max_width  	542
+				    justify    	0
+				    label      	"DefaultNodeComparator")
+				icon_style 	"Icon"
+				line_color 	3342489
+				fill_color 	13434879
+				quidu      	"471F532E00EA"
+				width      	560
+				height     	126
+				annotation 	8
+				autoResize 	TRUE)
+			    (object ClassView "Class" "Logical View::排序器::ReverseComparator" @4
+				ShowCompartmentStereotypes 	TRUE
+				IncludeAttribute 	TRUE
+				IncludeOperation 	TRUE
+				location   	(1728, 544)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object ItemLabel
+				    Parent_View 	@4
+				    location   	(1500, 493)
+				    fill_color 	13434879
+				    nlines     	1
+				    max_width  	456
+				    justify    	0
+				    label      	"ReverseComparator")
+				icon_style 	"Icon"
+				line_color 	3342489
+				fill_color 	13434879
+				quidu      	"471F532E03B9"
+				width      	474
+				height     	126
+				annotation 	8
+				autoResize 	TRUE)
+			    (object RealizeView "" @5
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"471F549901F4"
+				client     	@2
+				supplier   	@1
+				line_style 	0)
+			    (object InheritView "" @6
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"471F54B6032C"
+				client     	@3
+				supplier   	@2
+				line_style 	0)
+			    (object UsesView "" @7
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"471F54C7007D"
+				client     	@4
+				supplier   	@1
+				line_style 	0)
+			    (object NoteView @8
+				location   	(1728, 853)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object ItemLabel
+				    Parent_View 	@8
+				    location   	(1487, 731)
+				    fill_color 	13434879
+				    nlines     	4
+				    max_width  	447
+				    label      	"如果兄弟节点是同类型节点，从该类派生，只需要返回排序属性的值即可")
+				line_color 	3342489
+				fill_color 	13434879
+				width      	507
+				height     	256)
+			    (object AttachView "" @9
+				stereotype 	TRUE
+				line_color 	3342489
+				client     	@2
+				supplier   	@8
+				line_style 	0)
+			    (object NoteView @10
+				location   	(1632, 1131)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object ItemLabel
+				    Parent_View 	@10
+				    location   	(1494, 1071)
+				    fill_color 	13434879
+				    nlines     	2
+				    max_width  	240
+				    label      	"按节点名称排序")
+				line_color 	3342489
+				fill_color 	13434879
+				width      	300
+				height     	132)
+			    (object AttachView "" @11
+				stereotype 	TRUE
+				line_color 	3342489
+				client     	@3
+				supplier   	@10
+				line_style 	0)
+			    (object NoteView @12
+				location   	(1728, 295)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object ItemLabel
+				    Parent_View 	@12
+				    location   	(1496, 211)
+				    fill_color 	13434879
+				    nlines     	3
+				    max_width  	428
+				    label      	"倒转排序器，与指定排序器的排序方向相反")
+				line_color 	3342489
+				fill_color 	13434879
+				width      	488
+				height     	181)
+			    (object AttachView "" @13
+				stereotype 	TRUE
+				line_color 	3342489
+				client     	@4
+				supplier   	@12
+				line_style 	0)))))
+	    (object Class_Category "节点"
+		quid       	"471F58F0032C"
+		exportControl 	"Public"
+		logical_models 	(list unit_reference_list
+		    (object Class "DefaultNode"
+			quid       	"471F590E009C"
+			realized_interfaces 	(list realize_rel_list
+			    (object Realize_Relationship
+				quid       	"471F59D301B5"
+				supplier   	"Logical View::节点::Node"
+				quidu      	"471F590F01D4")))
+		    (object Class "WebTreeDynamicNode"
+			quid       	"471F590E0290"
+			superclasses 	(list inheritance_relationship_list
+			    (object Inheritance_Relationship
+				quid       	"471F59E70128"
+				supplier   	"Logical View::节点::WebTreeNode"
+				quidu      	"471F5910002E")))
+		    (object Class "SwingTreeNode"
+			quid       	"471F590F005D"
+			superclasses 	(list inheritance_relationship_list
+			    (object Inheritance_Relationship
+				quid       	"471F5A04009C"
+				supplier   	"Logical View::节点::DefaultNode"
+				quidu      	"471F590E009C")))
+		    (object Class "Node"
+			quid       	"471F590F01D4"
+			stereotype 	"Interface")
+		    (object Class "WebTreeNode"
+			quid       	"471F5910002E"
+			superclasses 	(list inheritance_relationship_list
+			    (object Inheritance_Relationship
+				quid       	"471F59DE0271"
+				supplier   	"Logical View::节点::DefaultNode"
+				quidu      	"471F590E009C"))))
+		logical_presentations 	(list unit_reference_list
+		    (object ClassDiagram "Main"
+			quid       	"471F590B03D8"
+			title      	"Main"
+			zoom       	100
+			max_height 	28350
+			max_width  	21600
+			origin_x   	0
+			origin_y   	0
+			items      	(list diagram_item_list
+			    (object ClassView "Class" "Logical View::节点::DefaultNode" @14
+				ShowCompartmentStereotypes 	TRUE
+				IncludeAttribute 	TRUE
+				IncludeOperation 	TRUE
+				location   	(1008, 688)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object ItemLabel
+				    Parent_View 	@14
+				    location   	(854, 637)
+				    fill_color 	13434879
+				    nlines     	1
+				    max_width  	308
+				    justify    	0
+				    label      	"DefaultNode")
+				icon_style 	"Icon"
+				line_color 	3342489
+				fill_color 	13434879
+				quidu      	"471F590E009C"
+				width      	326
+				height     	126
+				annotation 	8
+				autoResize 	TRUE)
+			    (object ClassView "Class" "Logical View::节点::WebTreeDynamicNode" @15
+				ShowCompartmentStereotypes 	TRUE
+				IncludeAttribute 	TRUE
+				IncludeOperation 	TRUE
+				location   	(704, 1280)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object ItemLabel
+				    Parent_View 	@15
+				    location   	(441, 1229)
+				    fill_color 	13434879
+				    nlines     	1
+				    max_width  	526
+				    justify    	0
+				    label      	"WebTreeDynamicNode")
+				icon_style 	"Icon"
+				line_color 	3342489
+				fill_color 	13434879
+				quidu      	"471F590E0290"
+				width      	544
+				height     	126
+				annotation 	8
+				autoResize 	TRUE)
+			    (object ClassView "Class" "Logical View::节点::SwingTreeNode" @16
+				ShowCompartmentStereotypes 	TRUE
+				IncludeAttribute 	TRUE
+				IncludeOperation 	TRUE
+				location   	(1296, 1019)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object ItemLabel
+				    Parent_View 	@16
+				    location   	(1112, 968)
+				    fill_color 	13434879
+				    nlines     	1
+				    max_width  	368
+				    justify    	0
+				    label      	"SwingTreeNode")
+				icon_style 	"Icon"
+				line_color 	3342489
+				fill_color 	12632256
+				quidu      	"471F590F005D"
+				width      	386
+				height     	126
+				annotation 	8
+				autoResize 	TRUE)
+			    (object ClassView "Class" "Logical View::节点::Node" @17
+				ShowCompartmentStereotypes 	TRUE
+				IncludeAttribute 	TRUE
+				IncludeOperation 	TRUE
+				location   	(1008, 368)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object ItemLabel
+				    Parent_View 	@17
+				    location   	(1007, 476)
+				    anchor_loc 	1
+				    nlines     	2
+				    max_width  	231
+				    justify    	0
+				    label      	"Node")
+				icon       	"Interface"
+				icon_style 	"Icon"
+				line_color 	3342489
+				fill_color 	13434879
+				quidu      	"471F590F01D4"
+				width      	58
+				height     	58
+				annotation 	8
+				autoResize 	TRUE)
+			    (object ClassView "Class" "Logical View::节点::WebTreeNode" @18
+				ShowCompartmentStereotypes 	TRUE
+				IncludeAttribute 	TRUE
+				IncludeOperation 	TRUE
+				location   	(704, 1019)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object ItemLabel
+				    Parent_View 	@18
+				    location   	(534, 968)
+				    fill_color 	13434879
+				    nlines     	1
+				    max_width  	340
+				    justify    	0
+				    label      	"WebTreeNode")
+				icon_style 	"Icon"
+				line_color 	3342489
+				fill_color 	13434879
+				quidu      	"471F5910002E"
+				width      	358
+				height     	126
+				annotation 	8
+				autoResize 	TRUE)
+			    (object RealizeView "" @19
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"471F59D301B5"
+				client     	@14
+				supplier   	@17
+				line_style 	0)
+			    (object InheritView "" @20
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"471F59E70128"
+				client     	@15
+				supplier   	@18
+				line_style 	0)
+			    (object InheritView "" @21
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"471F5A04009C"
+				client     	@16
+				supplier   	@14
+				vertices   	(list Points
+				    (1325, 956)
+				    (1325, 850)
+				    (1075, 850)
+				    (1075, 751))
+				line_style 	3
+				origin_attachment 	(1325, 956)
+				terminal_attachment 	(1075, 751))
+			    (object InheritView "" @22
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"471F59DE0271"
+				client     	@18
+				supplier   	@14
+				vertices   	(list Points
+				    (688, 956)
+				    (688, 866)
+				    (925, 866)
+				    (925, 751))
+				line_style 	3
+				origin_attachment 	(688, 956)
+				terminal_attachment 	(925, 751))))))
+	    (object Class_Category "Swing树"
+		quid       	"47243E5000BB"
+		exportControl 	"Public"
+		logical_models 	(list unit_reference_list
+		    (object Class "SwingTreeNode"
+			quid       	"47243E730261"
+			operations 	(list Operations
+			    (object Operation "获取右键菜单"
+				quid       	"4724421A034B"
+				concurrency 	"Sequential"
+				opExportControl 	"Public"
+				uid        	0)
+			    (object Operation "单击监听器"
+				quid       	"4724422A00AB"
+				concurrency 	"Sequential"
+				opExportControl 	"Public"
+				uid        	0)
+			    (object Operation "双级监听器"
+				quid       	"47244235009C"
+				concurrency 	"Sequential"
+				opExportControl 	"Public"
+				uid        	0)
+			    (object Operation "键盘监听器"
+				quid       	"472442420196"
+				concurrency 	"Sequential"
+				opExportControl 	"Public"
+				uid        	0)
+			    (object Operation "icon"
+				quid       	"4724424B02DE"
+				concurrency 	"Sequential"
+				opExportControl 	"Public"
+				uid        	0)
+			    (object Operation "openIcon"
+				quid       	"4724425A036B"
+				concurrency 	"Sequential"
+				opExportControl 	"Public"
+				uid        	0)
+			    (object Operation "业务对象"
+				quid       	"4724425E009C"
+				concurrency 	"Sequential"
+				opExportControl 	"Public"
+				uid        	0))
+			class_attributes 	(list class_attribute_list
+			    (object ClassAttribute "checked"
+				quid       	"47244294005D")
+			    (object ClassAttribute "disabled"
+				quid       	"472442990271")))
+		    (object Class "SwingTree"
+			quid       	"4724426B00BB"
+			superclasses 	(list inheritance_relationship_list
+			    (object Inheritance_Relationship
+				quid       	"47244648037A"
+				supplier   	"Logical View::Swing树::JTree"
+				quidu      	"4724464300EA")))
+		    (object Class "SwingRadioTree"
+			quid       	"4724426C0157"
+			superclasses 	(list inheritance_relationship_list
+			    (object Inheritance_Relationship
+				quid       	"472442BA037A"
+				supplier   	"Logical View::Swing树::SwingTree"
+				quidu      	"4724426B00BB"))
+			operations 	(list Operations
+			    (object Operation "getCheckedNode"
+				quid       	"472442C10128"
+				concurrency 	"Sequential"
+				opExportControl 	"Public"
+				uid        	0)
+			    (object Operation "getCheckedValue"
+				quid       	"472442CE0128"
+				concurrency 	"Sequential"
+				opExportControl 	"Public"
+				uid        	0)))
+		    (object Class "SwingCheckTree"
+			quid       	"4724426C037A"
+			superclasses 	(list inheritance_relationship_list
+			    (object Inheritance_Relationship
+				quid       	"472442BC003E"
+				supplier   	"Logical View::Swing树::SwingTree"
+				quidu      	"4724426B00BB"))
+			operations 	(list Operations
+			    (object Operation "getCheckedNodes"
+				quid       	"472442E20119"
+				concurrency 	"Sequential"
+				opExportControl 	"Public"
+				uid        	0)
+			    (object Operation "getCheckedValues"
+				quid       	"472442E802FD"
+				concurrency 	"Sequential"
+				opExportControl 	"Public"
+				uid        	0)))
+		    (object Class "SwingTreeBuilder"
+			quid       	"4724430700FA"
+			used_nodes 	(list uses_relationship_list
+			    (object Uses_Relationship
+				quid       	"472446AA035B"
+				label      	"create"
+				supplier   	"Logical View::Swing树::SwingTree"
+				quidu      	"4724426B00BB")))
+		    (object Class "SwingRadioTreeBuilder"
+			quid       	"4724430703A9"
+			superclasses 	(list inheritance_relationship_list
+			    (object Inheritance_Relationship
+				quid       	"47244690037A"
+				supplier   	"Logical View::Swing树::SwingTreeBuilder"
+				quidu      	"4724430700FA")))
+		    (object Class "SwingCheckTreeBuilder"
+			quid       	"4724430801B5"
+			superclasses 	(list inheritance_relationship_list
+			    (object Inheritance_Relationship
+				quid       	"4724469202CE"
+				supplier   	"Logical View::Swing树::SwingTreeBuilder"
+				quidu      	"4724430700FA")))
+		    (object Class "JTree"
+			quid       	"4724464300EA"))
+		logical_presentations 	(list unit_reference_list
+		    (object ClassDiagram "Main"
+			quid       	"47243E7102DE"
+			title      	"Main"
+			zoom       	100
+			max_height 	28350
+			max_width  	21600
+			origin_x   	0
+			origin_y   	0
+			items      	(list diagram_item_list
+			    (object ClassView "Class" "Logical View::Swing树::SwingTreeNode" @23
+				ShowCompartmentStereotypes 	TRUE
+				IncludeAttribute 	TRUE
+				IncludeOperation 	TRUE
+				location   	(1136, 1296)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object ItemLabel
+				    Parent_View 	@23
+				    location   	(936, 1015)
+				    fill_color 	13434879
+				    nlines     	1
+				    max_width  	400
+				    justify    	0
+				    label      	"SwingTreeNode")
+				icon_style 	"Icon"
+				line_color 	3342489
+				fill_color 	13434879
+				quidu      	"47243E730261"
+				compartment 	(object Compartment
+				    Parent_View 	@23
+				    location   	(936, 1076)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
+				    icon_style 	"Icon"
+				    fill_color 	13434879
+				    anchor     	2
+				    nlines     	10
+				    max_width  	338)
+				width      	418
+				height     	586
+				annotation 	8
+				autoResize 	TRUE)
+			    (object ClassView "Class" "Logical View::Swing树::SwingTree" @24
+				ShowCompartmentStereotypes 	TRUE
+				IncludeAttribute 	TRUE
+				IncludeOperation 	TRUE
+				location   	(1568, 320)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object ItemLabel
+				    Parent_View 	@24
+				    location   	(1438, 269)
+				    fill_color 	13434879
+				    nlines     	1
+				    max_width  	260
+				    justify    	0
+				    label      	"SwingTree")
+				icon_style 	"Icon"
+				line_color 	3342489
+				fill_color 	13434879
+				quidu      	"4724426B00BB"
+				width      	278
+				height     	126
+				annotation 	8
+				autoResize 	TRUE)
+			    (object ClassView "Class" "Logical View::Swing树::SwingRadioTree" @25
+				ShowCompartmentStereotypes 	TRUE
+				IncludeAttribute 	TRUE
+				IncludeOperation 	TRUE
+				location   	(1312, 624)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object ItemLabel
+				    Parent_View 	@25
+				    location   	(1079, 518)
+				    fill_color 	13434879
+				    nlines     	1
+				    max_width  	466
+				    justify    	0
+				    label      	"SwingRadioTree")
+				icon_style 	"Icon"
+				line_color 	3342489
+				fill_color 	13434879
+				quidu      	"4724426C0157"
+				compartment 	(object Compartment
+				    Parent_View 	@25
+				    location   	(1079, 579)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
+				    icon_style 	"Icon"
+				    fill_color 	13434879
+				    anchor     	2
+				    nlines     	3
+				    max_width  	394)
+				width      	484
+				height     	236
+				annotation 	8
+				autoResize 	TRUE)
+			    (object ClassView "Class" "Logical View::Swing树::SwingCheckTree" @26
+				ShowCompartmentStereotypes 	TRUE
+				IncludeAttribute 	TRUE
+				IncludeOperation 	TRUE
+				location   	(1968, 624)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object ItemLabel
+				    Parent_View 	@26
+				    location   	(1722, 518)
+				    fill_color 	13434879
+				    nlines     	1
+				    max_width  	492
+				    justify    	0
+				    label      	"SwingCheckTree")
+				icon_style 	"Icon"
+				line_color 	3342489
+				fill_color 	13434879
+				quidu      	"4724426C037A"
+				compartment 	(object Compartment
+				    Parent_View 	@26
+				    location   	(1722, 579)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
+				    icon_style 	"Icon"
+				    fill_color 	13434879
+				    anchor     	2
+				    nlines     	3
+				    max_width  	416)
+				width      	510
+				height     	236
+				annotation 	8
+				autoResize 	TRUE)
+			    (object InheritView "" @27
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"472442BA037A"
+				client     	@25
+				supplier   	@24
+				line_style 	0)
+			    (object InheritView "" @28
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"472442BC003E"
+				client     	@26
+				supplier   	@24
+				line_style 	0)
+			    (object ClassView "Class" "Logical View::Swing树::SwingTreeBuilder" @29
+				ShowCompartmentStereotypes 	TRUE
+				IncludeAttribute 	TRUE
+				IncludeOperation 	TRUE
+				location   	(640, 304)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object ItemLabel
+				    Parent_View 	@29
+				    location   	(432, 253)
+				    fill_color 	13434879
+				    nlines     	1
+				    max_width  	416
+				    justify    	0
+				    label      	"SwingTreeBuilder")
+				icon_style 	"Icon"
+				line_color 	3342489
+				fill_color 	13434879
+				quidu      	"4724430700FA"
+				width      	434
+				height     	126
+				annotation 	8
+				autoResize 	TRUE)
+			    (object ClassView "Class" "Logical View::Swing树::SwingRadioTreeBuilder" @30
+				ShowCompartmentStereotypes 	TRUE
+				IncludeAttribute 	TRUE
+				IncludeOperation 	TRUE
+				location   	(272, 688)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object ItemLabel
+				    Parent_View 	@30
+				    location   	(6, 637)
+				    fill_color 	13434879
+				    nlines     	1
+				    max_width  	532
+				    justify    	0
+				    label      	"SwingRadioTreeBuilder")
+				icon_style 	"Icon"
+				line_color 	3342489
+				fill_color 	13434879
+				quidu      	"4724430703A9"
+				width      	550
+				height     	126
+				annotation 	8
+				autoResize 	TRUE)
+			    (object ClassView "Class" "Logical View::Swing树::SwingCheckTreeBuilder" @31
+				ShowCompartmentStereotypes 	TRUE
+				IncludeAttribute 	TRUE
+				IncludeOperation 	TRUE
+				location   	(848, 672)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object ItemLabel
+				    Parent_View 	@31
+				    location   	(576, 621)
+				    fill_color 	13434879
+				    nlines     	1
+				    max_width  	544
+				    justify    	0
+				    label      	"SwingCheckTreeBuilder")
+				icon_style 	"Icon"
+				line_color 	3342489
+				fill_color 	13434879
+				quidu      	"4724430801B5"
+				width      	562
+				height     	126
+				annotation 	8
+				autoResize 	TRUE)
+			    (object ClassView "Class" "Logical View::Swing树::JTree" @32
+				ShowCompartmentStereotypes 	TRUE
+				IncludeAttribute 	TRUE
+				IncludeOperation 	TRUE
+				location   	(1568, 64)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object ItemLabel
+				    Parent_View 	@32
+				    location   	(1472, 13)
+				    fill_color 	13434879
+				    nlines     	1
+				    max_width  	192
+				    justify    	0
+				    label      	"JTree")
+				icon_style 	"Icon"
+				line_color 	3342489
+				fill_color 	13434879
+				quidu      	"4724464300EA"
+				width      	210
+				height     	126
+				annotation 	8
+				autoResize 	TRUE)
+			    (object InheritView "" @33
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"47244648037A"
+				client     	@24
+				supplier   	@32
+				line_style 	0)
+			    (object InheritView "" @34
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"47244690037A"
+				client     	@30
+				supplier   	@29
+				line_style 	0)
+			    (object InheritView "" @35
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"4724469202CE"
+				client     	@31
+				supplier   	@29
+				line_style 	0)
+			    (object UsesView "create" @36
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object ItemLabel
+				    Parent_View 	@36
+				    location   	(1142, 312)
+				    anchor_loc 	1
+				    nlines     	1
+				    max_width  	112
+				    justify    	0
+				    label      	"create")
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"472446AA035B"
+				client     	@29
+				supplier   	@24
+				line_style 	0))))))
+	logical_presentations 	(list unit_reference_list
+	    (object ClassDiagram "Main"
+		quid       	"471C951502EE"
+		title      	"Main"
+		external_docs 	(list external_doc_list
+		    (object external_doc
+			external_doc_path 	"J:\\e3.tree\\E3.Tree.uml"))
+		zoom       	100
+		max_height 	28350
+		max_width  	21600
+		origin_x   	919
+		origin_y   	300
+		items      	(list diagram_item_list
+		    (object ClassView "Class" "Logical View::Node" @37
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(2144, 736)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@37
+			    location   	(2048, 685)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	192
+			    justify    	0
+			    label      	"Node")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	16777177
+			quidu      	"471C953401B5"
+			width      	210
+			height     	126
+			annotation 	8
+			autoResize 	TRUE)
+		    (object ClassView "Class" "Logical View::业务对象" @38
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(1664, 208)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@38
+			    location   	(1523, 157)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	282
+			    justify    	0
+			    label      	"业务对象")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	12632256
+			quidu      	"471C957500EA"
+			width      	300
+			height     	126
+			annotation 	8
+			autoResize 	TRUE)
+		    (object ClassView "Class" "Logical View::业务数据集" @39
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(1664, 464)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@39
+			    location   	(1498, 413)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	332
+			    justify    	0
+			    label      	"业务数据集")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	12632256
+			quidu      	"471C958E01A5"
+			width      	350
+			height     	126
+			annotation 	8
+			autoResize 	TRUE)
+		    (object AssociationViewNew "$UNNAMED$0" @40
+			location   	(1664, 335)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"471C95A802AF"
+			roleview_list 	(list RoleViews
+			    (object RoleView "$UNNAMED$1" @41
+				Parent_View 	@40
+				location   	(1008, -417)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"471C95A901D4"
+				client     	@40
+				supplier   	@38
+				line_style 	0
+				label      	(object SegLabel @42
+				    Parent_View 	@41
+				    location   	(1734, 309)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
+				    anchor     	2
+				    anchor_loc 	1
+				    nlines     	1
+				    max_width  	15
+				    justify    	0
+				    label      	"1..*"
+				    pctDist    	0.403226
+				    height     	70
+				    orientation 	1))
+			    (object RoleView "$UNNAMED$2" @43
+				Parent_View 	@40
+				location   	(1008, -417)
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"471C95A901D6"
+				client     	@40
+				supplier   	@39
+				line_style 	0)))
+		    (object ClassView "Class" "Logical View::TreeModelCreator" @44
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(1664, 736)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@44
+			    location   	(1451, 685)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	426
+			    justify    	0
+			    label      	"TreeModelCreator")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"471C97050203"
+			width      	444
+			height     	126
+			annotation 	8
+			autoResize 	TRUE)
+		    (object ClassView "Class" "Logical View::UserDataUncoder" @45
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(1664, 1008)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@45
+			    location   	(1461, 957)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	406
+			    justify    	0
+			    label      	"UserDataUncoder")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"471C970601A5"
+			width      	424
+			height     	126
+			annotation 	8
+			autoResize 	TRUE)
+		    (object ClassView "Class" "Logical View::TreeBuilder" @46
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(560, 1008)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@46
+			    location   	(424, 957)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	272
+			    justify    	0
+			    label      	"TreeBuilder")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"471C9706032C"
+			width      	290
+			height     	126
+			annotation 	8
+			autoResize 	TRUE)
+		    (object UsesView "use" @47
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@47
+			    location   	(1664, 871)
+			    anchor_loc 	1
+			    nlines     	1
+			    max_width  	114
+			    justify    	0
+			    label      	"use")
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"471C978701F4"
+			client     	@44
+			supplier   	@45
+			line_style 	0)
+		    (object UsesView "use" @48
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@48
+			    location   	(1664, 600)
+			    anchor_loc 	1
+			    nlines     	1
+			    max_width  	114
+			    justify    	0
+			    label      	"use")
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"471C97AC0167"
+			client     	@44
+			supplier   	@39
+			line_style 	0)
+		    (object UsesView "create" @49
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@49
+			    location   	(1962, 736)
+			    anchor_loc 	1
+			    nlines     	1
+			    max_width  	114
+			    justify    	0
+			    label      	"create")
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"471C97D4007D"
+			client     	@44
+			supplier   	@37
+			line_style 	0)
+		    (object ClassView "Class" "Logical View::Node" @50
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(1072, 464)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@50
+			    location   	(976, 413)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	192
+			    justify    	0
+			    label      	"Node")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	16777177
+			quidu      	"471C953401B5"
+			width      	210
+			height     	126
+			annotation 	8
+			autoResize 	TRUE)
+		    (object ClassView "Class" "Logical View::TreeModel" @51
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(1072, 736)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@51
+			    location   	(945, 685)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	254
+			    justify    	0
+			    label      	"TreeModel")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"471C96F10119"
+			width      	272
+			height     	126
+			annotation 	8
+			autoResize 	TRUE)
+		    (object UsesView "create" @52
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@52
+			    location   	(1324, 736)
+			    anchor_loc 	1
+			    nlines     	1
+			    max_width  	114
+			    justify    	0
+			    label      	"create")
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"471C9784008C"
+			client     	@44
+			supplier   	@51
+			line_style 	0)
+		    (object AssociationViewNew "$UNNAMED$3" @53
+			location   	(1072, 599)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"471C999B006D"
+			roleview_list 	(list RoleViews
+			    (object RoleView "$UNNAMED$4" @54
+				Parent_View 	@53
+				location   	(0, -137)
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"471C999C036B"
+				client     	@53
+				supplier   	@50
+				line_style 	0)
+			    (object RoleView "$UNNAMED$5" @55
+				Parent_View 	@53
+				location   	(0, -137)
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"471C999C036D"
+				client     	@53
+				supplier   	@51
+				line_style 	0)))
+		    (object ClassView "Class" "Logical View::Comparator" @56
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(1376, 1312)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@56
+			    location   	(1231, 1261)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	290
+			    justify    	0
+			    label      	"Comparator")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"471C9A1102AF"
+			width      	308
+			height     	126
+			annotation 	8
+			autoResize 	TRUE)
+		    (object ClassView "Class" "Logical View::TreeDirector" @57
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(1072, 1008)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@57
+			    location   	(922, 957)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	300
+			    justify    	0
+			    label      	"TreeDirector")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"471C9706005D"
+			width      	318
+			height     	126
+			annotation 	8
+			autoResize 	TRUE)
+		    (object ClassView "Class" "Logical View::NodeVisitor" @58
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(800, 1312)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@58
+			    location   	(656, 1261)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	288
+			    justify    	0
+			    label      	"NodeVisitor")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"471C9A110109"
+			width      	306
+			height     	126
+			annotation 	8
+			autoResize 	TRUE)
+		    (object UsesView "" @59
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"471C9A0200AB"
+			client     	@57
+			supplier   	@51
+			line_style 	0)
+		    (object UsesView "use" @60
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@60
+			    location   	(808, 1008)
+			    anchor_loc 	1
+			    nlines     	1
+			    max_width  	80
+			    justify    	0
+			    label      	"use")
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"471C9A0D02BF"
+			client     	@57
+			supplier   	@46
+			line_style 	0)
+		    (object UsesView "use" @61
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@61
+			    location   	(882, 1125)
+			    anchor_loc 	1
+			    nlines     	1
+			    max_width  	80
+			    justify    	0
+			    label      	"use")
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"471C9E0501C5"
+			client     	@57
+			supplier   	@58
+			vertices   	(list Points
+			    (1019, 1071)
+			    (1019, 1125)
+			    (816, 1125)
+			    (816, 1249))
+			line_style 	3
+			origin_attachment 	(1019, 1071)
+			terminal_attachment 	(816, 1249))
+		    (object UsesView "use" @62
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@62
+			    location   	(1273, 1131)
+			    anchor_loc 	1
+			    nlines     	1
+			    max_width  	80
+			    justify    	0
+			    label      	"use")
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"471C9E07002E"
+			client     	@57
+			supplier   	@56
+			vertices   	(list Points
+			    (1116, 1071)
+			    (1116, 1131)
+			    (1373, 1131)
+			    (1373, 1249))
+			line_style 	3
+			origin_attachment 	(1116, 1071)
+			terminal_attachment 	(1373, 1249))
+		    (object CategoryView "Logical View::排序器" @63
+			location   	(1328, 1664)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@63
+			    location   	(1184, 1580)
+			    fill_color 	13434879
+			    nlines     	2
+			    max_width  	288
+			    justify    	0
+			    label      	"排序器")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"471F53160109"
+			width      	300
+			height     	180)
+		    (object CategoryView "Logical View::节点" @64
+			location   	(1728, 1664)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@64
+			    location   	(1584, 1580)
+			    fill_color 	13434879
+			    nlines     	2
+			    max_width  	288
+			    justify    	0
+			    label      	"节点")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"471F58F0032C"
+			width      	300
+			height     	180)
+		    (object CategoryView "Logical View::Swing树" @65
+			location   	(928, 1664)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@65
+			    location   	(784, 1580)
+			    fill_color 	13434879
+			    nlines     	2
+			    max_width  	288
+			    justify    	0
+			    label      	"Swing树")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"47243E5000BB"
+			width      	300
+			height     	180)))))
+    root_subsystem 	(object SubSystem "Component View"
+	quid       	"471C95110216"
+	physical_models 	(list unit_reference_list)
+	physical_presentations 	(list unit_reference_list
+	    (object Module_Diagram "Main"
+		quid       	"471C951502DE"
+		title      	"Main"
+		zoom       	100
+		max_height 	28350
+		max_width  	21600
+		origin_x   	0
+		origin_y   	0
+		items      	(list diagram_item_list))))
+    process_structure 	(object Processes
+	quid       	"471C95110222"
+	ProcsNDevs 	(list
+	    (object Process_Diagram "Deployment View"
+		quid       	"471C95110242"
+		title      	"Deployment View"
+		zoom       	100
+		max_height 	28350
+		max_width  	21600
+		origin_x   	0
+		origin_y   	0
+		items      	(list diagram_item_list))))
+    properties 	(object Properties
+	attributes 	(list Attribute_Set
+	    (object Attribute
+		tool       	"Deploy"
+		name       	"HiddenTool"
+		value      	FALSE)
+	    (object Attribute
+		tool       	"framework"
+		name       	"HiddenTool"
+		value      	FALSE)
+	    (object Attribute
+		tool       	"Java"
+		name       	"propertyId"
+		value      	"809135966")
+	    (object Attribute
+		tool       	"Java"
+		name       	"default__Project"
+		value      	(list Attribute_Set
+		    (object Attribute
+			tool       	"Java"
+			name       	"RootDir"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"CreateMissingDirectories"
+			value      	TRUE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"StopOnError"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"UsePrefixes"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"AutoSync"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"NotShowRoseIDDlg"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"ShowCodegenDlg"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"GenerateRoseID"
+			value      	TRUE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"GenerateDefaultJ2EEJavadoc"
+			value      	TRUE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"GenerateDefaultReturnLine"
+			value      	TRUE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"JavadocDefaultAuthor"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"JavadocDefaultVersion"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"JavadocDefaultSince"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"UserDefineJavaDocTags"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"JavadocNumAsterisks"
+			value      	0)
+		    (object Attribute
+			tool       	"Java"
+			name       	"MaxNumChars"
+			value      	80)
+		    (object Attribute
+			tool       	"Java"
+			name       	"Editor"
+			value      	("EditorType" 100))
+		    (object Attribute
+			tool       	"Java"
+			name       	"VM"
+			value      	("VMType" 200))
+		    (object Attribute
+			tool       	"Java"
+			name       	"ClassPath"
+			value      	";I:\\j2sdk1.4.2_04\\jre\\lib\\charsets.jar;I:\\j2sdk1.4.2_04\\jre\\lib\\jce.jar;I:\\j2sdk1.4.2_04\\jre\\lib\\jsse.jar;I:\\j2sdk1.4.2_04\\jre\\lib\\rt.jar;I:\\j2sdk1.4.2_04\\jre\\lib\\sunrsasign.jar;I:\\j2sdk1.4.2_04\\jre\\lib\\ext\\dnsns.jar;I:\\j2sdk1.4.2_04\\jre\\lib\\ext\\ldapsec.jar;I:\\j2sdk1.4.2_04\\jre\\lib\\ext\\localedata.jar;I:\\j2sdk1.4.2_04\\jre\\lib\\ext\\sunjce_provider.jar;I:\\j2sdk1.4.2_04\\jre\\lib\\security\\local_policy.jar;I:\\j2sdk1.4.2_04\\jre\\lib\\security\\US_export_policy.jar;I:\\j2sdk1.4.2_04\\lib\\dt.jar;I:\\j2sdk1.4.2_04\\lib\\htmlconverter.jar;I:\\j2sdk1.4.2_04\\lib\\tools.jar")
+		    (object Attribute
+			tool       	"Java"
+			name       	"ReferenceClasspath"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"EditorType"
+			value      	(list Attribute_Set
+			    (object Attribute
+				tool       	"Java"
+				name       	"BuiltIn"
+				value      	100)))
+		    (object Attribute
+			tool       	"Java"
+			name       	"VMType"
+			value      	(list Attribute_Set
+			    (object Attribute
+				tool       	"Java"
+				name       	"Sun"
+				value      	200)))
+		    (object Attribute
+			tool       	"Java"
+			name       	"VAJavaWorkingFolder"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"InstanceVariablePrefix"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"ClassVariablePrefix"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"DefaultAttributeDataType"
+			value      	"int")
+		    (object Attribute
+			tool       	"Java"
+			name       	"DefaultOperationReturnType"
+			value      	"void")
+		    (object Attribute
+			tool       	"Java"
+			name       	"NoClassCustomDlg"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"GlobalImports"
+			value      	(value Text ""))
+		    (object Attribute
+			tool       	"Java"
+			name       	"OpenBraceClassStyle"
+			value      	TRUE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"OpenBraceMethodStyle"
+			value      	TRUE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"UseTabs"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"UseSpaces"
+			value      	TRUE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"SpacingItems"
+			value      	3)
+		    (object Attribute
+			tool       	"Java"
+			name       	"RoseDefaultCommentStyle"
+			value      	TRUE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"AsteriskCommentStyle"
+			value      	TRUE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"JavaCommentStyle"
+			value      	TRUE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"JavadocAuthor"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"JavadocSince"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"JavadocVersion"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"BeanPrefix"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"BeanSuffix"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"RemotePrefix"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"RemoteSuffix"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"HomePrefix"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"HomeSuffix"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"LocalPrefix"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"LocalSuffix"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"LocalHomePrefix"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"LocalHomeSuffix"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"PrimaryKeyPrefix"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"PrimaryKeySuffix"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"EJBDTDLocation"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"ServletDTDLocation"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"DefaultEJBVersion"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"DefaultServletVersion"
+			value      	"")))
+	    (object Attribute
+		tool       	"Java"
+		name       	"default__Class"
+		value      	(list Attribute_Set
+		    (object Attribute
+			tool       	"Java"
+			name       	"Final"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"Static"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"GenerateDefaultConstructor"
+			value      	TRUE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"ConstructorIs"
+			value      	("Ctor_Set" 62))
+		    (object Attribute
+			tool       	"Java"
+			name       	"Ctor_Set"
+			value      	(list Attribute_Set
+			    (object Attribute
+				tool       	"Java"
+				name       	"public"
+				value      	62)
+			    (object Attribute
+				tool       	"Java"
+				name       	"protected"
+				value      	63)
+			    (object Attribute
+				tool       	"Java"
+				name       	"private"
+				value      	64)
+			    (object Attribute
+				tool       	"Java"
+				name       	"package"
+				value      	65)))
+		    (object Attribute
+			tool       	"Java"
+			name       	"GenerateFinalizer"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"GenerateStaticInitializer"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"GenerateInstanceInitializer"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"GenerateCode"
+			value      	TRUE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"DisableAutoSync"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"ReadOnly"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"Strictfp"
+			value      	FALSE)))
+	    (object Attribute
+		tool       	"Java"
+		name       	"Default_Servlet__Class"
+		value      	(list Attribute_Set
+		    (object Attribute
+			tool       	"Java"
+			name       	"ServletName"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"ServletContextRef"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"IsSingleThread"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"ServletInitParameter"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"ServletInitParameterNames"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"ServletIsSecure"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"ServletRequestDispatcher"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"ServletRequestDispatcherPath"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"DispatcherInclude"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"DispatcherForward"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"ServletSecurityRoles"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"ServletgetInfo"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"ServletXMLFilePath"
+			value      	"")))
+	    (object Attribute
+		tool       	"Java"
+		name       	"Http_Servlet__Class"
+		value      	(list Attribute_Set
+		    (object Attribute
+			tool       	"Java"
+			name       	"ServletRequestAttribute"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"ServletRequestAttributesNames"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"MethodForRequestAttributes"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"ServletRequestParameter"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"ServletRequestParameterNames"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"MethodForRequestParameters"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"ServletHeader"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"ServletHeaderNames"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"MethodForHeaders"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"ServletIntHeader"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"ServletDateHeader"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"ServletCookie"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"MethodForCookie"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"ServletContentType"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"GenerateHTML"
+			value      	FALSE)))
+	    (object Attribute
+		tool       	"Java"
+		name       	"Default_EJB__Class"
+		value      	(list Attribute_Set
+		    (object Attribute
+			tool       	"Java"
+			name       	"Generate_XML_DD"
+			value      	TRUE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"EJBCmpField"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"EJBEnvironmentProperties"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"EJBCnxFactory"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"EJBReferences"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"EJBSecurityRoles"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"EJBNameInJAR"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"EJBSessionType"
+			value      	("EJBSessionType_Set" 200))
+		    (object Attribute
+			tool       	"Java"
+			name       	"EJBSessionType_Set"
+			value      	(list Attribute_Set
+			    (object Attribute
+				tool       	"Java"
+				name       	""
+				value      	200)
+			    (object Attribute
+				tool       	"Java"
+				name       	"Stateless"
+				value      	201)
+			    (object Attribute
+				tool       	"Java"
+				name       	"Stateful"
+				value      	202)))
+		    (object Attribute
+			tool       	"Java"
+			name       	"EJBTransactionType"
+			value      	("EJBTransactionType_Set" 211))
+		    (object Attribute
+			tool       	"Java"
+			name       	"EJBTransactionType_Set"
+			value      	(list Attribute_Set
+			    (object Attribute
+				tool       	"Java"
+				name       	"Container"
+				value      	211)
+			    (object Attribute
+				tool       	"Java"
+				name       	"Bean"
+				value      	212)))
+		    (object Attribute
+			tool       	"Java"
+			name       	"EJBPersistenceType"
+			value      	("EJBPersistenceType_Set" 220))
+		    (object Attribute
+			tool       	"Java"
+			name       	"EJBPersistenceType_Set"
+			value      	(list Attribute_Set
+			    (object Attribute
+				tool       	"Java"
+				name       	""
+				value      	220)
+			    (object Attribute
+				tool       	"Java"
+				name       	"Bean"
+				value      	221)
+			    (object Attribute
+				tool       	"Java"
+				name       	"Container"
+				value      	222)))
+		    (object Attribute
+			tool       	"Java"
+			name       	"EJBReentrant"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"EJBSessionSync"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"EJBVersion"
+			value      	("EJBVersion_Set" 230))
+		    (object Attribute
+			tool       	"Java"
+			name       	"EJBVersion_Set"
+			value      	(list Attribute_Set
+			    (object Attribute
+				tool       	"Java"
+				name       	"2.0"
+				value      	230)
+			    (object Attribute
+				tool       	"Java"
+				name       	"1.x"
+				value      	231)))
+		    (object Attribute
+			tool       	"Java"
+			name       	"EJBXMLFilePath"
+			value      	"")))
+	    (object Attribute
+		tool       	"Java"
+		name       	"default__Module-Spec"
+		value      	(list Attribute_Set
+		    (object Attribute
+			tool       	"Java"
+			name       	"CmIdentification"
+			value      	(value Text ""))
+		    (object Attribute
+			tool       	"Java"
+			name       	"CopyrightNotice"
+			value      	(value Text ""))))
+	    (object Attribute
+		tool       	"Java"
+		name       	"default__Module-Body"
+		value      	(list Attribute_Set
+		    (object Attribute
+			tool       	"Java"
+			name       	"CmIdentification"
+			value      	(value Text ""))
+		    (object Attribute
+			tool       	"Java"
+			name       	"CopyrightNotice"
+			value      	(value Text ""))))
+	    (object Attribute
+		tool       	"Java"
+		name       	"default__Operation"
+		value      	(list Attribute_Set
+		    (object Attribute
+			tool       	"Java"
+			name       	"Abstract"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"Static"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"Final"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"Native"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"Synchronized"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"GenerateFullyQualifiedReturn"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"ReplaceExistingCode"
+			value      	TRUE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"Strictfp"
+			value      	FALSE)))
+	    (object Attribute
+		tool       	"Java"
+		name       	"default__Attribute"
+		value      	(list Attribute_Set
+		    (object Attribute
+			tool       	"Java"
+			name       	"Final"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"Transient"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"Volatile"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"PropertyType"
+			value      	("BeanProperty_Set" 71))
+		    (object Attribute
+			tool       	"Java"
+			name       	"BeanProperty_Set"
+			value      	(list Attribute_Set
+			    (object Attribute
+				tool       	"Java"
+				name       	"Not A Property"
+				value      	71)
+			    (object Attribute
+				tool       	"Java"
+				name       	"Simple"
+				value      	72)
+			    (object Attribute
+				tool       	"Java"
+				name       	"Bound"
+				value      	73)
+			    (object Attribute
+				tool       	"Java"
+				name       	"Constrained"
+				value      	74)))
+		    (object Attribute
+			tool       	"Java"
+			name       	"IndividualChangeMgt"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"Read/Write"
+			value      	("Read/Write_Set" 81))
+		    (object Attribute
+			tool       	"Java"
+			name       	"Read/Write_Set"
+			value      	(list Attribute_Set
+			    (object Attribute
+				tool       	"Java"
+				name       	"Read & Write"
+				value      	81)
+			    (object Attribute
+				tool       	"Java"
+				name       	"Read Only"
+				value      	82)
+			    (object Attribute
+				tool       	"Java"
+				name       	"Write Only"
+				value      	83)))
+		    (object Attribute
+			tool       	"Java"
+			name       	"GenerateFullyQualifiedTypes"
+			value      	FALSE)))
+	    (object Attribute
+		tool       	"Java"
+		name       	"default__Role"
+		value      	(list Attribute_Set
+		    (object Attribute
+			tool       	"Java"
+			name       	"ContainerClass"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"InitialValue"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"Final"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"Transient"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"Volatile"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"PropertyType"
+			value      	("BeanProperty_Set" 71))
+		    (object Attribute
+			tool       	"Java"
+			name       	"BeanProperty_Set"
+			value      	(list Attribute_Set
+			    (object Attribute
+				tool       	"Java"
+				name       	"Not A Property"
+				value      	71)
+			    (object Attribute
+				tool       	"Java"
+				name       	"Simple"
+				value      	72)
+			    (object Attribute
+				tool       	"Java"
+				name       	"Bound"
+				value      	73)
+			    (object Attribute
+				tool       	"Java"
+				name       	"Constrained"
+				value      	74)))
+		    (object Attribute
+			tool       	"Java"
+			name       	"IndividualChangeMgt"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"Read/Write"
+			value      	("Read/Write_Set" 81))
+		    (object Attribute
+			tool       	"Java"
+			name       	"Read/Write_Set"
+			value      	(list Attribute_Set
+			    (object Attribute
+				tool       	"Java"
+				name       	"Read & Write"
+				value      	81)
+			    (object Attribute
+				tool       	"Java"
+				name       	"Read Only"
+				value      	82)
+			    (object Attribute
+				tool       	"Java"
+				name       	"Write Only"
+				value      	83)))
+		    (object Attribute
+			tool       	"Java"
+			name       	"GenerateFullyQualifiedTypes"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"IsNavigable"
+			value      	TRUE)))
+	    (object Attribute
+		tool       	"Java"
+		name       	"HiddenTool"
+		value      	FALSE))
+	quid       	"471C95110223"))

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skin name="classicLook">
+<template name="xkin-default" ><![CDATA[
+  <LINK href="$res_xkin-default" type=text/css rel=stylesheet>		
+]]></template>	
+</skin>

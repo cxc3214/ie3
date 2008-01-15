@@ -1,0 +1,47 @@
+<e3:table id="userTable"
+          var="user"
+          items="users"
+          scope="page|request|session|application"
+          action="" >
+  <e3:column property="userID" title="用户ID"/>
+  <e3:column property="userName" title="用户名称"/>  
+  <e3:column property="birthday" title="生日">
+     <e3:decorator class="date">
+        <e3:property name="pattern" value="yyyy-MM-dd"/>
+     </e3:decorator>
+  </e3:column>
+  <e3:column property="status" title="用户状态">
+     <e3:decorator class="color">
+        <e3:property name="expression" value="user.status == 1 || user.status == 2"/>     
+     </e3:decorator>
+  </e3:column>
+  
+  <e3:column property="sex" title="用户性别">
+     <e3:decorator class="jsp">
+        <e3:property name="jsp">     
+            <c:if test="${user.sex == 1}>
+              男
+            </c:if>
+            <c:if test="${user.sex == 0}>
+              女
+            </c:if>
+        </e3:property>
+     </e3:decorator>
+     <e3:attribute name="onclcik" value="alert('测试')" for="cell"/>
+     <e3:attribute name="onclcik" value="alert('测试')" for="column"/>     
+  </e3:column>
+  
+  <e3:column property="op" title="操作">  
+     <a href="xx">修改</a>
+  </e3:column>  
+  
+  <e3:row styleClass="xx" style="xxx" >
+     <e3:attribute name="onclcik" value="alert('测试')" />     
+     <e3:srcipt>
+     </e3:script>
+  </e3:row>
+  
+
+            
+</e3:table>          
+          

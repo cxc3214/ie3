@@ -25,6 +25,10 @@ import net.jcreate.e3.table.support.DefaultColumn;
 import net.jcreate.e3.table.support.TableConstants;
 
 public class HTMLColumn extends DefaultColumn implements Attributeable{
+	
+	private String style;
+	private String styleClass;
+
 	private Attributes attributes = new Attributes();
 	public void setAttribute(String name, String value) {
 		attributes.setAttribute(name, value);
@@ -92,6 +96,22 @@ public class HTMLColumn extends DefaultColumn implements Attributeable{
 
 	public void setSortDir(String sortDir) {
 		this.sortDir = sortDir;
+	}
+
+	public String getStyle() {
+		return style;
+	}
+
+	public void setStyle(String style) {
+		this.style = style;
+	}
+
+	public String getStyleClass() {
+		return styleClass;
+	}
+
+	public void setStyleClass(String styleClass) {
+		this.styleClass = styleClass;
 	}
 
 }

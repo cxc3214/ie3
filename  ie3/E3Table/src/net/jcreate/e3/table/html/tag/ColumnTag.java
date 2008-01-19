@@ -39,6 +39,8 @@ public class ColumnTag extends TagSupport implements Attributeable{
 	 * 列名 
 	 */
 	private String property;
+	private String style;
+	private String styleClass;
 	
 	/**
 	 * 排序属性，默等于property
@@ -138,6 +140,8 @@ public class ColumnTag extends TagSupport implements Attributeable{
 			column.setWidth(this.width);
 			column.setSortable(this.sortable);
 			column.setTitleKey(this.titleKey);
+			column.setStyle(this.style);
+			column.setStyleClass(this.styleClass);
 			SortInfo sortInfo = tableTag.getSortInfo();
 			if ( sortInfo != null ){//存在排序信息
 				String sortColumn = sortInfo.getSortProperty();
@@ -207,6 +211,22 @@ public class ColumnTag extends TagSupport implements Attributeable{
 		if ( currCell != null ){
 		   currCell.setAttribute(name, value);
 		}
+	}
+
+	public String getStyle() {
+		return style;
+	}
+
+	public void setStyle(String style) {
+		this.style = style;
+	}
+
+	public String getStyleClass() {
+		return styleClass;
+	}
+
+	public void setStyleClass(String styleClass) {
+		this.styleClass = styleClass;
 	}
 
 	

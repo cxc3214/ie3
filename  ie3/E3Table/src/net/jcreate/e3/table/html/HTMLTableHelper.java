@@ -81,6 +81,8 @@ public abstract class HTMLTableHelper {
 		HttpSession session = pRequest.getSession(true); 
 		Boolean enableStateManager =
 		 (Boolean)session.getAttribute(TableConstants.ENABLED_STATE_MANAGER_PREFIX + pTableID);
+		String start = pRequest.getParameter(TableConstants.START_PARAM);
+		if ( start == null ){//如果没有传递导航参数，就要考虑是否启用状态管理的信息.
 		if ( enableStateManager != null ){
 			if ( enableStateManager.booleanValue() == true ){
 				NavRequest result = getNavRequestFromState(pTableID, pRequest);
@@ -89,8 +91,9 @@ public abstract class HTMLTableHelper {
 				}
 			}
 		}
+		}
 		NavRequest result = new NavRequest();		
-		String start = pRequest.getParameter(TableConstants.START_PARAM);
+		
 		String pageSize = pRequest.getParameter(TableConstants.PAGE_SIZE_PARAM);
 		String sortColumn = pRequest.getParameter(TableConstants.SORT_PROPERTY_PARAM);
 		String sortName = pRequest.getParameter(TableConstants.SORT_NAME_PARAM);

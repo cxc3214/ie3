@@ -49,7 +49,7 @@ public class DataModelFactory {
 	   /**
 	    * @todo: map,array,java.util.itertor等
 	    */
-	   return null;
+	   return EmptyDataModel.getInstance();
 
   }
 }

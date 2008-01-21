@@ -76,11 +76,17 @@ public class NavRequest {
 		if ( this.sortName == null ){
 			return "";
 		}
+		if ( "".equals(this.sortName.trim())){
+			return "";
+		}
 		return " order by " + this.sortName + " " + this.sortDir;
 	}
 	
 	public String getSortCode(String pEntity){
 		if ( this.sortName == null ){
+			return "";
+		}
+		if ( "".equals(this.sortName.trim())){
 			return "";
 		}
 		return " order by " + pEntity + "." + this.sortName + " " + this.sortDir;

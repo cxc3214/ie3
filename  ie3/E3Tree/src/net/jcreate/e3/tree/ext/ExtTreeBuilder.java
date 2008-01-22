@@ -47,6 +47,8 @@ public class ExtTreeBuilder extends AbstractWebTreeBuilder{
     private boolean animate = true;
     private boolean enableDD = true;
     private boolean containerScroll = true;
+    //是否显示border
+    private boolean border = false;
     //似乎否显示根节点
     private boolean rootVisible = true;
     
@@ -147,6 +149,7 @@ public class ExtTreeBuilder extends AbstractWebTreeBuilder{
 		resouces.append("       lines:${lines},").append(ENTER);
 		resouces.append("       rootVisible:${rootVisible},").append(ENTER);		
 		resouces.append("       title:'${title}',").append(ENTER);
+		resouces.append("       border: ${border},").append(ENTER);		
 	    resouces.append("       containerScroll: ${containerScroll}").append(ENTER);
 	    resouces.append("     });").append(ENTER);
 	    vars.add(this.treeID);
@@ -159,6 +162,7 @@ public class ExtTreeBuilder extends AbstractWebTreeBuilder{
 		context.put("autoScroll", this.autoScroll);
 		context.put("animate", this.animate);
 		context.put("enableDD", this.enableDD);
+		context.put("border", this.border);
 		context.put("lines", this.isLines());		
 		context.put("containerScroll", this.containerScroll);
 		context.put("rootVisible", this.rootVisible);
@@ -458,6 +462,14 @@ public class ExtTreeBuilder extends AbstractWebTreeBuilder{
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public boolean isBorder() {
+		return border;
+	}
+
+	public void setBorder(boolean border) {
+		this.border = border;
 	}
 
 

@@ -15,6 +15,8 @@
   2:选种节点颜色会变，取消disabledColor效果
   3:添加动态RadioXLoadTreeBuilder, CheckXLoadTreeBuilder和CompositeXLoadTreeBuilder
 
+1.2.1: ExtTreeBuilder 添加了border属性，默认设置为false,这样默认没有边框.
+1.2.2: 添加版本控制文件，这样可以自动升级，不需要每次都解压缩文件.
 
 
 2007-11-15日修改说明：

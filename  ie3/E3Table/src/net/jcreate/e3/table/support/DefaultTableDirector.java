@@ -92,10 +92,11 @@ public class DefaultTableDirector implements TableDirector{
 	       if ( showTopPanel ){
 	    	   pBuilder.buildTopPanel(pTable);
 	       }
-	       pBuilder.buildTableBegin(pTable);
+	       
 	       if ( this.showTopToolbar){
 	    	   pBuilder.buildTopToolbar(pTable);
 	       }
+	       pBuilder.buildTableBegin(pTable);
 	       
 	       if ( this.showHeader ){
 	    	   Header header = pTable.getHeader();
@@ -178,8 +179,12 @@ public class DefaultTableDirector implements TableDirector{
               }//end for
               pBuilder.buildBodyEnd(pTable);
 	       }//end build body
-	       pBuilder.buildBottomToolbar(pTable);
+
 	       pBuilder.buildTableEnd(pTable);
+	       
+	       if ( this.isShowBottomToolbar() ){
+	         pBuilder.buildBottomToolbar(pTable);
+	       }
 	       
 	       if ( this.showBottomPanel){
 	    	   pBuilder.buildBottomPanel(pTable);

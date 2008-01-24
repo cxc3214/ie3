@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="TemplateEngine" default="distE3Core" basedir=".">
+	<property name="author" value="huangyh"/>			
+	<property name="src" value="./src"/>
+	<property name="lib" value="./lib"/>		
+	<property name="classes" value="./bin"/>				
+	<property name="build" value="./build"/>			
+	<property name="dist" value="./dist"/>				
+
+    <path id="project.classpath">
+        <pathelement location="${classes}"/>
+    	<fileset dir="${lib}">
+    	        <include name="**/*.jar"/>
+ 	    </fileset>
+    </path>
+	
+    <target name="init">
+        <mkdir dir="${classes}"/>
+        <mkdir dir="${dist}"/>		    	
+    </target>
+    <target name="clean">
+       <delete dir="${classes}"/>
+       <delete dir="${dist}"/>    	
+    </target>
+    <target name="build" depends="init">
+        <javac destdir="${classes}" fork="true" encoding="utf-8">
+            <src path="${src}"/>
+            <classpath refid="project.classpath"/>
+        </javac>
+    	<copy todir="${classes}">
+    	    <fileset  dir="src">
+    	        <include name="**/*.*" />
+    	        <exclude name="**/*.java" />    	    	
+    	    </fileset>
+    	</copy>
+    </target>
+
+	<target name="distE3All" depends="clean,build">
+	  	   <jar destfile="${dist}/E3-Web.jar"
+					   includes="net/jcreate/e3/web/**/*"
+				       basedir="${classes}">
+					<manifest>
+				       <attribute name="Built-By" value="Build by ${author}"/>
+				       <attribute name="E3Web-version" value="1.0"/>				
+				    </manifest>
+				  </jar>
+	   	   <jar destfile="${dist}/E3-Core.jar"
+	 				   includes="net/jcreate/e3/core/**/*,net/jcreate/e3/util/**/*"
+	 			       basedir="${classes}">
+	 				<manifest>
+	 			       <attribute name="Built-By" value="Build by ${author}"/>
+	 			       <attribute name="E3Core-version" value="1.0"/>				
+	 			    </manifest>
+	 			  </jar>
+	   	   <jar destfile="${dist}/E3-Tools.jar"
+	 				   includes="net/jcreate/e3/tools/**/*"
+	 			       basedir="${classes}">
+	 				<manifest>
+	 			       <attribute name="Built-By" value="Build by ${author}"/>
+	 			       <attribute name="E3Tools-version" value="1.0"/>				
+	 			    </manifest>
+	 			  </jar>
+		
+			<copy file="${lib}/log4j/log4j-1.2.14.jar" tofile="${dist}/log4j-1.2.14.jar" />	
+			<copy file="${lib}/jakarta-commons/commons-logging.jar" tofile="${dist}/commons-logging.jar" />			
+			<copy file="${lib}/spring/spring.jar" tofile="${dist}/spring.jar" />			
+		
+	</target>
+
+	<target name="distE3Tools" depends="clean,build">
+  	   <jar destfile="${dist}/E3-Tools.jar"
+				   includes="net/jcreate/e3/tools/**/*"
+			       basedir="${classes}">
+				<manifest>
+			       <attribute name="Built-By" value="Build by ${author}"/>
+			       <attribute name="E3Tools-version" value="1.0"/>				
+			    </manifest>
+			  </jar>
+    </target>
+	
+	<target name="distE3Web" depends="clean,build">
+  	   <jar destfile="${dist}/E3-Web.jar"
+				   includes="net/jcreate/e3/web/**/*"
+			       basedir="${classes}">
+				<manifest>
+			       <attribute name="Built-By" value="Build by ${author}"/>
+			       <attribute name="E3Web-version" value="1.0"/>				
+			    </manifest>
+			  </jar>
+		<copy file="${lib}/log4j/log4j-1.2.14.jar" tofile="${dist}/log4j-1.2.14.jar" />	
+		<copy file="${lib}/jakarta-commons/commons-logging.jar" tofile="${dist}/commons-logging.jar" />			
+		<copy file="${lib}/spring/spring.jar" tofile="${dist}/spring.jar" />			
+	</target>	 
+	
+	<target name="distE3Core" depends="clean,build">
+  	   <jar destfile="${dist}/E3-Core.jar"
+				   includes="net/jcreate/e3/core/**/*,net/jcreate/e3/util/**/*"
+			       basedir="${classes}">
+				<manifest>
+			       <attribute name="Built-By" value="Build by ${author}"/>
+			       <attribute name="E3Core-version" value="1.0"/>				
+			    </manifest>
+			  </jar>
+		<copy file="${lib}/log4j/log4j-1.2.14.jar" tofile="${dist}/log4j-1.2.14.jar" />	
+		<copy file="${lib}/jakarta-commons/commons-logging.jar" tofile="${dist}/commons-logging.jar" />			
+		<copy file="${lib}/spring/spring.jar" tofile="${dist}/spring.jar" />			
+	</target>	 
+	
+</project>

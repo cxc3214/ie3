@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="E3Samples" test="a" >
+	<property name="componentName" value="E3Samples"/>	
+	<x>
+		aaaa1
+	</x>
+
+    <path id="project.classpath2">
+        <pathelement location="${classes}"/>
+    	<fileset dir="${lib}">
+    	        <include name="**/*.jar"/>
+ 	    </fileset>
+    </path>
+	
+</project>

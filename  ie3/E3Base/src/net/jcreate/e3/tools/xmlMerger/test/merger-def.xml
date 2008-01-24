@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<merger-def>
+     <element-merger path="/a" policy="IGNORE|REPLACE|MERGE">
+       <comaprator>
+          <property-set name="path">./@a</property-set>
+       <comaprator>       
+       <attributes-merger policy="IGNORE|REPLACE|MERGE">
+         <attribute-merger name="a" policy="IGNORE|REPLACE|MERGE"/>
+       </attributes-merger>
+       <text-merger policy="IGNORE|REPLACE|MERGE">       
+     </element-merger>
+</merger-def>

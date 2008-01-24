@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="lib/j2ee/jsp-api.jar"/>
+	<classpathentry kind="lib" path="lib/j2ee/servlet-api.jar"/>
+	<classpathentry kind="lib" path="lib/log4j/log4j-1.2.14.jar"/>
+	<classpathentry kind="lib" path="lib/jakarta-commons/commons-logging.jar"/>
+	<classpathentry kind="lib" path="lib/spring/spring.jar"/>
+	<classpathentry kind="lib" path="lib/tomcat/catalina.jar"/>
+	<classpathentry kind="lib" path="lib/tomcat/mx4j-jmx.jar"/>
+	<classpathentry kind="lib" path="lib/dom4j/dom4j-1.6.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

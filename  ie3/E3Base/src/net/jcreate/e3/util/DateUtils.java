@@ -1,6 +1,6 @@
 package net.jcreate.e3.util;
 
-public class DatetimeUtils {
+public class DateUtils {
 
 	/**
 	 * @param args

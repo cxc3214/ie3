@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="TemplateEngine" default="dist-velocity" basedir=".">
+	<property name="componentName" value="TemplateEngine"/>	
+	<property name="author" value="huangyh"/>			
+	<property name="src" value="./src"/>
+	<property name="lib" value="./lib"/>		
+	<property name="classes" value="./bin"/>				
+	<property name="build" value="./build"/>			
+	<property name="version" value="1.0"/>
+	<property name="dist" value="./dist"/>				
+
+    <path id="project.classpath">
+        <pathelement location="${classes}"/>
+    	<fileset dir="${lib}">
+    	        <include name="**/*.jar"/>
+ 	    </fileset>
+    </path>
+	
+    <target name="init">
+        <mkdir dir="${classes}"/>
+        <mkdir dir="${dist}"/>		    	
+    </target>
+    <target name="clean">
+       <delete dir="${classes}"/>
+       <delete dir="${dist}"/>    	
+    </target>
+    <target name="build" depends="init">
+        <javac destdir="${classes}" encoding="utf-8">
+            <src path="${src}"/>
+            <classpath refid="project.classpath"/>
+        </javac>
+    	<copy todir="${classes}">
+    	    <fileset  dir="src">
+    	        <include name="**/*.*" />
+    	        <exclude name="**/*.java" />    	    	
+    	    </fileset>
+    	</copy>
+    	
+    </target>
+	
+	<target name="dist" depends="clean,build,copyCommonLib">
+  	   <jar destfile="${dist}/E3-${componentName}.jar"
+				   includes="net/jcreate/**/*"
+			       basedir="${classes}">
+				<manifest>
+			       <attribute name="Built-By" value="Build by ${author}"/>
+			       <attribute name="${componentName}-version" value="${version}"/>				
+			    </manifest>
+			  </jar>
+	</target>	 
+	<target name="copyCommonLib">	
+		<copy file="${lib}/log4j-1.2.14.jar" tofile="${dist}/log4j-1.2.14.jar" />	
+		<copy file="${lib}/commons-logging.jar" tofile="${dist}/commons-logging.jar" />			
+	</target>	
+	<target name="dist-velocity" depends="dist">
+		<copy file="${lib}/velocity-1.4.jar" tofile="${dist}/velocity-1.4.jar" />	
+	</target>	
+	<target name="dist-freemarker" depends="dist">
+		<copy file="${lib}/freemarker.jar" tofile="${dist}/freemarker.jar" />	
+	</target>	
+	<target name="dist-webmacro" depends="dist">
+		<copy file="${lib}/webmacro.jar" tofile="${dist}/webmacro.jar" />	
+	</target>	
+	<target name="dist-jxp" depends="dist">
+		<copy file="${lib}/jxp-1.6.0.jar" tofile="${dist}/jxp-1.6.0.jar" />	
+	</target>	
+	
+</project>

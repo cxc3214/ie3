@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="lib/commons-logging.jar"/>
+	<classpathentry kind="lib" path="lib/freemarker.jar"/>
+	<classpathentry kind="lib" path="lib/jxp-1.6.0.jar"/>
+	<classpathentry kind="lib" path="lib/log4j-1.2.14.jar"/>
+	<classpathentry kind="lib" path="lib/velocity-1.4.jar"/>
+	<classpathentry kind="lib" path="lib/velocity-tools-generic-1.2.jar"/>
+	<classpathentry kind="lib" path="lib/velocity-tools-view-1.2.jar"/>
+	<classpathentry kind="lib" path="lib/webmacro.jar"/>
+	<classpathentry kind="lib" path="lib/meteortl-0.4.5.jar"/>
+	<classpathentry kind="lib" path="/E3Table/lib/servlet-api.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

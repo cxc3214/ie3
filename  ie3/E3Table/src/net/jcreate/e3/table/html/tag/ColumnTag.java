@@ -20,18 +20,20 @@
 package net.jcreate.e3.table.html.tag;
 
 import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.tagext.TagSupport;
+import javax.servlet.jsp.tagext.BodyContent;
+import javax.servlet.jsp.tagext.BodyTagSupport;
 
 import net.jcreate.e3.table.CellDecorator;
 import net.jcreate.e3.table.SortInfo;
 import net.jcreate.e3.table.decorator.CompositeCellDecorator;
+import net.jcreate.e3.table.decorator.JspDecorator;
 import net.jcreate.e3.table.html.Attributeable;
 import net.jcreate.e3.table.html.HTMLCell;
 import net.jcreate.e3.table.html.HTMLColumn;
 import net.jcreate.e3.table.html.HTMLRow;
 import net.jcreate.e3.table.support.TableConstants;
 
-public class ColumnTag extends TagSupport implements Attributeable{
+public class ColumnTag extends BodyTagSupport implements Attributeable{
 	
 	private static final long serialVersionUID = 1L;
 
@@ -117,7 +119,7 @@ public class ColumnTag extends TagSupport implements Attributeable{
 		currCell =(HTMLCell)currRow.getCell(this.property);
 		currCell.setCellDecorator(new CompositeCellDecorator());
 		
-		return EVAL_BODY_INCLUDE;
+		return EVAL_BODY_BUFFERED;
 	}
 	private HTMLCell currCell = null;
 	
@@ -155,7 +157,13 @@ public class ColumnTag extends TagSupport implements Attributeable{
 			 */
 			return super.doEndTag();
 		}
-		
+
+		BodyContent content  = this.bodyContent;
+		if ( content != null ){
+			JspDecorator jsp = new JspDecorator();
+			jsp.setJsp(content.getString());
+		    this.addCellDecorator(jsp);
+		}
 		
 		cleanUp();
 		return super.doEndTag();

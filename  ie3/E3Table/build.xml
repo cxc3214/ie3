@@ -38,7 +38,7 @@
 	
 	<target name="dist" depends="clean,build">
   	   <jar destfile="${dist}/E3-${componentName}.jar"
-				   includes="net/jcreate/**/*"
+				   includes="net/jcreate/**/*, META-INF/**/*"
 			       basedir="${classes}">
 				<manifest>
 			       <attribute name="Built-By" value="Build by ${author}"/>

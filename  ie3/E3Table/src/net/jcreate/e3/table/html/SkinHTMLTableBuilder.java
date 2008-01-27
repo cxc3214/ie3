@@ -355,7 +355,7 @@ public class SkinHTMLTableBuilder extends AbstractHTMLTableBuilder{
 	  }	
 	
 	protected String getSkinPath(String pTheme){
-		 String path = "WEB-INF/config/skins/" + pTheme + ".e3table.xml";
+		 String path = "e3/table/skins/" + pTheme + ".e3table.xml";
 		 return path;
 	}
 }

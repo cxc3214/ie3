@@ -12,8 +12,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 /**
- * 负责装载XTree需要的资源.
- * @author Grace
+ *  @author Grace
  *
  */
 public class ResourcesLoader {
@@ -153,7 +152,7 @@ public class ResourcesLoader {
 		ZipUtils.unzip(zis, pDestPath);
 	} catch (Exception e) {
 		final String MSG =
-			"解压缩xtree资源文件:" + pResources + " 到 " + pDestPath + "失败!";
+			"解压缩资源文件:" + pResources + " 到 " + pDestPath + "失败!";
 		logger.error(MSG, e);
 		throw new LoadResourcesException(MSG, e);
 	}

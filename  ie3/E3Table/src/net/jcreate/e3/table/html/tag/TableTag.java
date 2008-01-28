@@ -110,7 +110,7 @@ public class TableTag extends BodyTagSupport{
 	/**
 	 * 查询uri, 
 	 */
-	private String uri;
+	private String uri = "?";
 	
 	/**
 	 * 当前行对象

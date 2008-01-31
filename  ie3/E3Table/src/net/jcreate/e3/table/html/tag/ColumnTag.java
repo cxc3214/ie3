@@ -160,9 +160,12 @@ public class ColumnTag extends BodyTagSupport implements Attributeable{
 
 		BodyContent content  = this.bodyContent;
 		if ( content != null ){
-			JspDecorator jsp = new JspDecorator();
-			jsp.setJsp(content.getString());
-		    this.addCellDecorator(jsp);
+			//只有不存在修饰器的时候,body context才作为修饰器进行处理.否则忽略body content的内容.
+			if ( ((CompositeCellDecorator)currCell.getCellDecorator()).getSize() == 0 ){
+				JspDecorator jsp = new JspDecorator();
+				jsp.setJsp(content.getString());
+			    this.addCellDecorator(jsp);
+			}
 		}
 		
 		cleanUp();

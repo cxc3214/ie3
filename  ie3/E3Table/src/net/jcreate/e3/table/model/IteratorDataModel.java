@@ -19,6 +19,31 @@
  */
 package net.jcreate.e3.table.model;
 
-public class IteratorDataModel {
+import java.util.Iterator;
+import net.jcreate.e3.table.PageInfo;
+import net.jcreate.e3.table.SortInfo;
+
+public class IteratorDataModel  extends AbstractDataModel{
+
+	private final Iterator datasIterator;
+	
+	public IteratorDataModel(Iterator pDatas,SortInfo pSortInfo, PageInfo pNavInfo){
+		super(pSortInfo,pNavInfo);
+		this.datasIterator = pDatas;
+	}
+	
+	public IteratorDataModel(Iterator pDatas){
+		this.datasIterator = pDatas;
+	}
+	public boolean hasNext() {
+		if ( this.datasIterator == null ){
+			return false;
+		}
+		return datasIterator.hasNext();
+	}
+
+	public Object next() {
+		return datasIterator.next();
+	}
 
 }

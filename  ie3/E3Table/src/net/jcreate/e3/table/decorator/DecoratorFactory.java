@@ -42,6 +42,9 @@ public class DecoratorFactory {
 		if ( "jsp".equalsIgnoreCase(pClassName) ){
 			return new JspDecorator();
 		}
+		if ( "url".equalsIgnoreCase(pClassName) ){
+			return URLDecorator.me;
+		}
 		
 		
 		/**

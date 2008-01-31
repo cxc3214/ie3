@@ -40,6 +40,9 @@ public class CompositeCellDecorator implements CellDecorator, TableContextSuppor
 			public void setTableContext(TableContext pTableContext) {
 				this.webContext = pTableContext;
 			}
+    public int getSize(){
+    	return this.decorators.size();
+    }
 	public void addCellDecorator(CellDecorator pCellDecorator){
 		decorators.add(pCellDecorator);
 	}

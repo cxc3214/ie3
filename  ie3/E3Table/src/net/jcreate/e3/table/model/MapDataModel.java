@@ -19,6 +19,80 @@
  */
 package net.jcreate.e3.table.model;
 
-public class MapDataModel {
+import java.util.Map;
+import java.util.Collections;
+import java.util.Iterator;
+
+import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import net.jcreate.e3.table.PageInfo;
+import net.jcreate.e3.table.SortInfo;
+
+public class MapDataModel extends AbstractDataModel{
+
+	private final Map datas ;
+	private final Iterator datasIterator;
+	private final Log logger = LogFactory.getLog( MapDataModel.class );
+	
+	public MapDataModel(Map pDatas,SortInfo pSortInfo, PageInfo pNavInfo){
+		super(pSortInfo,pNavInfo);
+		if ( pDatas == null ){
+			this.datas = Collections.EMPTY_MAP;
+		}else{
+		    this.datas = pDatas;
+		}
+		this.datasIterator = datas.entrySet().iterator();
+	}
+	
+	public MapDataModel(Map pDatas){
+		if ( pDatas == null ){
+			this.datas = Collections.EMPTY_MAP;
+		}else{
+		    this.datas = pDatas;
+		}
+		this.datasIterator = datas.entrySet().iterator();
+	}
+	public boolean hasNext() {
+		if ( this.datasIterator == null ){
+			return false;
+		}
+		return datasIterator.hasNext();
+	}
+	
+    /**
+     * 获取指定列的值
+     * @param pItem 通过next跌代出来行对象
+     * @param pProperty 列名
+     * @return 单元格的值
+     */
+    public Object getCellValue(Object pItem, String pProperty){
+    	if ( pItem == null ){
+    		return null;
+    	}
+    	Object itemValue = null;
+        java.util.Map.Entry entry = (java.util.Map.Entry)pItem;
+        
+        Object row = entry.getValue();
+        if ( row instanceof Map ){
+        	itemValue = ((Map)row).get(pProperty); 
+        }else{
+        	try {
+				itemValue = PropertyUtils.getProperty(row, pProperty);
+        	}catch(Exception ex){
+        		if ( logger.isDebugEnabled() ){
+        		   logger.debug("类:" + pItem.getClass().getName() + "中不存在属性:" + pProperty);
+        		}
+			}//end try-catch
+        }//end else
+        return itemValue;
+    }
+	
+
+	
+	public Object next() {
+		return datasIterator.next();
+	}
 
 }

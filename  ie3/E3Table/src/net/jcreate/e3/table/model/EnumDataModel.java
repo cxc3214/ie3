@@ -17,15 +17,32 @@
 /**
  * 欢迎加入 E3平台联盟QQ群:21523645 
  */
-package net.jcreate.e3.table.decorator;
+package net.jcreate.e3.table.model;
 
-import net.jcreate.e3.table.Cell;
+import net.jcreate.e3.table.PageInfo;
+import net.jcreate.e3.table.SortInfo;
 
-public class EMailDecorator extends AbstractDecorator{
+public class EnumDataModel  extends AbstractDataModel{
 
-	public Object decorate(Object pValue, Cell pCell) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	private final java.util.Enumeration datasEnum;
+	
+	public EnumDataModel(java.util.Enumeration pDatas,SortInfo pSortInfo, PageInfo pNavInfo){
+		super(pSortInfo,pNavInfo);
+		this.datasEnum = pDatas;
+	}
+	
+	public EnumDataModel(java.util.Enumeration pDatas){
+		this.datasEnum = pDatas;
+	}
+	public boolean hasNext() {
+		if ( this.datasEnum == null ){
+			return false;
+		}
+		return datasEnum.hasMoreElements();
+	}
+
+	public Object next() {
+		return datasEnum.nextElement();
 	}
 
 }

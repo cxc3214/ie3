@@ -19,6 +19,45 @@
  */
 package net.jcreate.e3.table.model;
 
-public class ArrayDataModel {
+import net.jcreate.e3.table.PageInfo;
+import net.jcreate.e3.table.SortInfo;
+
+public class ArrayDataModel extends AbstractDataModel{
+
+	private final Object[] datas;
+	private int total;
+	private int index = 0;
+	
+	public ArrayDataModel(Object[] pDatas,SortInfo pSortInfo, PageInfo pNavInfo){
+		super(pSortInfo,pNavInfo);
+		if ( pDatas == null ){
+		  this.datas = new Object[0];	
+		}else{
+		  this.datas = pDatas;
+		}
+		this.total = this.datas.length;
+	}
+	
+	public ArrayDataModel(Object[] pDatas){
+		if ( pDatas == null ){
+			  this.datas = new Object[0];	
+			}else{
+			  this.datas = pDatas;
+			}
+			this.total = this.datas.length;
+	}
+	public boolean hasNext() {
+		if ( index < total){
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public Object next() {
+		Object result = datas[index];
+		index++;
+		return result;
+	}
 
 }

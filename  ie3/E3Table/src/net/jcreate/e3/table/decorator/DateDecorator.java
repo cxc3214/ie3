@@ -33,6 +33,16 @@ import net.jcreate.e3.table.CellDecorator;
 public class DateDecorator extends AbstractDecorator{
 
 	private String pattern;
+	private String type;
+	
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
 	public String getPattern() {
 		return pattern;
 	}

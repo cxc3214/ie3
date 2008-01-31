@@ -21,7 +21,7 @@ package net.jcreate.e3.table;
 
 /**
  * 单元格对象
- * @author 黄云辉
+ * @author 黄云辉 
  *
  */
 public interface Cell {

@@ -7,6 +7,7 @@
 	<property name="classes" value="./bin"/>				
 	<property name="build" value="./build"/>			
 	<property name="dist" value="./dist"/>				
+	<property name="version" value="1.2.2"/>
 
     <path id="project.classpath">
         <pathelement location="${classes}"/>
@@ -38,11 +39,11 @@
 	
 	<target name="dist" depends="clean,build">
   	   <jar destfile="${dist}/E3-${componentName}.jar"
-				   includes="net/jcreate/**/*"
+				   includes="net/jcreate/**/*, META-INF/**/*"
 			       basedir="${classes}">
 				<manifest>
 			       <attribute name="Built-By" value="Build by ${author}"/>
-			       <attribute name="${componentName}-version" value="1.0"/>				
+			       <attribute name="${componentName}-version" value="${version}"/>				
 			    </manifest>
 			  </jar>
 		<copy file="${lib}/log4j-1.2.14.jar" tofile="${dist}/log4j-1.2.14.jar" />	

@@ -9,6 +9,6 @@
 	<short-name>e3</short-name>
 	<uri>http://www.jcreate.net/e3/table</uri>	
 	<listener>
-		<listener-class>net.jcreate.e3.table.loader.LoadResourcesListener</listener-class>
+		<listener-class>net.jcreate.e3.tree.loader.LoadResourcesListener</listener-class>
 	</listener>		
 </taglib>

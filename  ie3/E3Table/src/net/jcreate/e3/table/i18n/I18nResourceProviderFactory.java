@@ -19,7 +19,6 @@
  */
 package net.jcreate.e3.table.i18n;
 
-import net.jcreate.e3.table.CellDecorator;
 import net.jcreate.e3.table.I18nResourceProvider;
 import net.jcreate.e3.table.util.ClassUtils;
 

@@ -19,40 +19,178 @@
  */
 package net.jcreate.e3.tree.taglib;
 
+import java.io.IOException;
+import java.util.ArrayList;
+
+import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.JspWriter;
+import javax.servlet.jsp.tagext.BodyTagSupport;
+import javax.servlet.jsp.tagext.DynamicAttributes;
+
+import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import net.jcreate.e3.tree.TreeDirector;
+import net.jcreate.e3.tree.TreeModel;
+import net.jcreate.e3.tree.support.DefaultTreeDirector;
+import net.jcreate.e3.tree.support.JspPageWebContext;
+import net.jcreate.e3.tree.support.WebTreeBuilder;
+import net.jcreate.e3.tree.support.WebTreeNode;
+
 /**
  * 
  * @todo:  完成该Tag
  * @author 黄云辉
  *
  */
-public class TreeTag {
-	private Object treeModule;
-	private Object treeBuilder;
-	private Object visitor;
-	private Object comparator;
-	public Object getComparator() {
-		return comparator;
+public class TreeTag extends BodyTagSupport implements DynamicAttributes {
+
+	private static final long serialVersionUID = 1L;
+	private String var;
+	private String items;
+	private String scope;
+	private String builder = "default";
+	private final Log logger = LogFactory.getLog( this.getClass() );
+	/**
+	 * 动态属性
+	 */
+	private java.util.LinkedHashMap dynamicAttributes = new java.util.LinkedHashMap();
+	
+	//
+	private java.util.List nodes = new ArrayList();
+	private java.util.Map idParentIds = new java.util.HashMap();
+	private java.util.Collection userDatas = null;
+	private java.util.Iterator userDatasIterator = null;
+	private Object currUserData;
+	
+	public void addNode(WebTreeNode pNode){
+		nodes.add(pNode);
 	}
-	public void setComparator(Object comparator) {
-		this.comparator = comparator;
+	public void addIdParentIds(String pId, String pParentId){
+		idParentIds.put(pId, pParentId);
 	}
-	public Object getTreeBuilder() {
-		return treeBuilder;
+
+	public int doStartTag() throws JspException {
+		userDatas = (java.util.Collection)this.pageContext.findAttribute(this.items);
+		if ( userDatas == null ){
+			return SKIP_BODY;
+		}
+		if ( userDatas.isEmpty() ){
+			return SKIP_BODY;	
+		}
+		userDatasIterator = userDatas.iterator();
+		currUserData = userDatasIterator.next();
+		this.pageContext.setAttribute(this.var, currUserData);
+		return EVAL_BODY_INCLUDE;
 	}
-	public void setTreeBuilder(Object treeBuilder) {
-		this.treeBuilder = treeBuilder;
+	public int doAfterBody() throws JspException {
+		/**
+		 * @todo: 提供添加节点的方法.
+		 */
+		if ( userDatasIterator.hasNext() ){
+			currUserData = userDatasIterator.next();
+			this.pageContext.setAttribute(this.var, currUserData);
+			return EVAL_BODY_AGAIN;
+		} else {
+			return SKIP_BODY;
+		}
 	}
-	public Object getTreeModule() {
-		return treeModule;
+	
+	private void setProperty(Object pObj, String pProperty, Object pValue) throws JspException{
+		try {
+			PropertyUtils.setProperty(pObj, pProperty, pValue);
+		} catch (Exception ex){
+			final String msg =
+				"设置节点：" + pObj.getClass().getName() + "的属性:" + pProperty + "失败！" +
+				"属性值为:" + pValue;
+			logger.error(msg, ex);
+			throw new JspException(msg, ex);
+		}
+		
 	}
-	public void setTreeModule(Object treeModule) {
-		this.treeModule = treeModule;
+	
+	public int doEndTag() throws JspException {
+		TreeModel treeModel = NodeUtils.convert(this.nodes, this.idParentIds);
+		WebTreeBuilder treeBuilder = BuilderFactory.getInstance(this.builder);
+		treeBuilder.init( new JspPageWebContext(this.pageContext) );
+		java.util.Iterator keys = dynamicAttributes.keySet().iterator();
+		while( keys.hasNext() ){
+			Object key = keys.next();
+			Object value = dynamicAttributes.get(key);
+			this.setProperty(treeBuilder, (String)key, value);
+		}
+		/**
+		 * @todo: 允许设置不同的TreeDirector
+		 */
+		TreeDirector director = new DefaultTreeDirector();
+		director.build(treeModel, treeBuilder);		
+		String treeScript = treeBuilder.getTreeScript();
+		JspWriter writer = this.pageContext.getOut();
+		cleanUp();
+		try {
+			writer.print(treeScript);
+		} catch (IOException e) {
+			e.printStackTrace();
+			throw new JspException(e.getMessage(), e);
+		}
+		return super.doEndTag();
 	}
-	public Object getVisitor() {
-		return visitor;
+	  private void cleanUp()
+	    {
+		    dynamicAttributes.clear();
+		    nodes.clear();
+		    idParentIds.clear();
+		    currUserData = null;
+		}
+
+	
+	public void setDynamicAttribute(String uri, String name, Object value) throws JspException {
+		dynamicAttributes.put(name, value);
 	}
-	public void setVisitor(Object visitor) {
-		this.visitor = visitor;
+
+	public String getVar() {
+		return var;
 	}
+
+	public void setVar(String var) {
+		this.var = var;
+	}
+
+	public String getItems() {
+		return items;
+	}
+
+	public void setItems(String items) {
+		this.items = items;
+	}
+
+	public String getScope() {
+		return scope;
+	}
+
+	public void setScope(String scope) {
+		this.scope = scope;
+	}
+
+	public String getBuilder() {
+		return builder;
+	}
+
+	public void setBuilder(String builder) {
+		this.builder = builder;
+	}
+	public void release() {
+		this.var = null;
+		this.items = null;
+		this.scope = null;
+		this.builder = "default";
+		super.release();
+	}
+	public Object getCurrUserData() {
+		return currUserData;
+	}
+	
+	
 	
 }

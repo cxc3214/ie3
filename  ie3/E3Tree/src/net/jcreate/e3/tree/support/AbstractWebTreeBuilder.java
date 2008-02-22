@@ -14,7 +14,7 @@ import org.apache.commons.logging.LogFactory;
  */
 public abstract class AbstractWebTreeBuilder extends TreeBuilderSupport implements WebTreeBuilder {
 	
-	protected HttpServletRequest request = null;
+	protected WebContext webContext;
 	
 	private static final int DEFAULT_BUFFER_SIZE = 200;
 	private final Log log = LogFactory.getLog( this.getClass() );
@@ -22,9 +22,12 @@ public abstract class AbstractWebTreeBuilder extends TreeBuilderSupport implemen
 	protected StringBuffer treeScript = null;
 	private int bufferSize = DEFAULT_BUFFER_SIZE;
 	
-	public void init(HttpServletRequest pRequest){
-		this.request = pRequest;
+	public void init(WebContext pWebContext){
+		this.webContext = pWebContext;
 	    treeScript = new StringBuffer(bufferSize);		
+	}
+	public void init(HttpServletRequest pRequest){ 
+		init(new HttpServletRequestWebContext(pRequest));
 	}
 	
 	private static boolean isJsIdentifier(String s) {

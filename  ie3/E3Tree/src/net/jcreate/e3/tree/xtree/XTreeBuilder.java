@@ -150,7 +150,7 @@ public class XTreeBuilder extends AbstractWebTreeBuilder{
 
 	public String getResourceHome() {
 		if ( resourceHome == null ){
-			return this.request.getContextPath() + "/e3/tree/xtree";
+			return this.webContext.getContextPath() + "/e3/tree/xtree";
 		} else {
 			return resourceHome;
 		}

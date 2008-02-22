@@ -14,7 +14,9 @@ import net.jcreate.e3.templateEngine.support.StrTemplateUtil;
 import net.jcreate.e3.tree.BuildTreeException;
 import net.jcreate.e3.tree.Node;
 import net.jcreate.e3.tree.support.AbstractWebTreeBuilder;
+import net.jcreate.e3.tree.support.HttpServletRequestWebContext;
 import net.jcreate.e3.tree.support.RequestUtil;
+import net.jcreate.e3.tree.support.WebContext;
 import net.jcreate.e3.tree.support.WebTreeNode;
 import net.jcreate.e3.tree.xtree.XTreeBuilder;
 
@@ -100,11 +102,24 @@ public class ExtTreeBuilder extends AbstractWebTreeBuilder{
     	}
     }
     
-    public void init(HttpServletRequest pRequest){
-    	super.init(pRequest);
+    private static final String COUNT_KEY = ExtTreeBuilder.class.getName() + ".e3.count";
+    public void init(WebContext webContext) {
+		super.init(webContext);
     	this.vars = new ArrayList();
     	icon2styles = new HashMap();
-    	iconCount = 0;
+    	//将counter保存到page变量中，这样当一个页面有多棵树时，图标不会冲突.
+    	Object countObj = webContext.getPageAttribute(COUNT_KEY);
+    	if ( countObj == null ){
+    		iconCount = 0;	
+    		webContext.setPageAttribute(COUNT_KEY, new Integer(iconCount));
+    	} else {
+    		iconCount = ((Integer)countObj).intValue() + 1;
+    	}
+    	
+	}
+
+	public void init(HttpServletRequest pRequest){
+		init(new HttpServletRequestWebContext(pRequest));
     }
 	
     /**
@@ -378,7 +393,7 @@ public class ExtTreeBuilder extends AbstractWebTreeBuilder{
 
 	public String getResourceHome() {
 		if ( resourceHome == null ){
-			return this.request.getContextPath() + "/e3/tree/ext";
+			return this.webContext.getContextPath() + "/e3/tree/ext";
 		} else {
 			return resourceHome;
 		}

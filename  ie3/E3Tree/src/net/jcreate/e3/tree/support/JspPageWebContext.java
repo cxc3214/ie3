@@ -142,4 +142,12 @@ public final class JspPageWebContext implements WebContext {
 	public InputStream getResourceAsStream(String pPath) {
 		return pageContext.getServletContext().getResourceAsStream(pPath);
 	}
+
+	public String getCharacterEncoding() {
+        if (pageContext.getRequest() instanceof HttpServletRequest) {
+            return ((HttpServletRequest) pageContext.getRequest()).getCharacterEncoding();
+        }
+
+        throw new UnsupportedOperationException("There is no real path associated with the request.");
+	}
 }

@@ -28,7 +28,7 @@ private BuilderFactory(){
 public static WebTreeBuilder getInstance(String pClassName){
 
 	if ( "default".equalsIgnoreCase(pClassName) ){
-		return new XTreeBuilder();
+		return new CompositeXTreeBuilder();
 	}
 	
 	if ( "XTree".equalsIgnoreCase(pClassName) ){

@@ -1,16 +1,26 @@
 package net.jcreate.e3.tree.taglib;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.tagext.BodyTagSupport;
 import javax.servlet.jsp.tagext.DynamicAttributes;
-import javax.servlet.jsp.tagext.TagSupport;
+
 import net.jcreate.e3.tree.support.WebTreeDynamicNode;
 import net.jcreate.e3.tree.support.WebTreeNode;
+
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-public class NodeTag extends TagSupport implements DynamicAttributes {
+public class NodeTag extends BodyTagSupport implements DynamicAttributes {
 	
+	public int doStartTag() throws JspException {
+		return NodeTag.EVAL_BODY_INCLUDE;
+	}
+
+
 	private final Log logger = LogFactory.getLog( this.getClass() );
 	private static final long serialVersionUID = 1L;
 	
@@ -104,6 +114,12 @@ public class NodeTag extends TagSupport implements DynamicAttributes {
 	 */
 	private String value = "";	
 	
+	private Map userAttributes = new HashMap();
+	
+	public void setAttribute(String pKey, String pValue){
+		userAttributes.put(pKey, pValue);
+	}
+	
 	public void setProperty(Object pObj, String pProperty, Object pValue) throws JspException{
 		try {
 			PropertyUtils.setProperty(pObj, pProperty, pValue);
@@ -144,6 +160,16 @@ public class NodeTag extends TagSupport implements DynamicAttributes {
 		if ( webNode instanceof WebTreeDynamicNode ){
 			((WebTreeDynamicNode)webNode).setSubTreeURL(this.subTreeURL);
 		}
+		
+		//设置用户属性
+		java.util.Iterator userAttrs = userAttributes.keySet().iterator();
+		while( userAttrs.hasNext() ){
+			Object key = userAttrs.next();
+			Object value = userAttributes.get(key);
+			webNode.setAttribute((String)key, (String)value);
+		}
+		userAttributes.clear();
+		
 		TreeTag treeTag = (TreeTag) findAncestorWithClass(this, TreeTag.class);
 		webNode.setUserData( treeTag.getCurrUserData() );//设置节点业务数据
 		treeTag.addNode(webNode);

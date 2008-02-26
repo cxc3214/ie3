@@ -146,4 +146,8 @@ public class HttpServletRequestWebContext implements WebContext {
 	public InputStream getResourceAsStream(String pPath) {
 		return request.getSession(true).getServletContext().getResourceAsStream(pPath);
 	}
+
+	public String getCharacterEncoding() {
+		return request.getCharacterEncoding();
+	}
 }

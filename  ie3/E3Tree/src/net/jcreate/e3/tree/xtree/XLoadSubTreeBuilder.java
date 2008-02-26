@@ -28,6 +28,7 @@ import net.jcreate.e3.templateEngine.support.StrTemplateUtil;
 import net.jcreate.e3.tree.BuildTreeException;
 import net.jcreate.e3.tree.Node;
 import net.jcreate.e3.tree.support.AbstractWebTreeBuilder;
+import net.jcreate.e3.tree.support.WebContext;
 import net.jcreate.e3.tree.support.WebTreeDynamicNode;
 import net.jcreate.e3.tree.support.WebTreeNode;
 
@@ -46,7 +47,18 @@ public class XLoadSubTreeBuilder extends AbstractWebTreeBuilder{
     //XML编码方式
     private String encoding;
 
-    public void init(HttpServletRequest pRequest){
+
+	public void init(WebContext webContext) {
+		super.init(webContext);
+    	if ( this.encoding == null ){
+    		this.encoding = webContext.getCharacterEncoding();
+    	}
+    	if ( this.encoding == null ){
+    		this.encoding = DEFAULT_ENCODING;
+    	}
+	}
+	
+	public void init(HttpServletRequest pRequest){
     	super.init(pRequest);
     	if ( this.encoding == null ){
     		this.encoding = pRequest.getCharacterEncoding();

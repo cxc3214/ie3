@@ -32,6 +32,8 @@ public interface WebContext {
     public String getParameter(String name);
 
     public Map getParameterMap();
+    
+    public String getCharacterEncoding();
 
     public void setParameterMap(Map parameterMap);
 

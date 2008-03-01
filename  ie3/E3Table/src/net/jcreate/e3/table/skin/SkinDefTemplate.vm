@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xkins>
+    <global-processor id="velocity" type="net.jcreate.xkins.processor.VelocityTemplateProcessor"/>
+	<skin name="classicLook" url="/store/skins/classicLook" definition="/xkins-definition.xml" defaultSkin="true"/>
+</xkins>

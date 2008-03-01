@@ -1,6 +1,8 @@
 package net.jcreate.e3.table.skin;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 
@@ -34,12 +36,14 @@ public class SkinScaner
 	public String[] scan(String pDir, final String pSkinFile)
 			throws SkinException
 	{
-
-		StringBuffer buffStr = new StringBuffer();
-
 		File root = new File(pDir);
+		List listFiles = new ArrayList();
+		if (pDir == null || pSkinFile == null)
+		{
+			return new String[0];
+		}
 
-		if (!(root.exists()))
+		if (root.exists() == false)
 		{
 			return new String[0];
 		}
@@ -47,23 +51,20 @@ public class SkinScaner
 		File[] filesOrDirs = root.listFiles();
 		for (int i = 0; i < filesOrDirs.length; i++)
 		{
-			if (filesOrDirs[i].isDirectory())
+			if (filesOrDirs[i].isDirectory() == true)
 			{
 				File[] childFiles = filesOrDirs[i].listFiles();
 				for (int j = 0; j < childFiles.length; j++)
 				{
-					if (childFiles[j].isDirectory())
+					if (pSkinFile.equals(childFiles[j].getName()))
 					{
-						continue;
-					}
-					else if (childFiles[j].getName().equals(pSkinFile))
-					{
-						buffStr.append(filesOrDirs[i].getName() + "&");
+						listFiles.add(filesOrDirs[i].getName());
 					}
 				}
 			}
+
 		}
-		return buffStr.toString().split("&");
+		return (String[]) listFiles.toArray(new String[listFiles.size()]);
 
 	}
 
@@ -81,4 +82,14 @@ public class SkinScaner
 		return scan(pDir, DEFAULT_SKIN_FILE);
 	}
 
+	public static void main(String[] args)
+	{
+		SkinScaner sc = new SkinScaner();
+		String[] arg = sc.scan("C:\\e3");
+		for (int i = 0; i < arg.length; i++)
+		{
+			System.out.println(arg[i]);
+
+		}
+	}
 }

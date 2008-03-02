@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xkins>
+       <!-- SKIN default -->
+       <skin name="default" url="/skins/default">
+             <processor type="net.jcreate.xkins.processor.VelocityTemplateProcessor"/>
+             <template name="mail">
+                    <content><![CDATA[
+<table>
+<tr bgcolor="cyan">
+<td>$text</td>
+</tr>中文都可以
+</table>
+             ]]></content>
+             </template>
+       </skin>
+</xkins>

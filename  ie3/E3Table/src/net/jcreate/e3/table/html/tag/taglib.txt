@@ -3,8 +3,11 @@
           items="users"
           scope="page|request|session|application"
           action="" >
-  <e3:column property="userID" title="用户ID"/>
-  <e3:column property="userName" title="用户名称"/>  
+  <e3:columnGroup title="基础信息">          
+    <e3:column property="userID" title="用户ID"/>
+    <e3:column property="userName" title="用户名称"/>
+  <e3:columnGroup>  
+  
   <e3:column property="birthday" title="生日">
      <e3:decorator class="date">
         <e3:property name="pattern" value="yyyy-MM-dd"/>

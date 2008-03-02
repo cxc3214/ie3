@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<!ELEMENT constant EMPTY>
+	<!ATTLIST constant
+	name CDATA #REQUIRED
+		value CDATA #IMPLIED
+		srcTemplate CDATA #IMPLIED
+>
+	<!ELEMENT content (#PCDATA)>
+	<!ATTLIST content
+		url CDATA #IMPLIED
+>
+	<!ELEMENT element EMPTY>
+	<!ATTLIST element
+	name CDATA #REQUIRED
+		path CDATA #IMPLIED
+		url CDATA #IMPLIED
+		srcTemplate CDATA #IMPLIED
+>
+	<!ELEMENT global-processor EMPTY>
+	<!ATTLIST global-processor
+		id CDATA #REQUIRED
+		type CDATA #REQUIRED
+>
+
+	<!ELEMENT processor EMPTY>
+	<!ATTLIST processor
+		id CDATA #IMPLIED
+		type CDATA #IMPLIED
+>
+	<!ELEMENT server EMPTY>
+	<!ATTLIST server
+		name CDATA #IMPLIED
+		url CDATA #IMPLIED
+>
+
+
+	<!ELEMENT path EMPTY>
+	<!ATTLIST path
+	name CDATA #REQUIRED
+		url CDATA #REQUIRED
+		absolute CDATA #IMPLIED
+		server CDATA #IMPLIED
+>
+	<!ELEMENT set-property EMPTY>
+	<!ATTLIST set-property
+		property CDATA #REQUIRED
+		value CDATA #REQUIRED
+>
+	<!ELEMENT skin (processor? | set-property? | path* | element* | constant* | template*)*>
+	<!ATTLIST skin
+	name CDATA #REQUIRED
+		url CDATA #REQUIRED
+		extends CDATA #IMPLIED
+		definition CDATA #IMPLIED
+		defaultSkin (false | true) #IMPLIED
+		type CDATA #IMPLIED
+>
+	<!ELEMENT template (processor?, content?, element*, constant*)*>
+	<!ATTLIST template
+	name CDATA #REQUIRED
+	srcSkin CDATA #IMPLIED	
+	group CDATA #IMPLIED		
+>
+	<!ELEMENT xkins (global-processor* | skin+)>
+	<!ATTLIST xkins
+		type CDATA #IMPLIED
+>
+	

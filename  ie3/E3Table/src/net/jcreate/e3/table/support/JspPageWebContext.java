@@ -144,4 +144,8 @@ public final class JspPageWebContext implements WebContext {
 	public InputStream getResourceAsStream(String pPath) {
 		return pageContext.getServletContext().getResourceAsStream(pPath);
 	}
+
+	public Object getBackingObject() {
+		return this.pageContext;
+	}
 }

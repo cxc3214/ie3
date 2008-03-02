@@ -32,6 +32,7 @@ public abstract class AbstractHTMLTableBuilder extends EmptyTableBuilder{
    protected StringBuffer tableScript = null;
    private static final int DEFAULT_BUFFER_SIZE = 200;
    protected int bufferSize = DEFAULT_BUFFER_SIZE;
+   protected HTMLTable table = null;
    public static final String ENTER = "\n";
    
    public AbstractHTMLTableBuilder(){
@@ -45,6 +46,7 @@ public abstract class AbstractHTMLTableBuilder extends EmptyTableBuilder{
 	 */
 	final public void init(Table pTable){
 	   init( (HTMLTable)pTable );
+
 	}
    
    protected void init(HTMLTable pTable){
@@ -52,6 +54,7 @@ public abstract class AbstractHTMLTableBuilder extends EmptyTableBuilder{
 	     tableScript = new StringBuffer(bufferSize);
 	   else
 	     tableScript.delete(0, tableScript.length());
+	   table = pTable;	   
    }
    
 	

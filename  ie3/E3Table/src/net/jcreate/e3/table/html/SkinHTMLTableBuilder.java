@@ -19,19 +19,15 @@
  */
 package net.jcreate.e3.table.html;
 
-import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.PageContext;
 
 import net.jcreate.e3.table.BuildTableException;
 import net.jcreate.e3.table.PageInfo;
-import net.jcreate.e3.table.WebContext;
-import net.jcreate.e3.table.skin.LoadSkinException;
-import net.jcreate.e3.table.skin.Skin;
-import net.jcreate.e3.table.skin.SkinLoader;
 import net.jcreate.e3.table.support.TableConstants;
 import net.jcreate.e3.templateEngine.Context;
 import net.jcreate.e3.templateEngine.support.DefaultContext;
+import net.jcreate.xkins.XkinProcessor;
 
 public class SkinHTMLTableBuilder extends AbstractHTMLTableBuilder{
 	
@@ -60,14 +56,14 @@ public class SkinHTMLTableBuilder extends AbstractHTMLTableBuilder{
 		Context context = new DefaultContext();
 		context.put("table", pTable);		
 		context.put("webContext", this.getTableContext().getWebContext());
-		appendScript(skin.getTemplateValue(TableConstants.BODY_BEGIN_ID, context));
+		appendScript(getTemplateValue(TableConstants.BODY_BEGIN_ID, context));
 	}
 
 	protected void buildHTMLBodyEnd(HTMLTable pTable) throws BuildTableException {
 		Context context = new DefaultContext();
 		context.put("table", pTable);		
 		context.put("webContext", this.getTableContext().getWebContext());
-		appendScript(skin.getTemplateValue(TableConstants.BODY_END_ID, context));
+		appendScript(getTemplateValue(TableConstants.BODY_END_ID, context));
 	}
 
 	protected void buildHTMLBottomToolbar(HTMLTable pTable) throws BuildTableException {
@@ -79,7 +75,7 @@ public class SkinHTMLTableBuilder extends AbstractHTMLTableBuilder{
 		context.put("table", pTable);		
 		context.put("webContext", this.getTableContext().getWebContext());
 		context.put("pageInfo", pageInfo);
-		appendScript(skin.getTemplateValue(TableConstants.BOTTOM_NAVIGATION_ID, context));
+		appendScript(getTemplateValue(TableConstants.BOTTOM_NAVIGATION_ID, context));
 	}
     private boolean isEmpty(String pValue ){
     	if ( pValue == null ){
@@ -99,7 +95,7 @@ public class SkinHTMLTableBuilder extends AbstractHTMLTableBuilder{
 		context.put("table", pTable);		
 		context.put("caption", caption);
 		context.put("webContext", this.getTableContext().getWebContext());
-		appendScript(skin.getTemplateValue(TableConstants.CAPTION_ID, context));
+		appendScript(getTemplateValue(TableConstants.CAPTION_ID, context));
 	}
 	
 	private void appendScript(String pScript){
@@ -117,7 +113,7 @@ public class SkinHTMLTableBuilder extends AbstractHTMLTableBuilder{
 		context.put("column", pCell.getColumn());
 		context.put("table", pCell.getRow().getTable());
 		context.put("webContext", this.getTableContext().getWebContext());
-		appendScript(skin.getTemplateValue(TableConstants.CELL_ID, context));
+		appendScript(getTemplateValue(TableConstants.CELL_ID, context));
 	}
 
 	protected void buildHTMLCellBegin(HTMLCell pCell) throws BuildTableException {
@@ -128,7 +124,7 @@ public class SkinHTMLTableBuilder extends AbstractHTMLTableBuilder{
 		context.put("column", pCell.getColumn());
 		context.put("table", pCell.getRow().getTable());
 		context.put("webContext", this.getTableContext().getWebContext());
-		appendScript(skin.getTemplateValue(TableConstants.CELL_BEGIN_ID, context));
+		appendScript(getTemplateValue(TableConstants.CELL_BEGIN_ID, context));
 
 	}
 
@@ -140,7 +136,7 @@ public class SkinHTMLTableBuilder extends AbstractHTMLTableBuilder{
 		context.put("column", pCell.getColumn());
 		context.put("table", pCell.getRow().getTable());
 		context.put("webContext", this.getTableContext().getWebContext());
-		appendScript(skin.getTemplateValue(TableConstants.CELL_END_ID, context));
+		appendScript(getTemplateValue(TableConstants.CELL_END_ID, context));
 
 	}
 	
@@ -159,7 +155,7 @@ public class SkinHTMLTableBuilder extends AbstractHTMLTableBuilder{
 		context.put("table", pColumn.getTable());
 		context.put("webContext", this.getTableContext().getWebContext());
 		context.put("contextPath", this.getTableContext().getWebContext().getContextPath());		
-		appendScript(skin.getTemplateValue(TableConstants.COLUMN_ID, context));
+		appendScript(getTemplateValue(TableConstants.COLUMN_ID, context));
 			
 	}
 
@@ -178,7 +174,7 @@ public class SkinHTMLTableBuilder extends AbstractHTMLTableBuilder{
 		context.put("webContext", this.getTableContext().getWebContext());
 		
 		context.put("contextPath", this.getTableContext().getWebContext().getContextPath());		
-		appendScript(skin.getTemplateValue(TableConstants.COLUMN_BEGIN_ID, context));
+		appendScript(getTemplateValue(TableConstants.COLUMN_BEGIN_ID, context));
 	}
 
 	protected void buildHTMLColumnEnd(HTMLColumn pColumn) throws BuildTableException {
@@ -195,7 +191,7 @@ public class SkinHTMLTableBuilder extends AbstractHTMLTableBuilder{
 		context.put("table", pColumn.getTable());
 		context.put("webContext", this.getTableContext().getWebContext());
 		context.put("contextPath", this.getTableContext().getWebContext().getContextPath());		
-		appendScript(skin.getTemplateValue(TableConstants.COLUMN_END_ID, context));
+		appendScript(getTemplateValue(TableConstants.COLUMN_END_ID, context));
 	}
 
 	protected void buildHTMLEndScript(HTMLTable pTable) throws BuildTableException {
@@ -203,7 +199,7 @@ public class SkinHTMLTableBuilder extends AbstractHTMLTableBuilder{
 		context.put("table", pTable);
 		context.put("webContext", this.getTableContext().getWebContext());
 		context.put("contextPath", this.getTableContext().getWebContext().getContextPath());		
-		appendScript(skin.getTemplateValue(TableConstants.END_SCRIPT_ID, context));
+		appendScript(getTemplateValue(TableConstants.END_SCRIPT_ID, context));
 	}
 
 	protected void buildHTMLHeaderBegin(HTMLHeader pHeader) throws BuildTableException {
@@ -212,7 +208,7 @@ public class SkinHTMLTableBuilder extends AbstractHTMLTableBuilder{
 		context.put("table", pHeader.getTable());
 		context.put("webContext", this.getTableContext().getWebContext());
 		context.put("contextPath", this.getTableContext().getWebContext().getContextPath());		
-		appendScript(skin.getTemplateValue(TableConstants.HEADER_BEGIN_ID, context));
+		appendScript(getTemplateValue(TableConstants.HEADER_BEGIN_ID, context));
 
 	}
 
@@ -222,7 +218,7 @@ public class SkinHTMLTableBuilder extends AbstractHTMLTableBuilder{
 		context.put("table", pHeader.getTable());
 		context.put("webContext", this.getTableContext().getWebContext());
 		context.put("contextPath", this.getTableContext().getWebContext().getContextPath());		
-		appendScript(skin.getTemplateValue(TableConstants.HEADER_END_ID, context));
+		appendScript(getTemplateValue(TableConstants.HEADER_END_ID, context));
 
 	}
 
@@ -231,7 +227,7 @@ public class SkinHTMLTableBuilder extends AbstractHTMLTableBuilder{
 		context.put("table", pTable);
 		context.put("webContext", this.getTableContext().getWebContext());
 		context.put("contextPath", this.getTableContext().getWebContext().getContextPath());		
-		appendScript(skin.getTemplateValue(TableConstants.BEGIN_SCRIPT_ID, context));
+		appendScript(getTemplateValue(TableConstants.BEGIN_SCRIPT_ID, context));
 	}
 
 	protected void buildHTMLRowBegin(HTMLRow pRow) throws BuildTableException {
@@ -240,7 +236,7 @@ public class SkinHTMLTableBuilder extends AbstractHTMLTableBuilder{
 		context.put("row", pRow);
 		context.put("webContext", this.getTableContext().getWebContext());
 		context.put("contextPath", this.getTableContext().getWebContext().getContextPath());		
-		appendScript(skin.getTemplateValue(TableConstants.ROW_BEGIN_ID, context));
+		appendScript(getTemplateValue(TableConstants.ROW_BEGIN_ID, context));
 	}
 
 	protected void buildHTMLRowEnd(HTMLRow pRow) throws BuildTableException {
@@ -249,7 +245,7 @@ public class SkinHTMLTableBuilder extends AbstractHTMLTableBuilder{
 		context.put("row", pRow);
 		context.put("webContext", this.getTableContext().getWebContext());
 		context.put("contextPath", this.getTableContext().getWebContext().getContextPath());		
-		appendScript(skin.getTemplateValue(TableConstants.ROW_END_ID, context));
+		appendScript(getTemplateValue(TableConstants.ROW_END_ID, context));
 	}
 
 
@@ -258,7 +254,7 @@ public class SkinHTMLTableBuilder extends AbstractHTMLTableBuilder{
 		context.put("table", pTable);
 		context.put("webContext", this.getTableContext().getWebContext());
 		context.put("contextPath", this.getTableContext().getWebContext().getContextPath());		
-		appendScript(skin.getTemplateValue(TableConstants.DOC_BEGIN_ID, context));
+		appendScript(getTemplateValue(TableConstants.DOC_BEGIN_ID, context));
    	
    	   
 //	     <form name="userTableForm" method="post" action="uri">
@@ -274,7 +270,7 @@ public class SkinHTMLTableBuilder extends AbstractHTMLTableBuilder{
 		context.put("table", pTable);
 		context.put("webContext", this.getTableContext().getWebContext());
 		context.put("contextPath", this.getTableContext().getWebContext().getContextPath());		
-		appendScript(skin.getTemplateValue(TableConstants.DOC_END_ID, context));
+		appendScript(getTemplateValue(TableConstants.DOC_END_ID, context));
    }
 	
 	protected void buildHTMLTableBegin(HTMLTable pTable) throws BuildTableException {
@@ -282,7 +278,7 @@ public class SkinHTMLTableBuilder extends AbstractHTMLTableBuilder{
 		context.put("table", pTable);
 		context.put("webContext", this.getTableContext().getWebContext());
 		context.put("contextPath", this.getTableContext().getWebContext().getContextPath());		
-		appendScript(skin.getTemplateValue(TableConstants.TABLE_BEGIN_ID, context));
+		appendScript(getTemplateValue(TableConstants.TABLE_BEGIN_ID, context));
 		
 	}
 
@@ -291,7 +287,7 @@ public class SkinHTMLTableBuilder extends AbstractHTMLTableBuilder{
 		context.put("table", pTable);
 		context.put("webContext", this.getTableContext().getWebContext());
 		context.put("contextPath", this.getTableContext().getWebContext().getContextPath());		
-		appendScript(skin.getTemplateValue(TableConstants.TABLE_END_ID, context));
+		appendScript(getTemplateValue(TableConstants.TABLE_END_ID, context));
 
 	}
 
@@ -300,62 +296,93 @@ public class SkinHTMLTableBuilder extends AbstractHTMLTableBuilder{
 		context.put("table", pTable);		
 		context.put("webContext", this.getTableContext().getWebContext());
 		context.put("params", pTable.getParams());
-		appendScript(skin.getTemplateValue(TableConstants.PARAMS_FORM_ID, context));
+		appendScript(getTemplateValue(TableConstants.PARAMS_FORM_ID, context));
 	}
-
 	protected void buildHTMLTopToolbar(HTMLTable pTable) throws BuildTableException {
 		PageInfo pageInfo = pTable.getPageInfo();
 		if ( pageInfo == null ){
 			return;
-		}
+		}		
 		Context context = new DefaultContext();
-		context.put("table", pTable);		
+		context.put("table", pTable);
 		context.put("webContext", this.getTableContext().getWebContext());
 		context.put("pageInfo", pageInfo);
-		appendScript(skin.getTemplateValue(TableConstants.TOP_NAVIGATION_ID, context));
+		appendScript(getTemplateValue(TableConstants.TOP_NAVIGATION_ID, context)) ;
 	}
-	 
-	private static Map skins = new HashMap();
-	private Skin skin = null;
-	protected void init(HTMLTable pTable) {
-		   if ( tableScript == null )
-			     tableScript = new StringBuffer(bufferSize);
-			   else
-			     tableScript.delete(0, tableScript.length());
-		
-		String skinID = pTable.getSkin();
-		if ( skinID == null ){
-			skinID = TableConstants.DEFAULT_SKIN;
-		}
-		String path = getSkinPath(skinID);
-		  if ( skins.containsKey(path) == false ){
-			  synchronized(this){
-				  /**
-				   * 说明：: 这里采用最简单的锁策略，因为这种碰撞几率很小，这样做不会有什么问题
-				   */
-			     InputStream is = getSkinInputStream(path, this.tableContext.getWebContext());
-			     SkinLoader skinLoader = new SkinLoader();
-			     Skin result = skinLoader.load(is);
-			     skins.put(path, result);
-			  }
-		  }
-		  skin = (Skin)skins.get(path);
-		
-	}
+
+	/**
+	 * 获取模板值.
+	 * @param pTemplateID
+	 * @param pContext
+	 * @return
+	 */
+    private String getTemplateValue(String pTemplateID, Context pContext){
+    	XkinProcessor processor = getXkinProcessor(pTemplateID);
+    	if ( processor == null ){
+    		return null;
+    	}
+    	processor.addParameters(pContext.getParameters());
+    	return processor.processContent();
+    }
 	
-	 protected InputStream getSkinInputStream(final String pSkinDefFile, final WebContext pWebContext) throws LoadSkinException{
-		  InputStream result = pWebContext.getResourceAsStream(pSkinDefFile);
-		  if ( result == null ){
-			  result = this.getClass().getClassLoader().getResourceAsStream(pSkinDefFile);
-		  }
-		  if ( result == null ){
-			  throw new LoadSkinException("没有找到皮肤定义文件:" + pSkinDefFile  );
-		  }
-		  return result;
-	  }	
-	
-	protected String getSkinPath(String pTheme){
-		 String path = "e3/table/skins/" + pTheme + ".e3table.xml";
-		 return path;
+	/**
+	 * 获取模板请求处理器.
+	 * @param pTemplateID
+	 * @return
+	 */
+	private XkinProcessor getXkinProcessor(String pTemplateID){
+		    XkinProcessor result = null;
+		   Object backingObject = this.getTableContext().getWebContext().getBackingObject();
+		   if ( backingObject instanceof PageContext ){
+			   result = new XkinProcessor(table.getSkin(), pTemplateID, (PageContext)backingObject); 
+		   } else if ( backingObject instanceof HttpServletRequest ){
+			   result = new XkinProcessor(table.getSkin(), pTemplateID, (HttpServletRequest)backingObject, null);
+		   }else{
+			  throw  new java.lang.IllegalStateException();   
+		   }
+           return result;
+		
 	}
+//	private static Map skins = new HashMap();
+//	private Skin skin = null;
+//	protected void init(HTMLTable pTable) {
+//		   if ( tableScript == null )
+//			     tableScript = new StringBuffer(bufferSize);
+//			   else
+//			     tableScript.delete(0, tableScript.length());
+//		String skinID = pTable.getSkin();
+//		if ( skinID == null ){
+	//		skinID = TableConstants.DEFAULT_SKIN;
+//		}
+//		String path = getSkinPath(skinID);
+//		  if ( skins.containsKey(path) == false ){
+//			  synchronized(this){
+//				  /**
+//				   * 说明：: 这里采用最简单的锁策略，因为这种碰撞几率很小，这样做不会有什么问题
+//				   */
+//			     InputStream is = getSkinInputStream(path, this.tableContext.getWebContext());
+//			     SkinLoader skinLoader = new SkinLoader();
+//			     Skin result = skinLoader.load(is);
+//			     skins.put(path, result);
+//			  }
+//		  }
+//		  skin = (Skin)skins.get(path);
+//		
+//	}
+	
+//	 protected InputStream getSkinInputStream(final String pSkinDefFile, final WebContext pWebContext) throws LoadSkinException{
+//		  InputStream result = pWebContext.getResourceAsStream(pSkinDefFile);
+//		  if ( result == null ){
+//			  result = this.getClass().getClassLoader().getResourceAsStream(pSkinDefFile);
+//		  }
+//		  if ( result == null ){
+//			  throw new LoadSkinException("没有找到皮肤定义文件:" + pSkinDefFile  );
+//		  }
+//		  return result;
+//	  }	
+//	
+//	protected String getSkinPath(String pTheme){
+//		 String path = "e3/table/skins/" + pTheme + ".e3table.xml";
+//		 return path;
+//	}
 }

@@ -70,4 +70,6 @@ public interface WebContext {
     public String getContextPath();
     
     public String getRealPath(String path);
+    
+    public Object getBackingObject();
 }

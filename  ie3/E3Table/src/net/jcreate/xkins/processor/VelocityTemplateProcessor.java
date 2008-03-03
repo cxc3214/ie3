@@ -94,6 +94,7 @@ public class VelocityTemplateProcessor
             throws XkinsException {
         try {       	
 	        VelocityContext vc = new VelocityContext();
+	        vc.put("_e3Tools", new E3Tools() );
 	
 	        //copy参数
 	        if (context.getParameters().size() > 0) {

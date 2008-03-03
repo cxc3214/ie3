@@ -30,10 +30,19 @@ public class ConstantResource
     //~ Instance fields ----------------------------------------------------------------------------
 
     private String value = "";
+    private String type = "string";
 
     //~ Constructors -------------------------------------------------------------------------------
 
-    /**
+    public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	/**
      * Constructor por defecto.
      */
     public ConstantResource() {
@@ -53,6 +62,7 @@ public class ConstantResource
             return this.value;
         }
     }
+    
 
     /**
      * Asigna el value de la constante.

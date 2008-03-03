@@ -3,8 +3,11 @@
        <!-- SKIN default -->
        <skin name="default" url="/skins/default">
              <processor type="net.jcreate.xkins.processor.VelocityTemplateProcessor"/>
+             <constant name="a" value="100" />
              <template name="mail">
                     <content><![CDATA[
+                    #set( $demo = $_e3Tools.toInt($res_a) +10)
+                    dd${demo}
 <table>
 <tr bgcolor="cyan">
 <td>$text</td>

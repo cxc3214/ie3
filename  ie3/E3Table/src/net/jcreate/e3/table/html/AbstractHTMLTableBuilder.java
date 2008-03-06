@@ -22,6 +22,7 @@ package net.jcreate.e3.table.html;
 import net.jcreate.e3.table.BuildTableException;
 import net.jcreate.e3.table.Cell;
 import net.jcreate.e3.table.Column;
+import net.jcreate.e3.table.ColumnGroup;
 import net.jcreate.e3.table.Header;
 import net.jcreate.e3.table.Row;
 import net.jcreate.e3.table.Table;
@@ -146,10 +147,48 @@ public abstract class AbstractHTMLTableBuilder extends EmptyTableBuilder{
 	}
 
 
+	final public void buildColumnGroupsBegin(Table pTable) throws BuildTableException{
+		buildHTMLColumnGroupsBegin((HTMLTable)pTable);
+	}	
+	protected void buildHTMLColumnGroupsBegin(HTMLTable pTable) throws BuildTableException{
+		
+	}
+	
+	final public void buildColumnGroupBegin(ColumnGroup pColumnGroup) throws BuildTableException{
+		buildHTMLColumnGroupBegin((HTMLColumnGroup)pColumnGroup);
+	}
+	protected void buildHTMLColumnGroupBegin(HTMLColumnGroup pColumnGroup) throws BuildTableException{
+		
+	}
+	
+	final public void buildColumnGroup(ColumnGroup pColumnGroup) throws BuildTableException{
+		buildHTMLColumnGroup((HTMLColumnGroup)pColumnGroup);
+	}
+	protected void buildHTMLColumnGroup(HTMLColumnGroup pColumnGroup) throws BuildTableException{
+		
+	}
+	
+	final public void buildColumnGroupEnd(ColumnGroup pColumnGroup) throws BuildTableException{
+		buildHTMLColumnGroupEnd((HTMLColumnGroup)pColumnGroup);
+	}
+	protected void buildHTMLColumnGroupEnd(HTMLColumnGroup pColumnGroup) throws BuildTableException{
+		
+	}
+	
+	final public void buildColumnGroupsEnd(Table pTable) throws BuildTableException{
+		buildHTMLColumnGroupsEnd((HTMLTable)pTable);
+	}
+	protected void buildHTMLColumnGroupsEnd(HTMLTable pTable) throws BuildTableException{
+		
+	}
+	
+	
+	
+	
 	final public void buildColumnBegin(Column pColumn) throws BuildTableException {
 		buildHTMLColumnBegin((HTMLColumn)pColumn);
 	}
-	
+		
 	protected void buildHTMLColumnBegin(HTMLColumn pColumn) throws BuildTableException {
 	}
 

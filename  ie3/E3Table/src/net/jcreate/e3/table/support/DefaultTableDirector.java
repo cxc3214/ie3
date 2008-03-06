@@ -19,10 +19,17 @@
  */
 package net.jcreate.e3.table.support;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import net.jcreate.e3.table.BuildTableException;
 import net.jcreate.e3.table.Cell;
 import net.jcreate.e3.table.CellDecorator;
 import net.jcreate.e3.table.Column;
+import net.jcreate.e3.table.ColumnGroup;
 import net.jcreate.e3.table.Header;
 import net.jcreate.e3.table.I18nResourceProvider;
 import net.jcreate.e3.table.Row;
@@ -105,13 +112,29 @@ public class DefaultTableDirector implements TableDirector{
 	    		   logger.debug(MSG);
 	    		   throw new NullPointerException(MSG);
 	    	   }
+	    	   int size = header.getSize();
+	    	   if ( size < 1 ){
+	    		   final String MSG = "至少应该存在一个列!";
+	    		   logger.debug(MSG);
+	    		   throw new BuildTableException(MSG);
+	    	   }
+	    	   
+	    	   
+	    	   List columnGroupsList = this.getColumnGroups(header);
+	    	   for(int i=0; i<columnGroupsList.size(); i++){
+	    		   Set columnGroups = (Set)columnGroupsList.get(i);
+	    		   java.util.Iterator groupIterator = columnGroups.iterator();
+	    		   pBuilder.buildColumnGroupsBegin(pTable);
+	    		   while( groupIterator.hasNext() ){
+	    			   ColumnGroup group = (ColumnGroup)groupIterator.next();
+	    			   pBuilder.buildColumnGroupBegin(group);
+	    			   pBuilder.buildColumnGroup(group);
+	    			   pBuilder.buildColumnGroupEnd(group);
+	    		   }
+	    		   pBuilder.buildColumnGroupsEnd(pTable);
+	    	   }
+	    	   
 		    	   pBuilder.buildHeaderBegin(header);
-		    	   int size = header.getSize();
-		    	   if ( size < 1 ){
-		    		   final String MSG = "至少应该存在一个列!";
-		    		   logger.debug(MSG);
-		    		   throw new BuildTableException(MSG);
-		    	   }
 		    	   for(int i=0; i<size; i++){
 		    		   Column cln = header.getColumn(i);
 		    		   if ( cln == null ){
@@ -194,6 +217,40 @@ public class DefaultTableDirector implements TableDirector{
 	       pBuilder.destory(pTable);	
 		}
 
+    private List getColumnGroups(Header pHeader){
+    	if ( pHeader == null ){
+    		return java.util.Collections.EMPTY_LIST;
+    	}
+    	List result = new ArrayList();
+    	Map temp = new java.util.TreeMap();
+    	List columns = pHeader.getColumns();
+    	if ( columns == null ){
+    		return java.util.Collections.EMPTY_LIST;
+    	}
+    	for(int i=0; i<columns.size(); i++){
+    		Column column = (Column)columns.get(i);
+    		ColumnGroup parentGroup = column.getColumnGroup();
+    		while( parentGroup != null ){
+    			int level = parentGroup.getLevel();
+    			if ( temp.containsKey(new Integer(level)) == false ){
+    				Set groupSet = new java.util.LinkedHashSet();
+    				temp.put(new Integer(level), groupSet);
+    			}
+    			Set groupSet = (Set)temp.get(new Integer(level));
+    			ColumnGroup group = parentGroup;
+    			groupSet.add(group);
+    			parentGroup = parentGroup.getParent();
+    		}    		
+    	}
+    	java.util.Iterator keyIterator = temp.keySet().iterator();
+    	while( keyIterator.hasNext() ){
+    		Object key = keyIterator.next();
+    		Set values = (Set)temp.get(key);
+    		result.add(values);
+    	}    	
+    	return result;
+    }
+    
 	public boolean isShowBody() {
 		return showBody;
 	}

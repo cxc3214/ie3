@@ -22,6 +22,7 @@ package net.jcreate.e3.table.support;
 import net.jcreate.e3.table.BuildTableException;
 import net.jcreate.e3.table.Cell;
 import net.jcreate.e3.table.Column;
+import net.jcreate.e3.table.ColumnGroup;
 import net.jcreate.e3.table.Header;
 import net.jcreate.e3.table.Row;
 import net.jcreate.e3.table.Table;
@@ -150,6 +151,23 @@ public abstract class EmptyTableBuilder implements TableBuilder, TableContextSup
 		
 		
 	}
+	
+	public void buildColumnGroupsBegin(Table pTable) throws BuildTableException{
+		
+	}
+	public void buildColumnGroupBegin(ColumnGroup pColumnGroup) throws BuildTableException{
+		
+	}
+	public void buildColumnGroup(ColumnGroup pColumnGroup) throws BuildTableException{
+		
+	}
+	public void buildColumnGroupEnd(ColumnGroup pColumnGroup) throws BuildTableException{
+		
+	}
+	public void buildColumnGroupsEnd(Table pTable) throws BuildTableException{
+		
+	}
+	
 
 	public void buildBottomPanel(Table pTable) throws BuildTableException {
 		

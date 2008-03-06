@@ -199,6 +199,12 @@ public class TableConstants {
    */
   public static final String HEADER_BEGIN_ID = "headerBegin";
   
+  public static final String COLUMN_GROUPS_BEGIN_ID = "columnGroupsBegin";
+  public static final String COLUMN_GROUPS_END_ID = "columnGroupsEnd";
+  public static final String COLUMN_GROUP_BEGIN_ID = "columnGroupBegin";
+  public static final String COLUMN_GROUP_ID = "columnGroup";
+  public static final String COLUMN_GROUP_END_ID = "columnGroupEnd";
+  
   /**
    * header结束
    */

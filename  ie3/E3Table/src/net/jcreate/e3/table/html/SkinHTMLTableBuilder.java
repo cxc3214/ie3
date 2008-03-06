@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
 
 import net.jcreate.e3.table.BuildTableException;
+import net.jcreate.e3.table.ColumnGroup;
 import net.jcreate.e3.table.PageInfo;
 import net.jcreate.e3.table.support.TableConstants;
 import net.jcreate.e3.templateEngine.Context;
@@ -255,14 +256,6 @@ public class SkinHTMLTableBuilder extends AbstractHTMLTableBuilder{
 		context.put("webContext", this.getTableContext().getWebContext());
 		context.put("contextPath", this.getTableContext().getWebContext().getContextPath());		
 		appendScript(getTemplateValue(TableConstants.DOC_BEGIN_ID, context));
-   	
-   	   
-//	     <form name="userTableForm" method="post" action="uri">
-//		     <input type="hidden" name="start" value="10"/>
-//		     <input type="hidden" name="pagesize" value="10"/>
-//			 <input type="hidden" name="sortColumn" value="userID"/>
-//			 <input type="hidden" name="sortDir" value="asc"/>
-//		  </form>    	
    }
    
    protected void buildHTMLDocEnd(HTMLTable pTable) throws BuildTableException{
@@ -281,7 +274,47 @@ public class SkinHTMLTableBuilder extends AbstractHTMLTableBuilder{
 		appendScript(getTemplateValue(TableConstants.TABLE_BEGIN_ID, context));
 		
 	}
-
+	protected void buildHTMLColumnGroupsBegin(HTMLTable pTable) throws BuildTableException{
+		Context context = new DefaultContext();
+		context.put("webContext", this.getTableContext().getWebContext());
+		context.put("contextPath", this.getTableContext().getWebContext().getContextPath());		
+		context.put("table", pTable);
+		appendScript(getTemplateValue(TableConstants.COLUMN_GROUPS_BEGIN_ID, context));
+	}
+	
+	protected void buildHTMLColumnGroupBegin(HTMLColumnGroup pColumnGroup) throws BuildTableException{
+		Context context = new DefaultContext();
+		context.put("webContext", this.getTableContext().getWebContext());
+		context.put("contextPath", this.getTableContext().getWebContext().getContextPath());		
+		context.put("columnGroup", pColumnGroup);
+		appendScript(getTemplateValue(TableConstants.COLUMN_GROUP_BEGIN_ID, context));
+	}
+	
+	protected void buildHTMLColumnGroup(HTMLColumnGroup pColumnGroup) throws BuildTableException{
+		Context context = new DefaultContext();
+		context.put("webContext", this.getTableContext().getWebContext());
+		context.put("contextPath", this.getTableContext().getWebContext().getContextPath());		
+		context.put("columnGroup", pColumnGroup);
+		context.put("title", pColumnGroup.getTitle());
+		appendScript(getTemplateValue(TableConstants.COLUMN_GROUP_ID, context));
+		
+	}
+	
+	protected void buildHTMLColumnGroupEnd(HTMLColumnGroup pColumnGroup) throws BuildTableException{
+		Context context = new DefaultContext();
+		context.put("webContext", this.getTableContext().getWebContext());
+		context.put("contextPath", this.getTableContext().getWebContext().getContextPath());		
+		context.put("columnGroup", pColumnGroup);
+		appendScript(getTemplateValue(TableConstants.COLUMN_GROUP_END_ID, context));
+	}
+	
+	protected void buildHTMLColumnGroupsEnd(HTMLTable pTable) throws BuildTableException{
+		Context context = new DefaultContext();
+		context.put("webContext", this.getTableContext().getWebContext());
+		context.put("contextPath", this.getTableContext().getWebContext().getContextPath());		
+		context.put("table", pTable);
+		appendScript(getTemplateValue(TableConstants.COLUMN_GROUPS_END_ID, context));
+	}
 	protected void buildHTMLTableEnd(HTMLTable pTable) throws BuildTableException {
 		Context context = new DefaultContext();
 		context.put("table", pTable);

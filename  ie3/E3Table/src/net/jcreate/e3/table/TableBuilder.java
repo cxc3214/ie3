@@ -102,6 +102,13 @@ public interface TableBuilder {
 	 */
 	public void buildBodyBegin(Table pTable) throws BuildTableException;
 
+	
+	public void buildColumnGroupsBegin(Table pTable) throws BuildTableException;
+	public void buildColumnGroupBegin(ColumnGroup pColumnGroup) throws BuildTableException;
+	public void buildColumnGroup(ColumnGroup pColumnGroup) throws BuildTableException;
+	public void buildColumnGroupEnd(ColumnGroup pColumnGroup) throws BuildTableException;
+	public void buildColumnGroupsEnd(Table pTable) throws BuildTableException;
+	
     /**
      * build 
      * @param pHeader

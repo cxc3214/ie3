@@ -111,6 +111,18 @@ public interface Column {
      * @param pDecorator
      */
     public void setCellDecorator(CellDecorator pDecorator);
+    
+    /**
+     * 获取所属组,如果没有返回null
+     * @return
+     */
+    public ColumnGroup getColumnGroup();
+    /**
+     * 设置所属组
+     * @param pColumnGroup
+     * @return
+     */
+    public void setColumnGroup(ColumnGroup pColumnGroup);
         
   
 }

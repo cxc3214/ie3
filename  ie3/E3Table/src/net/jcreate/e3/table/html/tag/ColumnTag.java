@@ -151,7 +151,11 @@ public class ColumnTag extends BodyTagSupport implements Attributeable{
 					column.setSortDir(sortInfo.getSortDir());//设置排序方向
 				}
 			}
-			column.setSortName(this.sortName);
+			column.setSortName(this.sortName);			
+			ColumnGroupTag groupTag = (ColumnGroupTag) findAncestorWithClass(this, ColumnGroupTag.class);
+			if ( groupTag != null ){//如果列存在分组，则添加进去
+				groupTag.addColumn(column);
+			}
 			/**
 			 * @todo:设置其他column属性
 			 */

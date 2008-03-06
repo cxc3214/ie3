@@ -21,6 +21,7 @@ package net.jcreate.e3.table.support;
 
 import net.jcreate.e3.table.CellDecorator;
 import net.jcreate.e3.table.Column;
+import net.jcreate.e3.table.ColumnGroup;
 import net.jcreate.e3.table.Table;
 
 public class DefaultColumn implements Column{
@@ -36,8 +37,22 @@ public class DefaultColumn implements Column{
 
 	private int columnIndex;
 	private CellDecorator cellDecorator;
+	private ColumnGroup columnGroup;
 	
 	
+	public ColumnGroup getColumnGroup() {
+		return columnGroup;
+	}
+
+	public void setColumnGroup(ColumnGroup columnGroup) {
+		/**
+		 * todo: 如果之前属于别的组时，这里要进行处理，要从别的组中删除
+		 * 目前版本column一旦加入一个组，不会出现换组的情况，所以暂时不
+		 * 处理.
+		 */
+		this.columnGroup = columnGroup;
+	}
+
 	public String getTitleKey() {
 		return titleKey;
 	}

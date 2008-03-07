@@ -50,6 +50,10 @@ public abstract class EmptyTableBuilder implements TableBuilder, TableContextSup
 		
 	}
 	
+	public void buildNoDataRow(Table pTable) throws BuildTableException{
+		
+	}
+	
 	public void buildBeginScript(Table pTable) throws BuildTableException {
 		
 		

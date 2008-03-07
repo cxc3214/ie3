@@ -29,7 +29,6 @@ import net.jcreate.e3.table.support.TableConstants;
 public class HTMLTable extends DefaultTable implements Attributeable{
 	private PageInfo pageInfo;
 	private String skin = TableConstants.DEFAULT_SKIN;
-	private String caption;
 	private String uri;
 	private String id;
 	private List params = new ArrayList();
@@ -68,13 +67,6 @@ public class HTMLTable extends DefaultTable implements Attributeable{
 		this.skin = skin;
 	}
 
-	public String getCaption() {
-		return caption;
-	}
-
-	public void setCaption(String caption) {
-		this.caption = caption;
-	}
 
 	public String getId() {
 		return id;
@@ -91,4 +83,5 @@ public class HTMLTable extends DefaultTable implements Attributeable{
 	public void setPageInfo(PageInfo pPageInfo) {
 		this.pageInfo = pPageInfo;
 	}
+
 }

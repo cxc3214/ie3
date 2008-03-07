@@ -24,6 +24,47 @@ import java.util.List;
 public interface Table {
 	
 	/**
+	 * 获取标题
+	 * @return
+	 */
+	public String getCaption();
+	/**
+	 * 设置标题
+	 * @param caption
+	 */
+	public void setCaption(String caption);
+	/**
+	 * 获取标题key
+	 * @return
+	 */
+	public String getCaptionKey();
+	/**
+	 * 设置标题key
+	 * @param captionKey
+	 */
+	public void setCaptionKey(String captionKey);
+	/**
+	 * 获取没有数据时提示信息
+	 * @return
+	 */
+	public String getNoDataTip();
+	/**
+	 * 设置没有数据时提示信息
+	 * @param noDataTip
+	 */
+	public void setNoDataTip(String noDataTip);
+	/**
+	 * 获取没有数据时的提示信息key
+	 * @return
+	 */
+	public String getNoDataTipKey();
+	/**
+	 * 设置没有数据时的提示信息key
+	 * @param noDataTipKey
+	 */
+	public void setNoDataTipKey(String noDataTipKey);
+
+	/**
 	 * 获取所有列
 	 * @return
 	 */

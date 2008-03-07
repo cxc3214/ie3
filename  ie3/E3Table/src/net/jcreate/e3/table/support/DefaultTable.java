@@ -29,12 +29,46 @@ import net.jcreate.e3.table.Header;
 
 public class DefaultTable implements Table{
 
+	private String caption;
+	private String captionKey;
+	private String noDataTip;
+	private String noDataTipKey;
 	private Header header;
 	
 	private List rows = new ArrayList();
 	
 	public List getColumns() {
 		return header.getColumns();
+	}
+	public String getCaption() {
+		return caption;
+	}
+
+	public void setCaption(String caption) {
+		this.caption = caption;
+	}
+	public String getCaptionKey() {
+		return captionKey;
+	}
+
+	public void setCaptionKey(String captionKey) {
+		this.captionKey = captionKey;
+	}
+
+	public String getNoDataTip() {
+		return noDataTip;
+	}
+
+	public void setNoDataTip(String noDataTip) {
+		this.noDataTip = noDataTip;
+	}
+
+	public String getNoDataTipKey() {
+		return noDataTipKey;
+	}
+
+	public void setNoDataTipKey(String noDataTipKey) {
+		this.noDataTipKey = noDataTipKey;
 	}
 
 

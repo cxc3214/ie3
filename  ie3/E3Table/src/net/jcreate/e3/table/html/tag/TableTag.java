@@ -106,6 +106,19 @@ public class TableTag extends BodyTagSupport{
 	 * 标题 
 	 */
 	private String caption;
+	/**
+	 * 标题key
+	 */
+	private String captionKey;
+	/**
+	 * 没有数据时的提示信息
+	 */
+	private String noDataTip;
+	/**
+	 * 没有数据说提示信息key
+	 */
+	private String noDataTipKey;
+	
 	
 	/**
 	 * 查询uri, 
@@ -140,7 +153,7 @@ public class TableTag extends BodyTagSupport{
 	
 	private DataModel dataModel = null;
 	
-	private String i18n;
+	private String i18n = TableConstants.DEFAULT_I18N;
 
 
 	public String getI18n() {
@@ -209,6 +222,9 @@ public class TableTag extends BodyTagSupport{
 			table.setCaption(this.caption);
 			table.setUri(this.uri);
 			table.setPageInfo(this.getNavInfo());
+			table.setCaptionKey(this.captionKey);
+			table.setNoDataTipKey(noDataTipKey);
+			table.setNoDataTip(noDataTip);
 			this.createdTable = true;
 			return EVAL_BODY_AGAIN;
 		}
@@ -357,7 +373,9 @@ public class TableTag extends BodyTagSupport{
 		this.createdHeader = false;
 		this.columnProperties.clear();
 		this.loopTagStatus = null;
-		
+		this.captionKey = null;
+		this.noDataTip = null;
+		this.noDataTipKey = null;		
 		this.columnProperties = null;
 		this.table = null;
 
@@ -448,6 +466,30 @@ public class TableTag extends BodyTagSupport{
 
 	public void setPageSize(int pageSize) {
 		this.pageSize = pageSize;
+	}
+
+	public String getCaptionKey() {
+		return captionKey;
+	}
+
+	public void setCaptionKey(String captionKey) {
+		this.captionKey = captionKey;
+	}
+
+	public String getNoDataTip() {
+		return noDataTip;
+	}
+
+	public void setNoDataTip(String noDataTip) {
+		this.noDataTip = noDataTip;
+	}
+
+	public String getNoDataTipKey() {
+		return noDataTipKey;
+	}
+
+	public void setNoDataTipKey(String noDataTipKey) {
+		this.noDataTipKey = noDataTipKey;
 	}
 
 

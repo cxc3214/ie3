@@ -97,6 +97,14 @@ public abstract class AbstractHTMLTableBuilder extends EmptyTableBuilder{
     	
     }
     
+	final public void buildNoDataRow(Table pTable) throws BuildTableException{
+		buildHTMLNoDataRow((HTMLTable)pTable);
+	}
+	protected void buildHTMLNoDataRow(HTMLTable pTable) throws BuildTableException{
+		
+	}
+
+    
     final public void buildDocEnd(Table pTable) throws BuildTableException{
     	buildHTMLDocEnd((HTMLTable)pTable);    	
     }

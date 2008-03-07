@@ -22,6 +22,7 @@ package net.jcreate.e3.table;
 import java.util.Locale;
 
 public interface I18nResourceProvider {
+	public Locale resolveLocale(WebContext pWebContext);
     public String getMessage(String pTitleKey,String defaultMessage, WebContext pWebContext);
     public String getMessage(String pTitleKey,  WebContext pWebContext) throws NoSuchMessageException;
 }

@@ -20,8 +20,8 @@
 package net.jcreate.e3.table.support;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -32,6 +32,7 @@ import net.jcreate.e3.table.Column;
 import net.jcreate.e3.table.ColumnGroup;
 import net.jcreate.e3.table.Header;
 import net.jcreate.e3.table.I18nResourceProvider;
+import net.jcreate.e3.table.MessageSource;
 import net.jcreate.e3.table.Row;
 import net.jcreate.e3.table.Table;
 import net.jcreate.e3.table.TableBuilder;
@@ -91,9 +92,35 @@ public class DefaultTableDirector implements TableDirector{
 		   }
 		   pBuilder.init(pTable);
 		   pBuilder.buildBeginScript(pTable);
+		   I18nResourceProvider i18n = this.tableContext.getI18nResourceProvider();
 		   
+		   
+		   /**
+		    * @todo: 这里的代码有点乱，需要整理下
+		    */
+			   String noDataTip = null;
+			   if ( i18n != null ){
+				   noDataTip = i18n.getMessage(pTable.getNoDataTipKey(), pTable.getNoDataTip(), this.tableContext.getWebContext());		   
+			   }
+			   if ( noDataTip == null ){
+				   Locale locale = null;
+				   if ( i18n != null ){
+					   locale = i18n.resolveLocale( this.tableContext.getWebContext() ); 
+				   }
+				   MessageSource message = tableContext.getMessageSource();
+				   if ( message != null ){
+				     noDataTip = message.getMessage(TableConstants.NO_DATA_TIP_KEY, null, locale);
+				   }
+			   }			   
+			  pTable.setNoDataTip(noDataTip);
+		   		    
 		   pBuilder.buildDocBegin(pTable);
 	       if ( this.showCaption ){
+    		   
+    		   if ( i18n != null ){
+    			  String title = i18n.getMessage(pTable.getCaptionKey(), pTable.getCaption(), this.tableContext.getWebContext());
+    			  pTable.setCaption(title);
+    		   }
 	    	   pBuilder.buildCaption(pTable);
 	       }
 	       if ( showTopPanel ){
@@ -127,6 +154,10 @@ public class DefaultTableDirector implements TableDirector{
 	    		   pBuilder.buildColumnGroupsBegin(pTable);
 	    		   while( groupIterator.hasNext() ){
 	    			   ColumnGroup group = (ColumnGroup)groupIterator.next();
+		    		   if ( i18n != null ){
+			    			  String title = i18n.getMessage(group.getTitleKey(), group.getTitle(), this.tableContext.getWebContext());
+			    			  group.setTitle(title);
+			    	   }	    			   
 	    			   pBuilder.buildColumnGroupBegin(group);
 	    			   pBuilder.buildColumnGroup(group);
 	    			   pBuilder.buildColumnGroupEnd(group);
@@ -143,7 +174,6 @@ public class DefaultTableDirector implements TableDirector{
 			    		   throw new BuildTableException(MSG);
 		    		   }
 		    		   String titleKey = cln.getTitleKey();
-		    		   I18nResourceProvider i18n = this.tableContext.getI18nResourceProvider();
 		    		   if ( i18n != null ){
 		    			  String title = i18n.getMessage(titleKey, cln.getTitle(), this.tableContext.getWebContext());
 		    			  cln.setTitle(title);
@@ -203,6 +233,10 @@ public class DefaultTableDirector implements TableDirector{
               pBuilder.buildBodyEnd(pTable);
 	       }//end build body
 
+	       int size = pTable.getRowSize();
+	       if ( size == 0 ){
+	    	   pBuilder.buildNoDataRow(pTable);
+	       }
 	       pBuilder.buildTableEnd(pTable);
 	       
 	       if ( this.isShowBottomToolbar() ){

@@ -19,6 +19,8 @@
  */
 package net.jcreate.e3.table.i18n;
 
+import java.util.Locale;
+
 import net.jcreate.e3.table.I18nResourceProvider;
 import net.jcreate.e3.table.NoSuchMessageException;
 import net.jcreate.e3.table.WebContext;
@@ -31,5 +33,8 @@ public class EmptyI18nResourceProvider implements I18nResourceProvider {
     public String getMessage(String pTitleKey,  WebContext pWebContext) throws NoSuchMessageException{
        throw new NoSuchMessageException(pTitleKey);	
     }
+	public Locale resolveLocale(WebContext webContext) {
+		return webContext.getLocale();
+	}
 
 }

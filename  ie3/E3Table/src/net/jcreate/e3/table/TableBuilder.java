@@ -84,6 +84,13 @@ public interface TableBuilder {
 	public void buildCaption(Table pTable) throws BuildTableException;
 	
 	/**
+	 * 没有数据的行
+	 * @param pTable
+	 * @throws BuildTableException
+	 */
+	public void buildNoDataRow(Table pTable) throws BuildTableException; 
+	
+	/**
 	 * build header 面版，一般为空，作为扩展留着
 	 * @throws BuildTableException
 	 */

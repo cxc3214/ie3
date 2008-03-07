@@ -229,6 +229,12 @@ public class TableConstants {
    * row 开始
    */
   public static final String ROW_BEGIN_ID = "rowBegin";
+  
+  /**
+   * 没数据的行
+   */
+  public static final String NO_DATA_ROW_ID = "noDataRow";
+  
   /**
    * row 结束
    */
@@ -252,6 +258,14 @@ public class TableConstants {
    */
   public static final String  PARAMS_FORM_ID = "paramsForm"; 
   
+  /**
+   * 没有数据时的提示信息key
+   */
+  public static final String NO_DATA_TIP_KEY = "e3.noDataTip";
+  /**
+   * 默认的i18 
+   */
+  public static final String DEFAULT_I18N = "struts";
   
   
   

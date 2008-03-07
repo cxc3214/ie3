@@ -300,6 +300,17 @@ public class SkinHTMLTableBuilder extends AbstractHTMLTableBuilder{
 		
 	}
 	
+	protected void buildHTMLNoDataRow(HTMLTable pTable) throws BuildTableException{
+		Context context = new DefaultContext();
+		context.put("webContext", this.getTableContext().getWebContext());
+		context.put("contextPath", this.getTableContext().getWebContext().getContextPath());		
+		context.put("table", pTable);
+		context.put("columnNum", pTable.getColumnSize());
+		context.put("noDataTip", pTable.getNoDataTip());
+		appendScript(getTemplateValue(TableConstants.NO_DATA_ROW_ID, context));
+	}
+	
+	
 	protected void buildHTMLColumnGroupEnd(HTMLColumnGroup pColumnGroup) throws BuildTableException{
 		Context context = new DefaultContext();
 		context.put("webContext", this.getTableContext().getWebContext());

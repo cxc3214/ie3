@@ -11,15 +11,13 @@
  * "GNU Free Documentation License".
  * ====================================================================
  */
-package net.jcreate.xkins.processor;
+package net.jcreate.e3.table.skin.processor;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.StringWriter;
 import java.util.Iterator;
 import java.util.Properties;
 
-import net.jcreate.e3.templateEngine.MergeTemplateException;
 import net.jcreate.xkins.Context;
 import net.jcreate.xkins.Template;
 import net.jcreate.xkins.XkinProcessor;
@@ -30,17 +28,17 @@ import net.jcreate.xkins.events.XkinsEvent;
 import net.jcreate.xkins.events.XkinsEventListener;
 import net.jcreate.xkins.events.XkinsLoadEvent;
 import net.jcreate.xkins.processor.TemplateProcessor;
+import net.jcreate.xkins.resources.Resource;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.velocity.VelocityContext;
-import org.apache.velocity.app.Velocity;
 import org.apache.velocity.app.VelocityEngine;
+import org.apache.velocity.app.event.EventCartridge;
+import org.apache.velocity.app.event.ReferenceInsertionEventHandler;
 import org.apache.velocity.exception.MethodInvocationException;
 import org.apache.velocity.exception.ParseErrorException;
 import org.apache.velocity.exception.ResourceNotFoundException;
-import org.apache.velocity.runtime.RuntimeConstants;
-import org.apache.velocity.runtime.RuntimeSingleton;
 import org.apache.velocity.servlet.VelocityServlet;
 
 
@@ -94,7 +92,8 @@ public class VelocityTemplateProcessor
     public void process(Template input, Context context, StringWriter pWriter)
             throws XkinsException {
         try {       	
-	        VelocityContext vc = new VelocityContext();
+	        final VelocityContext vc = new VelocityContext();
+	        vc.put("_e3Tools", new E3Tools() );
 	
 	        //copy参数
 	        if (context.getParameters().size() > 0) {
@@ -117,19 +116,74 @@ public class VelocityTemplateProcessor
 			vc.put(VelocityTemplateProcessor.APPLICATION, context.getServletContext());
 			vc.put(VelocityTemplateProcessor.SESSION, context.getSession());
 			
+			vc.attachEventCartridge(new EventCartridge(){
+
+				private String getKey(String reference){
+					//不是${xxx} 就是$xx,目前只支持这种形式 
+					if ( reference.startsWith("${") ){
+						return reference.substring(2, reference.length()-1);
+					}else {
+						return reference.substring(1);
+					}
+				}
+				public Object referenceInsert(String reference, Object value) {
+					if ( reference.startsWith("$res_") || 
+						 reference.startsWith("${res_")  ){
+						String key = getKey(reference);
+						/**
+						 * @fixme: 要根据key判断是否是dynamic的资源,如果是才进行合并处理 
+						 */
+						
+	                    StringWriter dataWriter = new StringWriter();    
+		    			try {
+							ve.evaluate(vc,  dataWriter,"SkinMerger.log", (String)value);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+		    			//对常量进行合并处理,这样常量就可以读取动态数据(譬如:request支类的),也可以引用其他常量
+		                return dataWriter.toString();
+
+					}else{
+					   return super.referenceInsert(reference, value);
+					}
+				}
+				
+			});
+
+			
+			
+			
 	        //copy资源
 	        if (input.getAllResources().size() > 0) {
 	            Iterator it = input.getAllResources().keySet().iterator();
 	            while (it.hasNext()) {
 	                String key = (String) it.next();
-	                String data = input.getResource(key).getData();//常量值   
+	                Resource resource = input.getResource(key);
+	                String data = resource.getData();//常量值   
 	                vc.put("res_" + key, data);
 	            }
 	        }
 	
+	        //2008-3-10 黄云辉
+	        if (input.getAllResources().size() > 0) {
+	            Iterator it = input.getAllResources().keySet().iterator();
+	            while (it.hasNext()) {
+	                String key = (String) it.next();
+	                Resource resource = input.getResource(key);
+	                if ( resource.isDynamic() ){
+		                String data = resource.getData();//常量值	                
+	                    StringWriter dataWriter = new StringWriter();    
+		    			ve.evaluate(vc,  dataWriter,"SkinMerger.log", data);
+		    			//对常量进行合并处理,这样常量就可以读取动态数据(譬如:request支类的),也可以引用其他常量
+		                vc.put("res_" + key, dataWriter.toString());
+	                }
+	            }
+	        }
+
+			
 	        
 			this.getTemplate(input).merge(vc, pWriter);	
-
+	        //os.write(w.getBuffer().toString().getBytes());
 
 		} catch(Exception ex) {
 			throw new XkinsException("合并模板 (" + input.getId() + ") 失败!" + ex.getMessage(), ex);

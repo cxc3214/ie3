@@ -182,7 +182,7 @@ public class TableConstants {
   /**
    * body结束
    */
-  public static final String BODY_END_ID = "bodyBegin";
+  public static final String BODY_END_ID = "bodyEnd";
   
   /**
    * table开始

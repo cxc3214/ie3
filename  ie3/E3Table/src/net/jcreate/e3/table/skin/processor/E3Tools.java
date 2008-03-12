@@ -1,4 +1,4 @@
-package net.jcreate.xkins.processor;
+package net.jcreate.e3.table.skin.processor;
 
 public class E3Tools {
 

@@ -14,37 +14,32 @@
  * limitations under the License.
  */
 
+package net.jcreate.e3.table.skin.processor;
+
 /**
- * 欢迎加入 E3平台联盟QQ群:21523645 
+ * 
+ * @author 黄云辉
+ *
  */
-package net.jcreate.e3.table.skin;
+public class InitVelocityEngineException extends RuntimeException{
 
-public class Template {
+	private static final long serialVersionUID = 1L;
 
-	/**
-	 * 模板名称
-	 */
-	private String name;
-
-	/**
-	 * 模板值
-	 */
-	private String content;
-
-	public String getContent() {
-		return content;
+	public InitVelocityEngineException() {
+		super();
 	}
 
-	public void setContent(String content) {
-		this.content = content;
+	public InitVelocityEngineException(String arg0, Throwable arg1) {
+		super(arg0, arg1);
 	}
 
-	public String getName() {
-		return name;
+	public InitVelocityEngineException(String arg0) {
+		super(arg0);
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public InitVelocityEngineException(Throwable arg0) {
+		super(arg0);
 	}
+
 
 }

@@ -99,7 +99,7 @@ public class SkinHTMLTableBuilder extends AbstractHTMLTableBuilder{
 		appendScript(getTemplateValue(TableConstants.CAPTION_ID, context));
 	}
 	
-	private void appendScript(String pScript){
+	final protected void appendScript(String pScript){
 		if ( pScript == null ){
 			return;
 		}
@@ -110,7 +110,7 @@ public class SkinHTMLTableBuilder extends AbstractHTMLTableBuilder{
 		Context context = new DefaultContext();
 		context.put("cell", pCell);		
 		context.put("cellValue", pCell.getValue());
-		context.put("row", pCell.getRow());
+		context.put("row", pCell.getRow());		
 		context.put("column", pCell.getColumn());
 		context.put("table", pCell.getRow().getTable());
 		context.put("webContext", this.getTableContext().getWebContext());
@@ -360,12 +360,13 @@ public class SkinHTMLTableBuilder extends AbstractHTMLTableBuilder{
 	 * @param pContext
 	 * @return
 	 */
-    private String getTemplateValue(String pTemplateID, Context pContext){
+    final protected String getTemplateValue(String pTemplateID, Context pContext){
     	XkinProcessor processor = getXkinProcessor(pTemplateID);
     	if ( processor == null ){
     		return null;
     	}
     	processor.addParameters(pContext.getParameters());
+    	processor.addParameter("messageResource",new MessageHelper(this.getTableContext()) );
     	return processor.processContent();
     }
 	
@@ -387,46 +388,4 @@ public class SkinHTMLTableBuilder extends AbstractHTMLTableBuilder{
            return result;
 		
 	}
-//	private static Map skins = new HashMap();
-//	private Skin skin = null;
-//	protected void init(HTMLTable pTable) {
-//		   if ( tableScript == null )
-//			     tableScript = new StringBuffer(bufferSize);
-//			   else
-//			     tableScript.delete(0, tableScript.length());
-//		String skinID = pTable.getSkin();
-//		if ( skinID == null ){
-	//		skinID = TableConstants.DEFAULT_SKIN;
-//		}
-//		String path = getSkinPath(skinID);
-//		  if ( skins.containsKey(path) == false ){
-//			  synchronized(this){
-//				  /**
-//				   * 说明：: 这里采用最简单的锁策略，因为这种碰撞几率很小，这样做不会有什么问题
-//				   */
-//			     InputStream is = getSkinInputStream(path, this.tableContext.getWebContext());
-//			     SkinLoader skinLoader = new SkinLoader();
-//			     Skin result = skinLoader.load(is);
-//			     skins.put(path, result);
-//			  }
-//		  }
-//		  skin = (Skin)skins.get(path);
-//		
-//	}
-	
-//	 protected InputStream getSkinInputStream(final String pSkinDefFile, final WebContext pWebContext) throws LoadSkinException{
-//		  InputStream result = pWebContext.getResourceAsStream(pSkinDefFile);
-//		  if ( result == null ){
-//			  result = this.getClass().getClassLoader().getResourceAsStream(pSkinDefFile);
-//		  }
-//		  if ( result == null ){
-//			  throw new LoadSkinException("没有找到皮肤定义文件:" + pSkinDefFile  );
-//		  }
-//		  return result;
-//	  }	
-//	
-//	protected String getSkinPath(String pTheme){
-//		 String path = "e3/table/skins/" + pTheme + ".e3table.xml";
-//		 return path;
-//	}
 }

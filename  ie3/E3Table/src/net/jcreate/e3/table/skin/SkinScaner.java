@@ -4,6 +4,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 /**
  * 
  * @author E3
@@ -11,6 +14,10 @@ import java.util.List;
  */
 public class SkinScaner
 {
+	private SkinScaner(){
+		
+	}
+	private static final Log logger = LogFactory.getLog( SkinScaner.class );
 
 	/**
 	 * 默认皮肤定义文件
@@ -33,7 +40,7 @@ public class SkinScaner
 	 * @throws SkinException
 	 *             扫描过程出现错误
 	 */
-	public String[] scan(String pDir, final String pSkinFile)
+	public static String[] scan(String pDir, final String pSkinFile)
 			throws SkinException
 	{
 		File root = new File(pDir);
@@ -45,23 +52,30 @@ public class SkinScaner
 
 		if (root.exists() == false)
 		{
+			logger.debug("目录不存在!" + pDir);
 			return new String[0];
 		}
 
 		File[] filesOrDirs = root.listFiles();
 		for (int i = 0; i < filesOrDirs.length; i++)
 		{
-			if (filesOrDirs[i].isDirectory() == true)
+			if (filesOrDirs[i].isDirectory() == false)
 			{
+				continue;
+			}
 				File[] childFiles = filesOrDirs[i].listFiles();
 				for (int j = 0; j < childFiles.length; j++)
 				{
 					if (pSkinFile.equals(childFiles[j].getName()))
 					{
-						listFiles.add(filesOrDirs[i].getName());
+						String skinDir = filesOrDirs[i].getName();
+						if ( logger.isDebugEnabled() ){
+							logger.debug("发现皮肤:" +  filesOrDirs[i].getAbsolutePath());							
+						}
+						listFiles.add(skinDir);
+						break;
 					}
 				}
-			}
 
 		}
 		return (String[]) listFiles.toArray(new String[listFiles.size()]);
@@ -77,7 +91,7 @@ public class SkinScaner
 	 * @throws SkinException
 	 *             扫描过程出现错误
 	 */
-	public String[] scan(String pDir) throws SkinException
+	public static String[] scan(String pDir) throws SkinException
 	{
 		return scan(pDir, DEFAULT_SKIN_FILE);
 	}
@@ -85,7 +99,7 @@ public class SkinScaner
 	public static void main(String[] args)
 	{
 		SkinScaner sc = new SkinScaner();
-		String[] arg = sc.scan("C:\\e3");
+		String[] arg = sc.scan("E:/eclipse312/eclipse/workspace/E3Samples/WebRoot/e3/table/skins");
 		for (int i = 0; i < arg.length; i++)
 		{
 			System.out.println(arg[i]);

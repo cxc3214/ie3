@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xkins>
-    <global-processor id="velocity" type="net.jcreate.xkins.processor.VelocityTemplateProcessor"/>
-	<skin name="classicLook" url="/store/skins/classicLook" definition="/xkins-definition.xml" defaultSkin="true"/>
+    <global-processor id="e3tableVelocity" type="net.jcreate.e3.table.skin.processor.VelocityTemplateProcessor"/>
+ #foreach ($skinDef in $skinDefs)
+    <skin name="${skinDef.name}" url="${skinDef.skinHome}" definition="/Skin.xml" />   
+ #end    
 </xkins>

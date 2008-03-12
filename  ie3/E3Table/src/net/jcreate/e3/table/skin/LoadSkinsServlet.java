@@ -1,41 +1,48 @@
 package net.jcreate.e3.table.skin;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.Enumeration;
-
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import net.jcreate.xkins.Skin;
 import net.jcreate.xkins.XkinProcessor;
 import net.jcreate.xkins.Xkins;
 import net.jcreate.xkins.XkinsLoader;
-import net.jcreate.xkins.XkinsServlet;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
-public class SkinServlet extends HttpServlet {
-    //~ Static fields/initializers -----------------------------------------------------------------
-
-    private static SkinServlet instance = null;
+/**
+ * 这些代码是来自xkins组件,在它基础上修改了一些东西.
+ * @author 黄云辉
+ *
+ */
+public class LoadSkinsServlet extends HttpServlet {
+	
+	private static final long serialVersionUID = 1L;
+	private static LoadSkinsServlet instance = null;
+    private static final Log logger = LogFactory.getLog( LoadSkinsServlet.class );    
 
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private String config = null;
-    private String defaultSkinName = null;
+
     private int debug = 0;
-    private int autoReload=0;
-    private String skinType=null;
+    private int autoReload= LoadSkinsListener.DEFAULT_AUTO_RELOAD;
+    /**
+     * 皮肤扫描路径.如果存在多个皮肤路径，以逗号/分号分隔.
+     */
+    private String skinPath;
+    
 	public static final String RELOAD_COMMAND = "reload";
     //~ Constructors -------------------------------------------------------------------------------
 
     /**
      * Crea un objecto XkinsServlet.
      */
-    public SkinServlet() {
+    public LoadSkinsServlet() {
         instance = this;
     }
 
@@ -45,25 +52,11 @@ public class SkinServlet extends HttpServlet {
      * Devuelve la instancia del servlet
      * @return
      */
-    public static SkinServlet getInstance() {
+    public static LoadSkinsServlet getInstance() {
         return instance;
     }
 
-    /**
-     * Sets the config.
-     * @param config The config to set
-     */
-    public void setConfig(String config) {
-        this.config = config;
-    }
 
-    /**
-     * Returns the config.
-     * @return String
-     */
-    public String getConfig() {
-        return config;
-    }
 
     /**
      * Sets the debug.
@@ -81,21 +74,6 @@ public class SkinServlet extends HttpServlet {
         return debug;
     }
 
-    /**
-     * Sets the defaultSkinName.
-     * @param defaultSkinName The defaultSkinName to set
-     */
-    public void setDefaultSkinName(String defaultSkinName) {
-        this.defaultSkinName = defaultSkinName;
-    }
-
-    /**
-     * Returns the defaultSkinName.
-     * @return String
-     */
-    public String getDefaultSkinName() {
-        return defaultSkinName;
-    }
 
     /** Returns a short description of the servlet.
      */
@@ -108,6 +86,7 @@ public class SkinServlet extends HttpServlet {
     public void destroy() {
     }
 
+    
     /** Initializes the servlet.
      */
     public void init(ServletConfig config)
@@ -115,12 +94,20 @@ public class SkinServlet extends HttpServlet {
         super.init(config);
         this.setDebug((config.getInitParameter("debug") != null)
                       ? Integer.parseInt(config.getInitParameter("debug")) : 0);
-        this.setConfig((config.getInitParameter("config") != null)
-                       ? config.getInitParameter("config") : XkinsLoader.getConfig());
-        this.setDefaultSkinName((config.getInitParameter("defaultSkinName") != null)
-                                ? config.getInitParameter("defaultSkinName")
-                                : Skin.ATTR_DEFAULT_SKIN_NAME);
-		this.setSkinType(config.getInitParameter("skinType"));
+        String skinPath = config.getInitParameter("skinPath");
+        
+        
+        String webHome = config.getServletContext().getRealPath("/");
+        
+        /**
+         * 创建皮肤定义文件:
+         */
+		SkinDefFileCreator.create(
+				webHome,
+				SkinUtil.getSkinPaths(skinPath) ,
+				webHome +LoadSkinsListener.SKIN_DEF_FILE
+		);
+
 		try {
 			this.setAutoReload((config.getInitParameter("autoReload") != null)
 						  ? Integer.parseInt(config.getInitParameter("autoReload")): 0);
@@ -130,26 +117,6 @@ public class SkinServlet extends HttpServlet {
 
         initSkins(config);
     }
-
-    /**
-     * Inicializa la carga de skins, tomando como archivo de configuraci�n el inputStream enviado por par�metro.
-     * @param in
-     */
-    public void initSkins(InputStream in) {
-        try {
-            XkinsLoader xs = new XkinsLoader();
-            xs.setDebug(this.getDebug());
-			xs.setServletContext(this.getServletContext());
-			xs.setSkinType(this.getSkinType());
-            Xkins xks = xs.loadSkins(in);
-            this.getServletConfig().getServletContext().setAttribute(Xkins.ATTR_SKINS, xks);
-            this.getServletConfig().getServletContext().setAttribute(Skin.ATTR_DEFAULT_SKIN_NAME,
-                                                                     this.getDefaultSkinName());
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-
 	private void printToOut(HttpServletResponse response) throws IOException {
 		response.setContentType("text/html");
 
@@ -166,48 +133,44 @@ public class SkinServlet extends HttpServlet {
 		out.close();			
 	}
 
-    /** Handles the HTTP <code>GET</code> method.
-     * @param request servlet request
-     * @param response servlet response
-     */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /** Handles the HTTP <code>POST</code> method.
-     * @param request servlet request
-     * @param response servlet response
-     */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /**
-     * Inicializa la carga de Skins usando el this.getServletConfig()
-     */
     protected void initSkins() {
         this.initSkins(this.getServletConfig());
     }
 
     /**
-     * Inicializa la carga de skins.
+     * 初始化皮肤
      * @param config
      */
     protected void initSkins(ServletConfig config) {
         try {
             XkinsLoader xs = new XkinsLoader();
             xs.setDebug(this.getDebug());
-            xs.setConfig(this.getConfig());
+            xs.setConfig(LoadSkinsListener.SKIN_DEF_PATH);
 			xs.setAutoReload(this.getAutoReload());
-			xs.setSkinType(this.getSkinType());
 			xs.setServletContext(this.getServletContext());
+			XkinsLoader.setRealWebPath( config.getServletContext().getRealPath("/") );
+			logger.info("开始装载e3.table皮肤!");			
             config.getServletContext().setAttribute(Xkins.ATTR_SKINS, xs.loadSkins());
-            config.getServletContext().setAttribute(Skin.ATTR_DEFAULT_SKIN_NAME,
-                                                    this.getDefaultSkinName());
+  		    logger.info("成功装载e3.table皮肤!");
         } catch (Exception ex) {
-            ex.printStackTrace();
+        	String webHome = config.getServletContext().getRealPath("/");        	
+			final String MSG =
+				"初始化e3.table皮肤失败!皮肤定义文件路径:" + webHome +LoadSkinsListener.SKIN_DEF_FILE;
+			logger.error(MSG, ex);
+			if ( logger.isDebugEnabled() ){
+		      ex.printStackTrace();	
+			}
+
         }
     }
 
@@ -232,10 +195,6 @@ public class SkinServlet extends HttpServlet {
 		
 	}
 
-    /** Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
-     * @param request servlet request
-     * @param response servlet response
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -264,18 +223,13 @@ public class SkinServlet extends HttpServlet {
 		autoReload = i;
 	}
 
-	/**
-	 * @return
-	 */
-	public String getSkinType() {
-		return skinType;
+
+	public String getSkinPath() {
+		return skinPath;
 	}
 
-	/**
-	 * @param string
-	 */
-	public void setSkinType(String string) {
-		skinType = string;
+	public void setSkinPath(String skinPath) {
+		this.skinPath = skinPath;
 	}
 
 }

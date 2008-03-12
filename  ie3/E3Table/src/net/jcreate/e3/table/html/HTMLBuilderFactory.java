@@ -39,9 +39,16 @@ public class HTMLBuilderFactory {
 			logger.error(msg);
 			throw new RuntimeException(msg);
 		}
+		//默认按fast方式构造,可以提高性能.
 		if ( "default".equalsIgnoreCase(pClassName) ){
+			return new FastSkinHTMLTableBuilder();
+		}else if ( "skin".equalsIgnoreCase(pClassName) ){
 			return new SkinHTMLTableBuilder();
+		} else if ( "fast".equalsIgnoreCase(pClassName) ){
+			return new FastSkinHTMLTableBuilder();
 		}
+		
+		
 		
 		
 		/**

@@ -35,6 +35,8 @@ import net.jcreate.xkins.resources.Resource;
 
 import org.apache.commons.digester.AbstractObjectCreationFactory;
 import org.apache.commons.digester.Digester;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
@@ -510,11 +512,8 @@ public class XkinsLoader {
 		autoReload = i;
 	}
 
-	/**
-	 * Clase Thread que se encarga de recargar los templates de ser necesario
-	 * @author Guillermo Meyer
-	 */
 	private class AutoReloader extends Thread {
+		private final Log log = LogFactory.getLog( AutoReloader.class );
 		public void run() {
 			while(true) {
 				try {
@@ -568,8 +567,10 @@ public class XkinsLoader {
 			Long lastModified = new Long(file.lastModified());
 			Long lastModifiedOrig = (Long)files.get(file.getPath());
 			boolean ret = lastModifiedOrig!=null && lastModifiedOrig.longValue() != lastModified.longValue();
-			if(ret) 
+			if(ret) {
+				log.info("模板文件文件发生变化:" + file.getAbsolutePath());
 				files.put(file.getPath(), lastModified);
+			}
 			return ret; 
 		}
 	}

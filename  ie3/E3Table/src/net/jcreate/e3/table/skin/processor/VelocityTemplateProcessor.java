@@ -89,7 +89,7 @@ public class VelocityTemplateProcessor
      * 处理模板
      * 将合并后信息输出到os流
      */
-    public void process(Template input, Context context, StringWriter pWriter)
+    public void process(final Template input, Context context, StringWriter pWriter)
             throws XkinsException {
         try {       	
 	        final VelocityContext vc = new VelocityContext();
@@ -119,29 +119,47 @@ public class VelocityTemplateProcessor
 			vc.attachEventCartridge(new EventCartridge(){
 
 				private String getKey(String reference){
-					//不是${xxx} 就是$xx,目前只支持这种形式 
+					//不是${xxx} 就是$xx,目前只支持这种形式
+					final int len = "res_".length();
 					if ( reference.startsWith("${") ){
-						return reference.substring(2, reference.length()-1);
+						return reference.substring(2 + len, reference.length()-1);
 					}else {
-						return reference.substring(1);
+						return reference.substring(1 + len);
 					}
 				}
+				
+				
 				public Object referenceInsert(String reference, Object value) {
 					if ( reference.startsWith("$res_") || 
 						 reference.startsWith("${res_")  ){
 						String key = getKey(reference);
-						/**
-						 * @fixme: 要根据key判断是否是dynamic的资源,如果是才进行合并处理 
-						 */
-						
+						Resource resource = input.getResource(key);
+						if ( resource == null ){//为定义
+							return super.referenceInsert(reference, value);
+						}
+						if ( resource.isDynamic() == false ){
+							return super.referenceInsert(reference, value);
+						}
 	                    StringWriter dataWriter = new StringWriter();    
 		    			try {
 							ve.evaluate(vc,  dataWriter,"SkinMerger.log", (String)value);
 						} catch (Exception e) {
 							e.printStackTrace();
+							throw new java.lang.RuntimeException("修饰皮肤失败!", e);
 						}
-		    			//对常量进行合并处理,这样常量就可以读取动态数据(譬如:request支类的),也可以引用其他常量
-		                return dataWriter.toString();
+						if ( resource.isExeTwice() == false){
+							return dataWriter.toString();
+						} 
+						   //执行第次合并.当在资源文件里消息包含动态变量时，需要设置exeTwice为true
+						    StringWriter twiceWriter = new StringWriter(); 
+			    			try {
+			    				String tmp = dataWriter.toString();
+								ve.evaluate(vc,  twiceWriter,"SkinMerger.log", tmp);
+								return twiceWriter.toString();
+							} catch (Exception e) {
+								e.printStackTrace();
+								throw new java.lang.RuntimeException("修饰皮肤失败!", e);
+							}
 
 					}else{
 					   return super.referenceInsert(reference, value);

@@ -25,7 +25,9 @@ public abstract class Resource
     protected String name = null;
     protected Template template = null;
     private String srcTemplateName = null; 
-    private boolean dynamic = false; 
+    private boolean dynamic = false;
+    private boolean exeTwice = false;
+                       
     
 
     //~ Constructors -------------------------------------------------------------------------------
@@ -125,4 +127,12 @@ public abstract class Resource
             return null;
         }
     }
+
+	public boolean isExeTwice() {
+		return exeTwice;
+	}
+
+	public void setExeTwice(boolean exeTwice) {
+		this.exeTwice = exeTwice;
+	}
 }

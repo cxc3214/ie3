@@ -439,6 +439,10 @@ public class XkinsLoader {
 		//Crea los resources globales constant
 		digester.addObjectCreate(prefix + "skin/constant", CONSTANT_CLASS_NAME);
 		digester.addSetProperties(prefix + "skin/constant");
+		//digester.addSetProperty(prefix + "skin/constant", "value", "value");
+		digester.addBeanPropertySetter(prefix + "skin/constant/value", "value");
+		//设置常量值
+		
 		digester.addSetTop(prefix + "skin/constant", "setSkin", SKIN_CLASS_NAME);
 		digester.addSetNext(prefix + "skin/constant", "addResource", RES_CLASS_NAME);
 		//setea el processor global de skin
@@ -476,6 +480,9 @@ public class XkinsLoader {
 		//Crea los resources constants
 		digester.addObjectCreate(prefix + "skin/template/constant", CONSTANT_CLASS_NAME);
 		digester.addSetProperties(prefix + "skin/template/constant");
+		//digester.addSetProperty(prefix + "skin/template/constant", "value", "value");
+		//设置常量值
+
 		digester.addSetTop(prefix + "skin/template/constant", "setTemplate", TEMPLATE_CLASS_NAME);
 		digester.addSetNext(prefix + "skin/template/constant", "addResource", RES_CLASS_NAME);
 		//Agrega el template

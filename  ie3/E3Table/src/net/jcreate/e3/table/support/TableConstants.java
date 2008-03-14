@@ -84,7 +84,7 @@ public class TableConstants {
   /**
    * 默认皮肤
    */
-  public static final String DEFAULT_SKIN = "001";
+  public static final String DEFAULT_SKIN = "E3001";
   /**
    * 默认builder
    */

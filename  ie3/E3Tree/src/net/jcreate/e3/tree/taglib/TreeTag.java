@@ -57,6 +57,7 @@ public class TreeTag extends BodyTagSupport implements DynamicAttributes {
 	private String scope;
 	private String builder = "default";
 	private NodeVisitor visitor;
+	private boolean defaultSort = true;
 	
 	/**
 	 * 节点排序器，如果设置了，则使用它来对节点排序
@@ -213,11 +214,11 @@ public class TreeTag extends BodyTagSupport implements DynamicAttributes {
 		} else if ( this.sortProperty != null ){
 			result = new PropertyNodeComparator(this.sortProperty);
 		} else {
-			/**
-			 * @fixme: 以后再加一个控制变量，用于设置是否起用
-			 * 默认排序器.
-			 */
-			result = new DefaultNodeComparator();
+			if ( defaultSort == false ){
+				return null;
+			} else {
+				result = new DefaultNodeComparator();				
+			}
 		}
 		if ( this.reverse ){
 			return new ReverseComparator( result );
@@ -262,6 +263,12 @@ public class TreeTag extends BodyTagSupport implements DynamicAttributes {
 	}
 	public void setVisitor(NodeVisitor visitor) {
 		this.visitor = visitor;
+	}
+	public boolean isDefaultSort() {
+		return defaultSort;
+	}
+	public void setDefaultSort(boolean defaultSort) {
+		this.defaultSort = defaultSort;
 	}
 	
 	

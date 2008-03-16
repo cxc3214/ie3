@@ -30,7 +30,16 @@ public class RowTag extends TagSupport implements Attributeable{
 	private static final long serialVersionUID = 1L;
 
 	private HTMLRow currRow = null;
+	private String style; 
 	
+	public String getStyle() {
+		return style;
+	}
+
+	public void setStyle(String style) {
+		this.style = style;
+	}
+
 	public int doEndTag() throws JspException {
 		return super.doEndTag();
 	}
@@ -38,6 +47,8 @@ public class RowTag extends TagSupport implements Attributeable{
 	public void setAttribute(String name, String value) {
 		currRow.setAttribute(name, value);
 	}
+	
+	
 
 	public int doStartTag() throws JspException {
 		TableTag tableTag = (TableTag) findAncestorWithClass(this, TableTag.class);
@@ -48,6 +59,9 @@ public class RowTag extends TagSupport implements Attributeable{
 			return SKIP_BODY;
 		}
 		currRow = tableTag.getCurrRow();
+		if ( style != null ){
+		  setAttribute("style", this.style);
+		}
 		return EVAL_BODY_INCLUDE;
 	}
 

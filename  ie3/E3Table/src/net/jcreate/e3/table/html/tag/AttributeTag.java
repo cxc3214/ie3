@@ -21,6 +21,7 @@
 package net.jcreate.e3.table.html.tag;
 
 import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.tagext.BodyContent;
 import javax.servlet.jsp.tagext.BodyTagSupport;
 
 import net.jcreate.e3.table.html.Attributeable;
@@ -58,7 +59,12 @@ public class AttributeTag extends BodyTagSupport {
 		}
 		String propertyValue = null;
 		if ( value == null ){
-			propertyValue = this.bodyContent.getString();
+			BodyContent context = this.bodyContent;
+			if ( context != null ){
+			  propertyValue = context.getString();
+			  context.clearBody();
+			  this.setBodyContent(null);//tomcat5.028好象不会自动清除,所以我们显示设置为nulll
+			}
 		}else{
 			propertyValue = value;
 		}

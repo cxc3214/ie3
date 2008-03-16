@@ -73,15 +73,15 @@ public abstract class TemplateEngineSupport implements TemplateEngine{
 				log.info("合并模板文件成功：\"" + FILE_PATH + "\"");
 			}
 		}else{
-			final String TEMPLATE_STR = getStrTemplate(pTemplate);
-			//合并字符串日志级别设置为debug,因为主要是fcg内部使用的，没必要呈现给终端用户.
-			if ( log.isDebugEnabled() ){
-				log.debug("开始合并字符串 \""+ TEMPLATE_STR + "\"");
-			}
+//			final String TEMPLATE_STR = getStrTemplate(pTemplate);
+//			//合并字符串日志级别设置为debug,因为主要是fcg内部使用的，没必要呈现给终端用户.
+//			if ( log.isDebugEnabled() ){
+//				log.debug("开始合并字符串 \""+ TEMPLATE_STR + "\"");
+//			}
 			mergeStringTemplate(pTemplate, pContext, pWriter);
-			if ( log.isDebugEnabled() ){
-				log.debug("合并字符串 \"" + TEMPLATE_STR + "\" 成功!");
-			}
+//			if ( log.isDebugEnabled() ){
+//				log.debug("合并字符串 \"" + TEMPLATE_STR + "\" 成功!");
+//			}
 			
 		}
 		

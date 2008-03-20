@@ -33,17 +33,15 @@ import net.jcreate.xkins.processor.TemplateProcessor;
  *
  */
 public class XkinProcessor extends ContextHolder {
-    //~ Static fields/initializers -----------------------------------------------------------------
-
-    /**
-     * Constante para indicar una propiedad bodyContent.
-     */
     public static final String JSP_BODY = "ar.com.koalas.xkins.XkinProcessor.bodyContent";
 
     /**
-     * Nombre del XkinProcessor por default.
+     * 默认的请求处理器
      */
     public static final String DEFAULT_PROCESSOR_NAME = "ar.com.koalas.xkins.processor.TemplateProcessorImpl";
+    /**
+     * 默认的请求处理器
+     */
     private static TemplateProcessor defaultProcessor = null;
     private static Map processors = null;
 	
@@ -136,6 +134,7 @@ public class XkinProcessor extends ContextHolder {
     public XkinProcessor(String p_skinName, String templateName, ServletRequest request,
 							ServletResponse response) {
 		try {
+			//获取皮肤名称
 			HttpSession session = ((HttpServletRequest)request).getSession();
 	        if (p_skinName == null) {
 	            this.skinName = (String) session.getAttribute(Skin.ATTR_SKIN_NAME);
@@ -146,7 +145,9 @@ public class XkinProcessor extends ContextHolder {
 	            this.skinName = p_skinName;
 	        }
 	
-	        //Obtengo los skins
+	        /**
+	         * 获取xkins对象.
+	         */
 	        this.xs = (Xkins) session.getServletContext().getAttribute(Xkins.ATTR_SKINS);
 	        
 	        if(this.xs==null) throw new Exception("No Xkins are defined.");

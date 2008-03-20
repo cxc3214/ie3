@@ -22,6 +22,11 @@ public abstract class AbstractWebTreeBuilder extends TreeBuilderSupport implemen
 	protected StringBuffer treeScript = null;
 	private int bufferSize = DEFAULT_BUFFER_SIZE;
 	
+	public AbstractWebTreeBuilder(){
+		
+	}
+	
+	
 	public void init(WebContext pWebContext){
 		this.webContext = pWebContext;
 	    treeScript = new StringBuffer(bufferSize);		

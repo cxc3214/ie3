@@ -114,6 +114,21 @@ public class RequestUtil {
             return contextPath + adjustUrl(pUrl);			
 		}
 		
+		public static String getUrl(String pUrl, WebContext pWebContext){
+			if ( pUrl == null ){
+				return null;
+			}
+			if ( pWebContext == null ){
+				return null;
+			}
+			String contextPath = pWebContext.getContextPath();
+			/**
+			 * @todo: 1:判断url格式，是否跨域url,如果是，不需要加contextpath
+			 *        2:
+			 */
+            return contextPath + adjustUrl(pUrl);			
+		}
+		
 
 		/**
 		 * 给未添加"/"url加上"/"

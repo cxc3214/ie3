@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Resource" default="md5rename" basedir=".">
+	<property name="lib" value="./lib"/>		
+	<property name="classes" value="./bin"/>				
+
+    <path id="project.classpath">
+        <pathelement location="${classes}"/>
+    	<fileset dir="${lib}">
+    	        <include name="**/*.jar"/>
+ 	    </fileset>
+    </path> 
+	
+	<taskdef name="md5rename" classname="net.jcreate.e3.resource.tools.MD5FileNameTask" >
+		<classpath refid="project.classpath" />
+	</taskdef>
+	<!-- web项目路径 -->
+	<property name="webroot" value="E:\eclipse312\eclipse\workspace\E3Samples\WebRoot"/>		
+	<!-- 资源包名 -->
+ 	<property name="resourceName" value="Resources"/>			
+	<!-- 临时工作目录 -->
+ 	<property name="outdir" value="${java.io.tmpdir}"/>			
+	<target name="md5rename">
+	  <!-- 输出临时目录 -->	
+      <md5rename  out="${outdir}">
+        <fileset dir="${webroot}" includes="**/*.js"/>
+            <fileset dir="${webroot}" includes="**/*.css"/>      	
+     </md5rename>
+		
+   	   <jar destfile="${webroot}/WEB-INF/lib/${resourceName}.jar"
+ 				   includes="*.e3"
+ 			       basedir="${outdir}">
+ 				<manifest>
+ 			       <attribute name="Built-By" value="Build by e3"/>
+ 			    </manifest>
+  	   </jar>
+		<delete>
+		    <fileset dir="${outdir}" includes="*.e3"/>
+   	   </delete>
+		
+    </target>
+	
+	
+</project>

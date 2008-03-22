@@ -23,7 +23,7 @@ import net.jcreate.e3.table.SortInfo;
 
 public class EmptySortInfo implements SortInfo {
 	
-	private static EmptySortInfo me = new EmptySortInfo();
+	public static EmptySortInfo me = new EmptySortInfo();
 	private EmptySortInfo(){
 		
 	}

@@ -26,7 +26,7 @@ public class EmptyDataModel  extends AbstractDataModel{
 	private EmptyDataModel(){
 		
 	}
-	private static final EmptyDataModel me = new EmptyDataModel();
+	public static final EmptyDataModel me = new EmptyDataModel();
 	
 	public static EmptyDataModel getInstance(){
 		return me;

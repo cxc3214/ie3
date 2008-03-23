@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skin name="classicLook" >
+	<processor type="net.jcreate.xkins.processor.VelocityTemplateProcessor"/>
+	<path name="cssPath" url="/css"/>
+ 	<path name="imagesPath" url="/images"/>
+	<path name="jsPath" url="/js"/>
+ 	<path name="templatePath" url="/template"/>	
+ 	<path name="ePageListResourcePath" url="/images/navigation"/>
+	
+	<constant name="outlookBGColor" value="#A7B8D2"/>
+ 	
+ 	<element name="imageTitle" path="imagesPath" url="/tb4.gif"/>	
+	<element name="stylesheet" path="cssPath" url="/Styles.css"/>
+	<element name="xkin-default" path="cssPath" url="/default.css"/>
+ 	<element name="navigationTemplate" path="templatePath" url="/navigation.vm"/>	
+
+	<template name="loginUI" >
+		<content><![CDATA[
+          <table class="updateTable">
+          <tr > 为什么? ddd
+            <td class="label">用户ID</td>
+            <td class="input">${userIDUI}</td>
+          </tr>
+          <tr>
+            <td class="label">userPWD</td>
+            <td class="input">${userPWDUI}</td>
+          </tr>
+          </table>		
+		]]></content>
+	</template>
+	
+	<template name="menuUI" >
+		<content><![CDATA[
+		 ${menus} ....
+		]]></content>
+	</template>
+	
+
+	<template name="indexLayout" >
+		<content><![CDATA[
+          <table border="10px"><tr>
+           <td>${loginBox}</td>
+           <td>${menuBox}</td>           
+          </tr></table>		
+		]]></content>
+	</template>
+	
+		
+</skin>	

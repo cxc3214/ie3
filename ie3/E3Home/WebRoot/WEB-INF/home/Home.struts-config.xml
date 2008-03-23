@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="GBK" ?>
+
+<!DOCTYPE struts-config PUBLIC
+          "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+          "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+          
+<struts-config>
+
+  <!-- ========== Form Bean Definitions =================================== -->
+
+    <form-beans>    
+  </form-beans>
+   <action-mappings>
+   
+    <action   path="/indexAction" scope="request" 
+      type="net.jcreate.home.index.IndexAction" >
+      <forward name="index" path="/Index.jsp" />
+    </action>
+   
+  </action-mappings>
+    
+  
+    <message-resources 
+     parameter="net.jcreate.home.config.ApplicationResources"
+     />
+  
+</struts-config>
+

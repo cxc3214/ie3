@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="GB2312"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	<!-- ========================= GENERAL DEFINITIONS ========================= -->
+
+	<!-- Configurer that replaces ${...} placeholders with values from properties files -->
+	<!-- (in this case, mail and JDBC related properties) -->
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>e3:WEB-INF/config/E3.properties</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName">
+			<value>org.hsqldb.jdbcDriver</value>
+		</property>
+		<property name="url">
+			<value>jdbc:hsqldb:mem:tree</value>
+		</property>
+		<property name="username">
+			<value>sa</value>
+		</property>
+		<property name="password">
+			<value></value>
+		</property>
+	</bean>	
+	
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	   <property name="dataSource" ref="dataSource"/>
+	</bean>
+
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+	 <constructor-arg ref="dataSource"/>
+	</bean>
+	
+	
+
+	<bean id="baseTxProxy"  abstract="true"  class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean" >
+		<property name="transactionManager">
+			<ref local="transactionManager"/>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+                <prop key="get*">PROPAGATION_REQUIRED,readOnly,-Exception</prop>									
+                <prop key="find*">PROPAGATION_REQUIRED,readOnly,-Exception</prop>									                
+                <prop key="query*">PROPAGATION_REQUIRED,readOnly,-Exception</prop>									                                
+				<prop key="*">PROPAGATION_REQUIRED,-Exception</prop>				
+			</props>
+		</property>
+	</bean>	
+	
+	<bean id="treeServiceTarget"  class="net.jcreate.e3.samples.tree.TreeService">
+	    <property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+	
+	<bean id="treeService"  parent="baseTxProxy"   >
+		<property name="target">
+			<ref local="treeServiceTarget"/>
+		</property>
+	</bean>
+	
+	
+
+</beans>

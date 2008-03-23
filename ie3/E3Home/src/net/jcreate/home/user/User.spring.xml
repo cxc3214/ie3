@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <bean id="userDAO" singleton="true" class="net.jcreate.home.user.UserDAO" parent="baseDAO">
+	</bean>
+
+	<bean id="userServiceTarget" singleton="true" class="net.jcreate.home.user.UserService">
+	   <property name="userDAO"><ref local="userDAO"/></property>
+	</bean>
+	
+	<bean id="userService" singleton="true" parent="baseTxProxy">
+		<property name="target">
+			<ref local="userServiceTarget"/>			            
+		</property>
+	</bean>
+</beans>

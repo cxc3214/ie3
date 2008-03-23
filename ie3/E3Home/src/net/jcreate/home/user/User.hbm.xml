@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN"
+		"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">	
+<hibernate-mapping>
+	<class name="net.jcreate.home.user.User" table="st_user">
+		<id name = "oid"
+            column="oid"
+            unsaved-value = "null">
+               <generator class="assigned" />
+		</id>
+ 		<property name="loginID" />		
+ 		<property name="userName"/>
+ 		<property name="userPWD"/> 		
+ 		<property name="sex"/> 		
+ 		<property name="userLevel"/> 		 		
+ 		<property name="email"/> 		 		 		
+ 		<property name="qq"/>
+ 		<property name="msn"/> 		
+ 		<property name="ww"/> 		 		
+ 		<property name="address"/> 		 		 		
+ 		<property name="postcode"/>
+ 			<property name="question"/> 		 		 		
+ 		<property name="answer"/>
+ 
+ 	<property name="regDate"/> 		 		 		
+ 		<property name="regTime"/>
+ 	<property name="birthday"/> 		 		 		
+ 		<property name="status"/>
+ 	 <property name="lastLoginDate"/> 		 		 		
+ 	<property name="lastLoginTime"/>
+ 	</class>
+</hibernate-mapping>

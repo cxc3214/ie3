@@ -4,28 +4,23 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.commons.beanutils.BeanComparator;
-
 import net.jcreate.e3.table.CreateDataModelException;
 import net.jcreate.e3.table.NavRequest;
 import net.jcreate.e3.table.Sort;
 
-/**
- * 内存数据分页
- * @author 黄云辉
- *
- */
-public class CollectionDataModelCreator extends AbstractDataModelCreator {
+import org.apache.commons.beanutils.BeanComparator;
+
+public class IbatisDataModelCreator extends AbstractDataModelCreator {
 
 	private java.util.Collection datas = null;
 	
-	public CollectionDataModelCreator(java.util.Collection pDatas){
+	public IbatisDataModelCreator(java.util.Collection pDatas){
 		if ( pDatas == null ){
 			datas = java.util.Collections.EMPTY_LIST;
 		}
 		this.datas = pDatas;
 	}
-	protected int getTotalSize() throws CreateDataModelException{
+	protected int getTotalSize()throws CreateDataModelException {
 		return datas.size();
 	}
 

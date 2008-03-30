@@ -44,6 +44,9 @@ public abstract class AbstractDataModelCreator implements DataModelCreator {
 		}
 		DefaultPageInfo pageInfo = new DefaultPageInfo(start, totalSize, pNavRequest.getPageSize());
 		//当start大于 totalSize -1 时,需要调整start的值.
+		if ( start < 0 ){
+			start = 0;
+		}
 		if ( start > (totalSize-1) ){
 			//@todo: getStartOfLastPage的计算不会依赖start的值,否则这种算法有问题
 			//,有空的时候把getStartOfLastPage代码挪出来
@@ -64,7 +67,7 @@ public abstract class AbstractDataModelCreator implements DataModelCreator {
 	 * 获取记录总数
 	 * @return
 	 */
-	abstract protected int getTotalSize();
+	abstract protected int getTotalSize() throws CreateDataModelException;
 	/**
 	 * 查询当前页面数据,如果需要排序,需要调用 getSortCode 获取排序代码
 	 * @param pStart      记录开始索引
@@ -72,5 +75,5 @@ public abstract class AbstractDataModelCreator implements DataModelCreator {
 	 * @param pNavRequest 导航请求对象
 	 * @return
 	 */
-	abstract protected List queryData(int pStart, int pPageSize, NavRequest pNavRequest);
+	abstract protected List queryData(int pStart, int pPageSize, NavRequest pNavRequest) throws CreateDataModelException;
 }

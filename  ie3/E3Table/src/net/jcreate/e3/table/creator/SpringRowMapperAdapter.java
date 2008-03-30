@@ -10,7 +10,7 @@ import java.sql.SQLException;
  */
 public class SpringRowMapperAdapter implements RowMapper {
 	org.springframework.jdbc.core.RowMapper springRowMapper = null;
-    private SpringRowMapperAdapter(org.springframework.jdbc.core.RowMapper pRowMapper){
+	public SpringRowMapperAdapter(org.springframework.jdbc.core.RowMapper pRowMapper){
     	if ( pRowMapper == null ){
     		throw new java.lang.IllegalArgumentException("行对象不能为空null");
     	}

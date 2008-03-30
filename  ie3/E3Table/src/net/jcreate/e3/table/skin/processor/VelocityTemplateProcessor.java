@@ -130,6 +130,9 @@ public class VelocityTemplateProcessor
 				
 				
 				public Object referenceInsert(String reference, Object value) {
+					if ( value == null ){
+						return "";
+					}
 					if ( reference.startsWith("$res_") || 
 						 reference.startsWith("${res_")  ){
 						String key = getKey(reference);

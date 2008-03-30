@@ -33,6 +33,7 @@ import net.jcreate.e3.table.PageInfo;
 import net.jcreate.e3.table.SortInfo;
 import net.jcreate.e3.table.StateInfo;
 import net.jcreate.e3.table.TableDirector;
+import net.jcreate.e3.table.creator.CollectionDataModelCreator;
 import net.jcreate.e3.table.html.AbstractHTMLTableBuilder;
 import net.jcreate.e3.table.html.HTMLBuilderFactory;
 import net.jcreate.e3.table.html.HTMLColumn;
@@ -284,7 +285,8 @@ public class TableTag extends BodyTagSupport{
 		//当items是 collection类型时，系统自动做特殊处理，这样就可以很方便实现翻页功能
 		if ( itemsObj instanceof Collection ){
 			NavRequest navRequest = HTMLTableHelper.getNavRequest(this.id, (HttpServletRequest)this.pageContext.getRequest(), pageSize);
-			dataModel = HTMLTableHelper.getDataModel(navRequest, (Collection)itemsObj);
+			//dataModel = HTMLTableHelper.getDataModel(navRequest, (Collection)itemsObj);
+			 dataModel = new CollectionDataModelCreator((Collection)itemsObj).create(navRequest);
 		}else{
 	   	    dataModel = DataModelFactory.getInstance(itemsObj);
 		}

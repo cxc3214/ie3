@@ -41,7 +41,7 @@ public class ResultSetDataModelCreator extends AbstractDataModelCreator {
 		List result = new ArrayList();				
 		try{
 		    rs.first();
-	        rs.absolute(start);	//定位到指定位置
+	        rs.absolute(start+1);	//定位到指定位置
 	        int rowNum = start+1;//结果行号,第一行为1,第2行位,依次类推
 	        do {
 	            Object obj = rowMapper.mapRow(rs, rowNum);//行对象

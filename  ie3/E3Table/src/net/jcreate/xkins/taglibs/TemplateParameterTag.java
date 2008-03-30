@@ -17,24 +17,18 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspTagException;
 import javax.servlet.jsp.tagext.BodyTagSupport;
 
-/**
- * Este tag se utiliza en conjunto con TemplateTag y permite asignarle los par�metros al TempalteTag.<br>
- * Ser�a algo similar como el m�todo <code>addParameter()</code> del <code>XkinProcessor</code>.
- * El valor del par�metro es lo que el tag contiene en el bodtContent. Por ejemplo:
- * <pre>
- *     &lt;xkins:templateParameter name="param1"&gt;Valor del parametro&lt;/xkins:templateParameter&gt;
- * </pre>
- * Esto ser�a similar como hacer <code>xkp.addParameter("param1", "Valor del parametro");</code>, donde
- * <code>xkp</code> es una instancia de <code>XkinProcessor</code>.
- * @see net.jcreate.xkins.XkinProcessor
- * @see net.jcreate.xkins.taglibs.TemplateTag
- * @author Guillermo Meyer
- */
 public class TemplateParameterTag
         extends BodyTagSupport {
     //~ Instance fields ----------------------------------------------------------------------------
-
-    private String name = null;
+	//参数名,
+    protected String name = null;
+	//存储参数值的变量
+	protected String var = null;
+	
+	//变量所在范围，可以取值page,request,session, application
+	//默认采用pageContext的findAttribute方法寻找变量值.
+	protected String scope = null; 
+    
 
     //~ Methods ------------------------------------------------------------------------------------
 
@@ -58,22 +52,27 @@ public class TemplateParameterTag
      */
     public int doEndTag()
             throws javax.servlet.jsp.JspTagException, JspException {
-        TemplateTag parent = (TemplateTag) findAncestorWithClass(this, TemplateTag.class);
+    	
+		TemplateTag parent = (TemplateTag) findAncestorWithClass(this,
+				TemplateTag.class);
         if (parent == null) {
-            throw new JspTagException("Error de anidamiento. "
-                                      + TemplateParameterTag.class.getName()
-                                      + " debe estar dentro de " + TemplateTag.class.getName());
-        } else {
-            parent.addParameter(this.name, (this.bodyContent!=null?this.bodyContent.getString():""));
+            throw new JspTagException(TemplateParameterTag.class.getName()
+                                      + "应该是 " 
+                                      + TemplateTag.class.getName() 
+                                      + "的子标签");
         }
-        return (EVAL_PAGE);
+		if ( var == null ){
+            parent.addParameter(this.name, (this.bodyContent!=null?this.bodyContent.getString():""));	
+		}else{
+			/**
+			 * @fixme: 根据scope来获取
+			 */
+				Object value = pageContext.findAttribute(var);
+				parent.addParameter(this.name, (Object)value);
+	        }
+		return (EVAL_PAGE);
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
-     */
     public int doStartTag() {
         return (TemplateParameterTag.EVAL_BODY_BUFFERED);
     }
@@ -81,6 +80,28 @@ public class TemplateParameterTag
 	public void release() {
 		super.release();
 		name = null;
+		var = null;
+		scope = null;
+	}
+
+	public String getVar() {
+		return var;
+	}
+
+	public void setVar(String var) {
+		this.var = var;
+	}
+
+	public String getScope() {
+		return scope;
+	}
+
+	public void setScope(String scope) {
+		this.scope = scope;
+	}
+
+	public String getName() {
+		return name;
 	}
 
 }

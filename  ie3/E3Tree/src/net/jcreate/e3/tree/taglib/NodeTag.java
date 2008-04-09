@@ -10,7 +10,7 @@ import javax.servlet.jsp.tagext.DynamicAttributes;
 import net.jcreate.e3.tree.support.WebTreeDynamicNode;
 import net.jcreate.e3.tree.support.WebTreeNode;
 
-import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -122,7 +122,7 @@ public class NodeTag extends BodyTagSupport implements DynamicAttributes {
 	
 	public void setProperty(Object pObj, String pProperty, Object pValue) throws JspException{
 		try {
-			PropertyUtils.setProperty(pObj, pProperty, pValue);
+			BeanUtils.setProperty(pObj, pProperty, pValue);
 		} catch (Exception ex){
 			final String msg =
 				"设置节点：" + pObj.getClass().getName() + "的属性:" + pProperty + "失败！" +

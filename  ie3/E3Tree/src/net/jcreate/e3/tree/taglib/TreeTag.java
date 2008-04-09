@@ -31,6 +31,7 @@ import javax.servlet.jsp.tagext.DynamicAttributes;
 import net.jcreate.e3.tree.NodeVisitor;
 import net.jcreate.e3.tree.TreeDirector;
 import net.jcreate.e3.tree.TreeModel;
+import net.jcreate.e3.tree.ext.ExtLoadTreeBuilder;
 import net.jcreate.e3.tree.support.DefaultNodeComparator;
 import net.jcreate.e3.tree.support.DefaultTreeDirector;
 import net.jcreate.e3.tree.support.JspPageWebContext;
@@ -39,7 +40,7 @@ import net.jcreate.e3.tree.support.ReverseComparator;
 import net.jcreate.e3.tree.support.WebTreeBuilder;
 import net.jcreate.e3.tree.support.WebTreeNode;
 
-import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -121,7 +122,7 @@ public class TreeTag extends BodyTagSupport implements DynamicAttributes {
 	
 	private void setProperty(Object pObj, String pProperty, Object pValue) throws JspException{
 		try {
-			PropertyUtils.setProperty(pObj, pProperty, pValue);
+			BeanUtils.setProperty(pObj, pProperty, pValue);
 		} catch (Exception ex){
 			final String msg =
 				"设置节点：" + pObj.getClass().getName() + "的属性:" + pProperty + "失败！" +
@@ -271,6 +272,16 @@ public class TreeTag extends BodyTagSupport implements DynamicAttributes {
 		this.defaultSort = defaultSort;
 	}
 	
-	
+	public static void main(String[] args){
+		ExtLoadTreeBuilder builder = new ExtLoadTreeBuilder();
+		TreeTag tag = new TreeTag();
+	    try {
+			tag.setProperty(builder, "createDive", "true" );
+		} catch (JspException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 	
 }

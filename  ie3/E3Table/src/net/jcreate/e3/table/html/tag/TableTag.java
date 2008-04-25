@@ -107,6 +107,10 @@ public class TableTag extends BodyTagSupport{
 	 * 标题 
 	 */
 	private String caption;
+	private String paramsFormVar;//参数form变量，如果设置了则不输出，包参数form存储到变量中，由用户自己确定位置，这样
+    //设置是为了解决form嵌套的问题
+    private String paramsFormScope = TableConstants.DEFAULT_PARAMSFORM_SCOPE;//默认是request
+	
 	/**
 	 * 标题key
 	 */
@@ -226,6 +230,8 @@ public class TableTag extends BodyTagSupport{
 			table.setCaptionKey(this.captionKey);
 			table.setNoDataTipKey(noDataTipKey);
 			table.setNoDataTip(noDataTip);
+			table.setParamsFormScope(paramsFormScope);
+			table.setParamsFormVar(paramsFormVar);
 			this.createdTable = true;
 			return EVAL_BODY_AGAIN;
 		}
@@ -380,6 +386,8 @@ public class TableTag extends BodyTagSupport{
 		this.noDataTipKey = null;		
 		this.columnProperties = null;
 		this.table = null;
+		this.paramsFormScope = null;
+		this.paramsFormVar = null;
 
 		
 		super.release();
@@ -492,6 +500,22 @@ public class TableTag extends BodyTagSupport{
 
 	public void setNoDataTipKey(String noDataTipKey) {
 		this.noDataTipKey = noDataTipKey;
+	}
+
+	public String getParamsFormVar() {
+		return paramsFormVar;
+	}
+
+	public void setParamsFormVar(String paramsFormVar) {
+		this.paramsFormVar = paramsFormVar;
+	}
+
+	public String getParamsFormScope() {
+		return paramsFormScope;
+	}
+
+	public void setParamsFormScope(String paramsFormScope) {
+		this.paramsFormScope = paramsFormScope;
 	}
 
 

@@ -44,6 +44,7 @@ public class DateDecorator extends AbstractDecorator{
 	}
 
 	public String getPattern() {
+		
 		return pattern;
 	}
 	

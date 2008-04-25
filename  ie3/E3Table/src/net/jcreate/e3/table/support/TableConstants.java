@@ -85,6 +85,11 @@ public class TableConstants {
    * 默认皮肤
    */
   public static final String DEFAULT_SKIN = "E3001";
+  
+  /**
+   * 默认参数form保存范围
+   */
+  public static final String DEFAULT_PARAMSFORM_SCOPE = "request";
   /**
    * 默认builder
    */

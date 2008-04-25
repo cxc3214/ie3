@@ -23,8 +23,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
 
 import net.jcreate.e3.table.BuildTableException;
-import net.jcreate.e3.table.ColumnGroup;
 import net.jcreate.e3.table.PageInfo;
+import net.jcreate.e3.table.html.util.JspUtils;
 import net.jcreate.e3.table.support.TableConstants;
 import net.jcreate.e3.templateEngine.Context;
 import net.jcreate.e3.templateEngine.support.DefaultContext;
@@ -340,7 +340,17 @@ public class SkinHTMLTableBuilder extends AbstractHTMLTableBuilder{
 		context.put("table", pTable);		
 		context.put("webContext", this.getTableContext().getWebContext());
 		context.put("params", pTable.getParams());
-		appendScript(getTemplateValue(TableConstants.PARAMS_FORM_ID, context));
+		if (  pTable.getParamsFormVar() != null ){//认为设置了paramForms,需要把参数值导出
+		  	//导出参数变量,解决form嵌套问题
+			JspUtils.setAttribute(
+					tableContext.getWebContext(),
+					pTable.getParamsFormVar(),
+					getTemplateValue(TableConstants.PARAMS_FORM_ID, context), 
+				    pTable.getParamsFormScope());
+			//super..
+		}else{
+		 appendScript(getTemplateValue(TableConstants.PARAMS_FORM_ID, context));
+		}
 	}
 	protected void buildHTMLTopToolbar(HTMLTable pTable) throws BuildTableException {
 		PageInfo pageInfo = pTable.getPageInfo();

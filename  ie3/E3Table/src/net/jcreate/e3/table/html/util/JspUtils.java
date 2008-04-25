@@ -27,6 +27,7 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.StringTokenizer;
@@ -36,6 +37,8 @@ import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.BodyContent;
 import javax.servlet.jsp.tagext.Tag;
+
+import net.jcreate.e3.table.WebContext;
 
 /**
  * A lot of this functionality is in the Struts ResponceUtils, but I do not want
@@ -50,6 +53,57 @@ public final class JspUtils
    private JspUtils()
    {
    }
+   
+   /**
+    * 
+    * @param pWebContext
+    * @param pVar   变量名
+    * @param pValue 
+    * @param pScope page|request|session|application
+    */
+   public static void setAttribute(WebContext pWebContext, String pVar, Object pValue, final String pScope ){
+	   if ( pWebContext == null ){
+		   return;
+	   }
+	   if ( scopes.contains(pScope) == false ){
+		   final StringBuffer sb = new StringBuffer();
+		   int len = scopes.size();
+		   for(int i=0;i<scopes.size();i++){
+			   String scope = (String)scopes.get(i);
+			   sb.append(scope);
+			   if ( i != (len - 1) ){//不是最后一个
+				  sb.append(" , "); 
+			   }
+		   }
+		   throw new java.lang.IllegalArgumentException
+		      ("不支持的scope:[" + pScope + "],有效值范围[" + sb.toString() + "]");
+	   }
+	   if ( PAGE.equals(pScope)){
+		   pWebContext.setPageAttribute(pVar, pValue);
+	   } else if ( REQUEST.equals(pScope) ){
+		   pWebContext.setRequestAttribute(pVar, pValue);
+	   } else if ( SESSION.equals(pScope) ){
+		   pWebContext.setSessionAttribute(pVar, pValue);
+	   } else if ( APPLICATION.equals(pScope) ){
+		   pWebContext.setApplicationAttribute(pVar, pValue);
+	   } else {
+		   ;//do nothig
+	   }
+   }
+   public static final String PAGE = "page";
+   public static final String REQUEST = "request";
+   public static final String SESSION = "session";
+   public static final String APPLICATION = "application";
+   
+   public static final List scopes = new ArrayList();
+   static{
+	   scopes.add(PAGE);
+	   scopes.add(REQUEST);
+	   scopes.add(SESSION);
+	   scopes.add(APPLICATION);
+   }
+   
+   
 
    /**
     * Write the specified text as the response to the writer associated with

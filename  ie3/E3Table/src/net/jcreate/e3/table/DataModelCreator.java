@@ -1,7 +1,7 @@
 package net.jcreate.e3.table;
 
 /**
- * 数据模型处理器
+ * 数据模型创建器
  * @author 黄云辉
  *
  */

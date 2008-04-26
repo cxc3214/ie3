@@ -76,7 +76,7 @@ public class LoadSkinsListener implements ServletContextListener {
 		xs.setConfig(SKIN_DEF_PATH);
 		XkinsLoader.setRealWebPath( WEB_HOME );
 		try{
-		  logger.info("开始装载e3.table皮肤!");
+		  logger.info("开始装载e3.table皮肤!" + SKIN_DEF_PATH);
 		  servletContext.setAttribute(Xkins.ATTR_SKINS, xs.loadSkins());
 		  logger.info("成功装载e3.table皮肤!");
 		}catch(Exception ex){

@@ -208,6 +208,15 @@ public class TableTag extends BodyTagSupport{
 	public void setVar(String var) {
 		this.var = var;
 	}
+	
+	{
+		String strPageSize = MessageSourceFactory.getInstance().getMessage(TableConstants.PAGE_SIZE_KEY,null,null);
+		try{
+		  pageSize = Integer.parseInt(strPageSize);
+		}catch(Exception ex){
+			logger.warn("每页记录数:[" + strPageSize + "]不是有效数字!使用默认值:" + TableConstants.DEFAULT_PAGE_SIZE);
+		}
+	}
 
 
 	/**

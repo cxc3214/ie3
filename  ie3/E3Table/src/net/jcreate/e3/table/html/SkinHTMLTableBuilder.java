@@ -227,7 +227,9 @@ public class SkinHTMLTableBuilder extends AbstractHTMLTableBuilder{
 		Context context = new DefaultContext();
 		context.put("table", pTable);
 		context.put("webContext", this.getTableContext().getWebContext());
-		context.put("contextPath", this.getTableContext().getWebContext().getContextPath());		
+		context.put("contextPath", this.getTableContext().getWebContext().getContextPath());
+		PageInfo pageInfo = pTable.getPageInfo();
+		context.put("pageInfo", pageInfo);
 		appendScript(getTemplateValue(TableConstants.BEGIN_SCRIPT_ID, context));
 	}
 

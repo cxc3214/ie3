@@ -20,7 +20,6 @@
 package net.jcreate.e3.table.html;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import net.jcreate.e3.table.NavRequest;
 import net.jcreate.e3.table.PageInfo;
@@ -31,8 +30,12 @@ import net.jcreate.e3.table.message.MessageSourceFactory;
 import net.jcreate.e3.table.support.HttpServletRequestWebContext;
 import net.jcreate.e3.table.support.TableConstants;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 public abstract class HTMLTableHelper {
 
+	private final static Log logger = LogFactory.getLog( HTMLTableHelper.class );
 	private HTMLTableHelper(){
 		
 	}
@@ -109,8 +112,15 @@ public abstract class HTMLTableHelper {
 	 * @return
 	 */
 	public static NavRequest getNavRequest(String pTableID, HttpServletRequest pRequest){
-	  String pageSize = MessageSourceFactory.getInstance().getMessage(TableConstants.PAGE_SIZE_KEY,null,null);
-      return getNavRequest(pTableID, pRequest,Integer.parseInt(pageSize) );    
+		String strPageSize = MessageSourceFactory.getInstance().getMessage(TableConstants.PAGE_SIZE_KEY,null,null);
+		int pageSize = TableConstants.DEFAULT_PAGE_SIZE;
+		try{
+		  pageSize = Integer.parseInt(strPageSize);
+		}catch(Exception ex){
+			logger.warn("每页记录数:[" + strPageSize + "]不是有效数字!使用默认值:" + TableConstants.DEFAULT_PAGE_SIZE);
+		}
+
+      return getNavRequest(pTableID, pRequest, pageSize );    
 	}
 	
 }

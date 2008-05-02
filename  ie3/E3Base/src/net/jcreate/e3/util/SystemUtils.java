@@ -13,5 +13,5 @@ public class SystemUtils {
 	public static String getPrjPath(){
 		return System.getProperty("user.dir");
 	}
-
+ 
 }

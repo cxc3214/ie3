@@ -26,7 +26,7 @@ public class DefaultSequenceGenerator implements SequenceGenerator{
 	/**
 	 * 用于存储／读取　已分配出去的最大序号 
 	 */
-	private SequenceStorer sequenceStorer;
+	private SequenceStorer sequenceStorer = new FileSequenceStorer();
 	
 	private long currCount = 0L;//当前实际已分配序号最大值
 	private long maxCount  = cache + currCount;//可以分配最大序号值（
@@ -49,6 +49,7 @@ public class DefaultSequenceGenerator implements SequenceGenerator{
 		this.id = pId; 
 	}
 	public void init(){
+		initiated = true;
 		long initValue = sequenceStorer.load(this.getId());
 		initValue = java.lang.Math.max(initValue, minValue);
 		
@@ -64,11 +65,11 @@ public class DefaultSequenceGenerator implements SequenceGenerator{
 		currCount = initValue;
 		maxCount = currCount + cache;
 		maxCount = java.lang.Math.min(maxCount, maxValue);
+		sequenceStorer.save(maxCount, this.getId());
 	}
 	public long next() throws CreateSequnceException {
 		if ( initiated == false ){
 			init();
-			initiated = true;
 		}
 		if (currCount == maxCount) {//重新申请id
 		  long tmp = maxCount + cache;

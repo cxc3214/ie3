@@ -11,4 +11,12 @@ public class DefaultSequenceFormater implements SequenceFormater {
         return df.format(pSequence);
 	}
 
+	public String getPattern() {
+		return pattern;
+	}
+
+	public void setPattern(String pattern) {
+		this.pattern = pattern;
+	}
+
 }

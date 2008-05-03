@@ -1,4 +1,6 @@
-package net.jcreate.e3.commons.id;
+package net.jcreate.e3.commons.id.generator;
+
+import net.jcreate.e3.commons.id.CreateIDException;
 
 /**
  * 代码来自hibernate

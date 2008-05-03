@@ -1,4 +1,7 @@
-package net.jcreate.e3.commons.id;
+package net.jcreate.e3.commons.id.storer;
+
+import net.jcreate.e3.commons.id.SequenceStorer;
+import net.jcreate.e3.commons.id.StoreSequenceException;
 
 public class DBSequenceStorer implements SequenceStorer{
 

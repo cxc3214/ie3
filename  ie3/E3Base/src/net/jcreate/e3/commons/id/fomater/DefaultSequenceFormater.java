@@ -1,6 +1,9 @@
-package net.jcreate.e3.commons.id;
+package net.jcreate.e3.commons.id.fomater;
 
 import java.text.DecimalFormat;
+
+import net.jcreate.e3.commons.id.FormatSequenceExcepiton;
+import net.jcreate.e3.commons.id.SequenceFormater;
 
 public class DefaultSequenceFormater implements SequenceFormater {
 

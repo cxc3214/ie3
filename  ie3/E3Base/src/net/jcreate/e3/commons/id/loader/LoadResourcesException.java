@@ -1,4 +1,6 @@
-package net.jcreate.e3.commons.id;
+package net.jcreate.e3.commons.id.loader;
+
+import net.jcreate.e3.commons.id.IDException;
 
 public class LoadResourcesException extends IDException{
 

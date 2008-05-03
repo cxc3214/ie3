@@ -1,4 +1,7 @@
-package net.jcreate.e3.commons.id;
+package net.jcreate.e3.commons.id.prefix;
+
+import net.jcreate.e3.commons.id.CreatePrefixException;
+import net.jcreate.e3.commons.id.PrefixGenerator;
 
 
 public class DefaultPrefixGenerator implements PrefixGenerator{

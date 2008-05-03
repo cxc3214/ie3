@@ -1,4 +1,9 @@
-package net.jcreate.e3.commons.id;
+package net.jcreate.e3.commons.id.test;
+
+import net.jcreate.e3.commons.id.fomater.DefaultSequenceFormater;
+import net.jcreate.e3.commons.id.generator.DefaultIDGenerator;
+import net.jcreate.e3.commons.id.prefix.DefaultPrefixGenerator;
+import net.jcreate.e3.commons.id.sequence.DefaultSequenceGenerator;
 
 
 public class Hello {
@@ -14,7 +19,7 @@ public static void main(String[] args){
 	
 	//序号生成器
 	DefaultSequenceGenerator sequenceGenerator = new DefaultSequenceGenerator();
-	sequenceGenerator.setMinValue(1);
+	sequenceGenerator.setMinValue(0);
 	sequenceGenerator.setMaxValue(9999999);
 	sequenceGenerator.setCycle(true);
 	sequenceGenerator.setCache(100);

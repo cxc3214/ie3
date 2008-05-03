@@ -1,8 +1,11 @@
-package net.jcreate.e3.commons.id;
+package net.jcreate.e3.commons.id.storer;
 
 import java.util.HashMap;
 import java.util.Map;
 
+
+import net.jcreate.e3.commons.id.SequenceStorer;
+import net.jcreate.e3.commons.id.StoreSequenceException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

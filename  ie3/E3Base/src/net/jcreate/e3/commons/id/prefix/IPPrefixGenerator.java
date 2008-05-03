@@ -1,6 +1,8 @@
-package net.jcreate.e3.commons.id;
+package net.jcreate.e3.commons.id.prefix;
 
 import java.net.InetAddress;
+
+import net.jcreate.e3.commons.id.PrefixGenerator;
 
 public abstract class IPPrefixGenerator implements PrefixGenerator{
 

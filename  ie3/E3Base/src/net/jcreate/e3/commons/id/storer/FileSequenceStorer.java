@@ -1,8 +1,12 @@
-package net.jcreate.e3.commons.id;
+package net.jcreate.e3.commons.id.storer;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+
+import net.jcreate.e3.commons.id.SequenceStorer;
+import net.jcreate.e3.commons.id.StoreSequenceException;
+import net.jcreate.e3.commons.id.test.Hello;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

@@ -1,6 +1,8 @@
-package net.jcreate.e3.commons.id;
+package net.jcreate.e3.commons.id.generator;
 
 import java.net.InetAddress;
+
+import net.jcreate.e3.commons.id.IDGenerator;
 
 /**
  * 代码来自hibernate

@@ -23,7 +23,7 @@ public abstract class IDHelper {
 		sequenceGenerator.setMinValue(0);
 		sequenceGenerator.setMaxValue(999999999999L);
 		sequenceGenerator.setCycle(true);
-		sequenceGenerator.setCache(100);
+		sequenceGenerator.setCache(1000);
 		e3idGenerator.setSequenceGenerator(sequenceGenerator);
 		
 		DefaultSequenceFormater sequenceFormater = new DefaultSequenceFormater();

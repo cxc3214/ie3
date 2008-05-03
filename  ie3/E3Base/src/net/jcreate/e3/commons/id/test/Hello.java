@@ -3,6 +3,7 @@ package net.jcreate.e3.commons.id.test;
 import net.jcreate.e3.commons.id.fomater.DefaultSequenceFormater;
 import net.jcreate.e3.commons.id.generator.DefaultIDGenerator;
 import net.jcreate.e3.commons.id.prefix.DefaultPrefixGenerator;
+import net.jcreate.e3.commons.id.sequence.TimeRollingSequenceGenerator;
 import net.jcreate.e3.commons.id.sequence.DefaultSequenceGenerator;
 
 
@@ -18,7 +19,7 @@ public static void main(String[] args){
 	prefixGenerator.setPrefix("E3_");
 	
 	//序号生成器
-	DefaultSequenceGenerator sequenceGenerator = new DefaultSequenceGenerator();
+	DefaultSequenceGenerator sequenceGenerator = TimeRollingSequenceGenerator.getYearRollingSequenceGenerator();
 	sequenceGenerator.setMinValue(0);
 	sequenceGenerator.setMaxValue(9999999);
 	sequenceGenerator.setCycle(true);
@@ -30,7 +31,15 @@ public static void main(String[] args){
 	sequenceFormater.setPattern("0000000");
 	generator.setSequenceFormater(sequenceFormater);
  	System.out.println(generator.create());
- 	System.out.println(generator.create());
+// 	while( true ){
+// 	  System.out.println(sequenceGenerator.next());
+// 	  try {
+//		Thread.sleep(1000);
+//	} catch (InterruptedException e) {
+//		// TODO Auto-generated catch block
+//		e.printStackTrace();
+//	}
+// 	}
 }
 	  
 }

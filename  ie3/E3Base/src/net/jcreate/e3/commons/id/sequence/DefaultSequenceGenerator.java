@@ -15,30 +15,30 @@ public class DefaultSequenceGenerator implements SequenceGenerator{
 	/**
 	 * 序号最小值
 	 */
-	private long minValue = 0L;
+	protected long minValue = 0L;
 	/**
 	 * 序号最大值
 	 */
-	private long maxValue = Long.MAX_VALUE;
+	protected long maxValue = Long.MAX_VALUE;
 	/**
 	 * cache大小，用于确定预分配序号数;cache越大，ＩＤ生成效率越高，但是当系统
 	 * 关闭时，可能造成的ＩＤ浪费也会更多.
 	 */
-	private int  cache    = 100;
+	protected int  cache    = 100;
 	/**
 	 * 是否循环生成，当cycle达到最大值时，是否循环，又从最小值开始生成
 	 */
-	private boolean cycle = true;
+	protected boolean cycle = true;
 	/**
 	 * 用于存储／读取　已分配出去的最大序号 
 	 */
-	private SequenceStorer sequenceStorer = new FileSequenceStorer();
+	protected SequenceStorer sequenceStorer = new FileSequenceStorer();
 	
-	private long currCount = 0L;//当前实际已分配序号最大值
-	private long maxCount  = cache + currCount;//可以分配最大序号值（
-	private String id = "anonymity";//序号的标致符号
-	private boolean initiated = false;
-	private final Log logger = LogFactory.getLog( DefaultSequenceGenerator.class );
+	protected long currCount = 0L;//当前实际已分配序号最大值
+	protected long maxCount  = cache + currCount;//可以分配最大序号值（
+	protected String id = "anonymity";//序号的标致符号
+	protected boolean initiated = false;
+	protected final Log logger = LogFactory.getLog( DefaultSequenceGenerator.class );
 	
 	public String getId() {
 		return id;

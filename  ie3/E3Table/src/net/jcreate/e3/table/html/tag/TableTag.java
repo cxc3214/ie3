@@ -22,12 +22,14 @@ package net.jcreate.e3.table.html.tag;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.BodyTagSupport;
 
 import net.jcreate.e3.table.DataModel;
+import net.jcreate.e3.table.I18nResourceProvider;
 import net.jcreate.e3.table.NavRequest;
 import net.jcreate.e3.table.PageInfo;
 import net.jcreate.e3.table.SortInfo;
@@ -71,6 +73,9 @@ public class TableTag extends BodyTagSupport{
 	 */
 	private String stateParam = TableConstants.DEFAULT_STATE;
 	
+	private String toolbarPosition;
+	private String toolbarShowPolicy;
+	
 	/**
 	 * 表格ID
 	 */
@@ -91,9 +96,9 @@ public class TableTag extends BodyTagSupport{
 	private String items;
 	
 	/**
-	 * 每页显示记录数，默认显示20条
+	 * 每页显示记录数
 	 */
-	private int pageSize = TableConstants.DEFAULT_PAGE_SIZE;
+	private int pageSize = -1;
 
 	/**
 	 * 变量范围，有效值[page|request|session|application]
@@ -102,7 +107,7 @@ public class TableTag extends BodyTagSupport{
 	/**
 	 * 譬如
 	 */
-	private String skin = TableConstants.DEFAULT_SKIN;
+	private String skin;
 	/**
 	 * 标题 
 	 */
@@ -209,14 +214,68 @@ public class TableTag extends BodyTagSupport{
 		this.var = var;
 	}
 	
-	{
-		String strPageSize = MessageSourceFactory.getInstance().getMessage(TableConstants.PAGE_SIZE_KEY,null,null);
+
+	
+	private int getDefaultPageSize(){
+		int result = TableConstants.DEFAULT_PAGE_SIZE;
+		String strPageSize = MessageSourceFactory.getInstance().getMessage(TableConstants.PAGE_SIZE_KEY,null,getLocale());
 		try{
-		  pageSize = Integer.parseInt(strPageSize);
+			result = Integer.parseInt(strPageSize);
 		}catch(Exception ex){
 			logger.warn("每页记录数:[" + strPageSize + "]不是有效数字!使用默认值:" + TableConstants.DEFAULT_PAGE_SIZE);
 		}
+		return result;
 	}
+	
+	private String getDefaultSkin(){
+		String result = TableConstants.DEFAULT_SKIN;
+		String configValue = MessageSourceFactory.getInstance().getMessage(TableConstants.SKIN_KEY,null,getLocale());
+		/**
+		 * 皮肤有效性校验 
+		 */
+		if ( configValue != null ){
+			result = configValue;
+		}
+		return result;
+	}
+	
+	
+	private void setDefaultValue(){
+		this.pageSize = this.pageSize == -1 ? this.getDefaultPageSize() : this.pageSize;
+		this.toolbarPosition = this.toolbarPosition == null ? this.getDefaultToolbarPosition() : this.toolbarPosition;
+		this.toolbarShowPolicy = this.toolbarShowPolicy == null ? this.getDefaultToolbarShowPolicy() : this.toolbarShowPolicy;
+		this.skin = this.skin == null ? getDefaultSkin() : this.skin;
+	}
+	
+	private String getDefaultToolbarPosition(){
+		String result = TableConstants.DEFAULT_TOOLBAR_POSITION;
+		String configValue = MessageSourceFactory.getInstance().getMessage(TableConstants.TOOLBAR_POSITION_KEY,null,getLocale());
+		if ( TableConstants.TOP_POSITION.equalsIgnoreCase(configValue) ||
+			 TableConstants.BOTTOM_POSITION.equalsIgnoreCase(configValue) ||
+			 TableConstants.BOTH_POSITION.equalsIgnoreCase(configValue)){
+			result = configValue;
+		} else {
+			logger.warn("默认显示位置:[" + configValue + "]错误!,有效值范围是[" + 
+					TableConstants.TOP_POSITION + ", " + TableConstants.BOTTOM_POSITION +
+					", " + 	TableConstants.BOTH_POSITION + "].使用默认值:"+ TableConstants.DEFAULT_TOOLBAR_POSITION);			
+		}
+		return result;
+	}
+	private String getDefaultToolbarShowPolicy(){
+		String result = TableConstants.DEFAULT_TOOLBAR_SHOW_POLICY;
+		String configValue = MessageSourceFactory.getInstance().getMessage(TableConstants.TOOLBAR_SHOW_POLICY_KEY,null,getLocale());
+		if ( TableConstants.ALWAYS_POLICY.equalsIgnoreCase(configValue) ||
+			 TableConstants.NEED_POLICY.equalsIgnoreCase(configValue) ||
+			 TableConstants.NONE_POLICY.equalsIgnoreCase(configValue)){
+			result = configValue;
+		} else {
+			logger.warn("默认显示位置策略:[" + configValue + "]错误!,有效值范围是[" + 
+					TableConstants.ALWAYS_POLICY + ", " + TableConstants.NEED_POLICY +
+					", " + 	TableConstants.NONE_POLICY + "].使用默认值:"+ TableConstants.DEFAULT_TOOLBAR_SHOW_POLICY);			
+		}
+		return result;
+	}
+	
 
 
 	/**
@@ -295,7 +354,10 @@ public class TableTag extends BodyTagSupport{
 			return this.dataModel.getNavInfo();
 	}
 	
-	public int doStartTag() throws JspException {		
+	public int doStartTag() throws JspException {
+		//设置默认值
+		setDefaultValue();
+		
 		Object itemsObj = this.pageContext.findAttribute(this.items);
 		//当items是 collection类型时，系统自动做特殊处理，这样就可以很方便实现翻页功能
 		if ( itemsObj instanceof Collection ){
@@ -325,12 +387,31 @@ public class TableTag extends BodyTagSupport{
 			this.table.addParam(new HTMLParam(TableConstants.SORT_NAME_PARAM, "" ));
 			this.table.addParam(new HTMLParam(TableConstants.SORT_DIR_PARAM, "" ));
 		}
-		
-		
 		 TableDirector director = getTableDirector();
-		 /**
-		  * @fixme: 根据builder值获取builder对象
-		  */
+		 //显示位置
+		 director.setShowTopToolbar(
+				 TableConstants.TOP_POSITION.equalsIgnoreCase(this.toolbarPosition) ||
+				 TableConstants.BOTH_POSITION.equalsIgnoreCase(this.toolbarPosition)
+		  );
+		 director.setShowBottomToolbar(
+				 TableConstants.BOTTOM_POSITION.equalsIgnoreCase(this.toolbarPosition) ||
+				 TableConstants.BOTH_POSITION.equalsIgnoreCase(this.toolbarPosition)
+		 );
+		 
+		 //显示策略
+		 if ( TableConstants.NONE_POLICY.equalsIgnoreCase(this.toolbarShowPolicy) ){
+			 director.setShowTopToolbar(false);//不翻页
+			 director.setShowBottomToolbar(false);
+		 } else if ( TableConstants.NEED_POLICY.equalsIgnoreCase(toolbarShowPolicy) ){
+			 PageInfo pageData = dataModel.getNavInfo();
+			 boolean isNeedPage = pageData == null ? false : pageData.getTotalPages() > 1;
+			 if ( isNeedPage == false  ){//不翻页
+				 director.setShowTopToolbar(false);
+				 director.setShowBottomToolbar(false);
+			 }			 
+		 } else {
+			 ;//do nothing;
+		 }
 		 AbstractHTMLTableBuilder htmlBuilder = 
 			 HTMLBuilderFactory.getInstance(builder);
 		 director.build(htmlBuilder, table);
@@ -365,6 +446,15 @@ public class TableTag extends BodyTagSupport{
 		this.columnProperties.clear();
 		this.loopTagStatus = null;
 	}
+    
+    private Locale getLocale(){
+    	I18nResourceProvider i18n = I18nResourceProviderFactory.getInstance(this.i18n);
+    	if ( i18n == null ){
+    		return Locale.getDefault();
+    	}
+    	Locale result = i18n.resolveLocale(new JspPageWebContext(this.pageContext));
+    	return result;
+    }
 	protected TableDirector getTableDirector(){
 		DefaultTableContext tableContext = new DefaultTableContext(
 				new JspPageWebContext(this.pageContext),
@@ -384,6 +474,7 @@ public class TableTag extends BodyTagSupport{
 		this.scope = null;
 		this.builder = null;
 		
+		this.enabledStateManager = true;
 		this.currRow = null;
 		this.rowIndex = 0;		
 		this.createdTable = false;
@@ -396,8 +487,9 @@ public class TableTag extends BodyTagSupport{
 		this.columnProperties = null;
 		this.table = null;
 		this.paramsFormScope = null;
-		this.paramsFormVar = null;
-
+		this.paramsFormVar = TableConstants.DEFAULT_PARAMSFORM_SCOPE;//默认是request;
+		this.i18n = TableConstants.DEFAULT_I18N;
+		setDefaultValue();
 		
 		super.release();
 	}
@@ -525,6 +617,22 @@ public class TableTag extends BodyTagSupport{
 
 	public void setParamsFormScope(String paramsFormScope) {
 		this.paramsFormScope = paramsFormScope;
+	}
+
+	public String getToolbarPosition() {
+		return toolbarPosition;
+	}
+
+	public void setToolbarPosition(String toolbarPosition) {
+		this.toolbarPosition = toolbarPosition;
+	}
+
+	public String getToolbarShowPolicy() {
+		return toolbarShowPolicy;
+	}
+
+	public void setToolbarShowPolicy(String toolbarShowPolicy) {
+		this.toolbarShowPolicy = toolbarShowPolicy;
 	}
 
 

@@ -32,7 +32,11 @@ public class TableConstants {
   /**
    * 存储pageSize信息的key值
    */
-  public static final String PAGE_SIZE_KEY = "e3.pageSize";
+  public static final String PAGE_SIZE_KEY = "e3.table.pageSize";
+  public static final String TOOLBAR_POSITION_KEY = "e3.table.toolbarPosition";
+  public static final String TOOLBAR_SHOW_POLICY_KEY = "e3.table.toolbarShowPolicy";
+  
+  public static final String SKIN_KEY = "e3.table.skin";
   /**
    * 命名空间/前缀
    */
@@ -59,6 +63,28 @@ public class TableConstants {
    * 状态参数
    */
   public static final String STATE_PARAM_PREFIX = PREFIX + "_" + "stateParam_";
+  
+  /**
+   * 工具条显示位置
+   */
+  public static final String TOP_POSITION = "top";
+  public static final String BOTTOM_POSITION = "bottom";
+  public static final String BOTH_POSITION = "both";
+  public static final String DEFAULT_TOOLBAR_POSITION = BOTH_POSITION;
+  
+  
+  /**
+   * 总是显示
+   */
+  public static final String ALWAYS_POLICY = "always";
+  public static final String NEED_POLICY = "need";
+  public static final String NONE_POLICY = "none";
+  public static final String DEFAULT_TOOLBAR_SHOW_POLICY = ALWAYS_POLICY;
+  
+  
+  
+   
+  
   
   
   /**
@@ -266,7 +292,7 @@ public class TableConstants {
   /**
    * 没有数据时的提示信息key
    */
-  public static final String NO_DATA_TIP_KEY = "e3.noDataTip";
+  public static final String NO_DATA_TIP_KEY = "e3.table.noDataTip";
   /**
    * 默认的i18 
    */

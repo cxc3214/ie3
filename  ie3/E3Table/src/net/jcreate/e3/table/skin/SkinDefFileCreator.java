@@ -55,8 +55,11 @@ public class SkinDefFileCreator {
 	 * @throws SkinException 创建皮肤文件时出现异常
 	 */
   public static void create(String pWebHome, String[] pDirs, String pSaveFile)  throws SkinException{
+	  /**
+	   * 当是war应用时,pWebHome会是null
+	   */
 	if ( pWebHome == null ){
-		throw new SkinException("WEB HOME路径不能为空null");
+		return;
 	}
 	if ( pDirs == null ){
 	  throw new SkinException("譬如搜索路径不能为空null"); 	

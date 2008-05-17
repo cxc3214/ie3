@@ -285,7 +285,7 @@ public abstract class AbstractHTMLTableBuilder extends EmptyTableBuilder{
 	protected void buildHTMLHeaderEnd(HTMLHeader pHeader) throws BuildTableException {
 	}
 	public String getTableScript() {
-		return tableScript.toString();
+		return tableScript.toString().trim();
 	}
 	
 	

@@ -28,6 +28,7 @@ public class HTMLColumn extends DefaultColumn implements Attributeable{
 	
 	private String style;
 	private String styleClass;
+	private String headerStyle;
 
 	private Attributes attributes = new Attributes();
 	public void setAttribute(String name, String value) {
@@ -112,6 +113,14 @@ public class HTMLColumn extends DefaultColumn implements Attributeable{
 
 	public void setStyleClass(String styleClass) {
 		this.styleClass = styleClass;
+	}
+
+	public String getHeaderStyle() {
+		return headerStyle;
+	}
+
+	public void setHeaderStyle(String headerStyle) {
+		this.headerStyle = headerStyle;
 	}
 
 }

@@ -60,6 +60,7 @@ public class LoadSkinsListener implements ServletContextListener {
 		
         
         
+		if ( WEB_HOME != null ){
         /**
          * 创建皮肤定义文件:
          */
@@ -68,7 +69,7 @@ public class LoadSkinsListener implements ServletContextListener {
 				SkinUtil.getSkinPaths(skinPath) ,
 				WEB_HOME +LoadSkinsListener.SKIN_DEF_FILE
 		);
-		
+		}
         XkinsLoader xs = new XkinsLoader();
         xs.setDebug(0);
 		xs.setAutoReload(autoReload);

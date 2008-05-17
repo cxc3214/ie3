@@ -1,0 +1,15 @@
+#macro createTable(pItems, pColumns)
+#end
+
+#set var htmTable = createTable(${users},["userID","userName"]);
+$htmTable.setId("userTable")
+
+#set var aColumn = htmTable.columns.ddd
+aColumn.setTitle="ddd"
+
+#foreach(var row in userTable.rows)
+   #set var user = row.userData;
+   #set var userIDCell = row.columns("userID");
+   #set var userNameCell = row.columns("userName");
+   $userIDCell.value = user.userID
+#end

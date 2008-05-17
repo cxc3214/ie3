@@ -42,7 +42,12 @@ public class ColumnTag extends BodyTagSupport implements Attributeable{
 	 */
 	private String property;
 	private String style;
+	/**
+	 * @deprecated
+	 */
 	private String styleClass;
+	
+	private String headerStyle;
 	
 	/**
 	 * 排序属性，默等于property
@@ -144,6 +149,7 @@ public class ColumnTag extends BodyTagSupport implements Attributeable{
 			column.setTitleKey(this.titleKey);
 			column.setStyle(this.style);
 			column.setStyleClass(this.styleClass);
+			column.setHeaderStyle(headerStyle);
 			SortInfo sortInfo = tableTag.getSortInfo();
 			if ( sortInfo != null ){//存在排序信息
 				String sortColumn = sortInfo.getSortProperty();
@@ -193,6 +199,11 @@ public class ColumnTag extends BodyTagSupport implements Attributeable{
 		this.property = null;
 		this.title = null;
 		this.width = null;
+		this.headerStyle = null;
+		this.style = null;
+		this.styleClass = null;
+		this.titleKey = null;
+		this.sortable = false;
 		super.release();
 	}
 
@@ -245,6 +256,14 @@ public class ColumnTag extends BodyTagSupport implements Attributeable{
 
 	public void setStyleClass(String styleClass) {
 		this.styleClass = styleClass;
+	}
+
+	public String getHeaderStyle() {
+		return headerStyle;
+	}
+
+	public void setHeaderStyle(String headerStyle) {
+		this.headerStyle = headerStyle;
 	}
 
 	

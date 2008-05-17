@@ -31,6 +31,8 @@ public class HTMLTable extends DefaultTable implements Attributeable{
 	private String skin = TableConstants.DEFAULT_SKIN;
 	private String uri;
 	private String id;
+	private String style;
+	
 	private String paramsFormVar;//参数form变量，如果设置了则不输出，包参数form存储到变量中，由用户自己确定位置，这样
 	                             //设置是为了解决form嵌套的问题
 	private String paramsFormScope = TableConstants.DEFAULT_PARAMSFORM_SCOPE;//默认是request
@@ -102,5 +104,15 @@ public class HTMLTable extends DefaultTable implements Attributeable{
 	public void setParamsFormScope(String paramsFormScope) {
 		this.paramsFormScope = paramsFormScope;
 	}
+
+
+	public String getStyle() {
+		return style;
+	}
+
+	public void setStyle(String style) {
+		this.style = style;
+	}
+
 
 }

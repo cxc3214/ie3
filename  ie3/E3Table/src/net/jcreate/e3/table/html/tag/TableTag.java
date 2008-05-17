@@ -163,6 +163,8 @@ public class TableTag extends BodyTagSupport{
 	
 	private DataModel dataModel = null;
 	
+	private String style;
+	
 	private String i18n = TableConstants.DEFAULT_I18N;
 
 
@@ -292,6 +294,7 @@ public class TableTag extends BodyTagSupport{
 			table = (HTMLTable)creator.createTable(dataModel, (String[])this.columnProperties.toArray(new String[this.columnProperties.size()]));
 			table.setId(this.id);
 			table.setSkin(this.skin);
+		
 			table.setCaption(this.caption);
 			table.setUri(this.uri);
 			table.setPageInfo(this.getNavInfo());
@@ -300,6 +303,7 @@ public class TableTag extends BodyTagSupport{
 			table.setNoDataTip(noDataTip);
 			table.setParamsFormScope(paramsFormScope);
 			table.setParamsFormVar(paramsFormVar);
+			table.setStyle(style);
 			this.createdTable = true;
 			return EVAL_BODY_AGAIN;
 		}
@@ -473,7 +477,8 @@ public class TableTag extends BodyTagSupport{
 		this.items = null;
 		this.scope = null;
 		this.builder = null;
-		
+		this.style = null;
+	
 		this.enabledStateManager = true;
 		this.currRow = null;
 		this.rowIndex = 0;		
@@ -636,7 +641,13 @@ public class TableTag extends BodyTagSupport{
 	}
 
 
-	
+	public String getStyle() {
+		return style;
+	}
+
+	public void setStyle(String style) {
+		this.style = style;
+	}
 
 	
 }

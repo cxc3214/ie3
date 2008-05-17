@@ -13,6 +13,9 @@ public class ColumnGroupTag extends TagSupport {
 	private String titleKey;
 	private HTMLColumnGroup group = null;
 	private String style;
+	/**
+	 * @deprecated
+	 */
 	private String styleClass;
 	
 

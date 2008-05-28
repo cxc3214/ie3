@@ -266,6 +266,7 @@ public class Configuration {
   
   private AntPathMatcher uriPatternMatcher = new AntPathMatcher();
   private static final String URI_PATTERN = "*.uriPattern";
+  private static final String INCLUDE_PATTERN = "*.includes";
 
   /**
    * 获取所有uriMapping定义
@@ -282,10 +283,12 @@ public class Configuration {
 	  java.util.Iterator propIterator = properites.keySet().iterator();
 	  while( propIterator.hasNext() ){
 		  Object key = propIterator.next();
-		  if ( uriPatternMatcher.match(URI_PATTERN, (String)key) ){
+		  if (    uriPatternMatcher.match(URI_PATTERN, (String)key) ||
+				  uriPatternMatcher.match(INCLUDE_PATTERN, (String)key)
+				  ){
 			  String uriMappingName = getUriMappingName((String)key);
 			  sb.append(uriMappingName).append(Constants.SPLITER);
-		  }
+		  } 
 	  }
 	  return sb.toString();
   }

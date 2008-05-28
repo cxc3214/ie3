@@ -28,8 +28,6 @@ public class GZipResourceHandler implements ResourceHandler{
 
 	public void handle(Resource pResource) throws HandleResourceException {
 		HttpServletRequest request = HttpHolder.getRequest();		
-		boolean isSupportedGZIP = WebUtils.isSupportedGzip(request); 
-		if ( isSupportedGZIP ) {
 			logger.info("正在对资源:" + pResource.getUri() + "进行gzip压缩...");
 			int before = pResource.getTreatedData().length;
 			try {
@@ -41,11 +39,6 @@ public class GZipResourceHandler implements ResourceHandler{
 			}
 			int after = pResource.getTreatedData().length;
 			logger.info("压缩资源:" + pResource.getUri() + "成功." + getGZIPDesc(before, after) );
-		}else{
-			logger.debug("客户端：" + request.getRemoteAddr() + "不支持gzip压缩，未进行数据压缩!");
-            return;             
-		}
-
 	}
 	
 	

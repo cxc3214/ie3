@@ -73,16 +73,16 @@ public abstract class AbstractResourceManager implements ResourceManager {
 			if ( resourceConfig == null ){
 				final String msg =
 					"没有找到资源: " + pUri + " 对应的配置项目，请检查配置文件中是否存在与之匹配的uri模式!";
-				logger.error(msg);
-				throw new ResourceException(msg);
+				logger.warn(msg);
 			}
 			ResourceLoader loader = null;
-				loader = loaderMapping.mapping(resourceConfig.getLoaderName());
-
 			if ( resourceConfig == null ){
 				loader = DEFAULT_LOADER;
 				logger.warn("资源:" + pUri + "没有对应的loader,采用默认的文件Loader");
+			} else {
+				loader = loaderMapping.mapping(resourceConfig.getLoaderName());
 			}
+
 			
 			Resource result = cacheManager.get(pUri);
 			if ( result != null ){	
@@ -130,7 +130,6 @@ public abstract class AbstractResourceManager implements ResourceManager {
 			Resource res = pLoader.load(pUri);
 			ResourceConfig resourceConfig = resourceConfigMapping.mapping(pUri);
 			if ( resourceConfig == null ){
-				logger.debug("没有发现:" + pUri + "对应的配置项目");
 				cacheManager.put(res);
 				return res;
 			}

@@ -9,7 +9,8 @@ public class UriMapping implements Serializable{
 	private String mimeType;
 	private String loader = Constants.DEFAULT_LOADER_NAME;	
 	private String handlers;
-	private String uriPattern;
+	private String includes;
+	private String excludes;
 	public String getCharset() {
 		return charset;
 	}
@@ -34,11 +35,31 @@ public class UriMapping implements Serializable{
 	public void setMimeType(String mimeType) {
 		this.mimeType = mimeType;
 	}
+
+	/**
+	 * @deprecated 历史原因,以后使用getIncludes
+	 */
 	public String getUriPattern() {
-		return uriPattern;
+		return includes;
 	}
+	/**
+	 * @deprecated
+	 * 历史原因,以后使用setIncludes
+	 */	
 	public void setUriPattern(String uriPattern) {
-		this.uriPattern = uriPattern;
+		this.includes = uriPattern;
+	}
+	public String getIncludes() {
+		return includes;
+	}
+	public void setIncludes(String includes) {
+		this.includes = includes;
+	}
+	public String getExcludes() {
+		return excludes;
+	}
+	public void setExcludes(String excludes) {
+		this.excludes = excludes;
 	}
 	
 }

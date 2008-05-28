@@ -539,6 +539,9 @@ public abstract class StringUtils {
 	 * @see #delimitedListToStringArray
 	 */
 	public static String[] tokenizeToStringArray(String str, String delimiters) {
+		if ( str == null ){
+			return new String[0];
+		}
 		return tokenizeToStringArray(str, delimiters, true, true);
 	}
 

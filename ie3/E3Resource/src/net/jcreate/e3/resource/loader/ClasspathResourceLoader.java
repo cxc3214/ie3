@@ -75,7 +75,7 @@ public class ClasspathResourceLoader  implements ResourceLoader{
 		InputStream is = ClassUtils.getResourceAsStream(this.getClass(), uri);
 		if ( is  == null ){
 			final String MSG = "没有找到资源文件:" + uri ;
-			logger.error(MSG);
+			logger.debug(MSG);
 			throw new NotFoundResourceException(MSG);		
 		}
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();		

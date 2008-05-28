@@ -25,7 +25,7 @@ public class DefaultResourceConfigMapping implements ResourceConfigMapping {
 		}
 		for(int i=0; i<uriMappings.length; i++){
 			UriMapping uriMapping = uriMappings[i];
-			if  ( pathMatcher.match(uriMapping.getUriPattern(), pUri) == false ){
+			if  ( isMatch(uriMapping, pUri) == false ){
 				continue;
 			} else {
 				String loaderName = uriMapping.getLoader();
@@ -40,6 +40,39 @@ public class DefaultResourceConfigMapping implements ResourceConfigMapping {
 			
 		}
 		return null;
+	}
+	
+	protected boolean isMatch(UriMapping pUriMapping, String pUri){
+		final String includes = pUriMapping.getIncludes();
+		final String excludes = pUriMapping.getExcludes(); 
+		if ( includes == null ){
+			return false;
+		}
+		if ( pUri == null ){
+			return false;
+		}
+		String[] includeArray = StringUtils.tokenizeToStringArray(includes,  Constants.SPLITER);
+		boolean match = false;
+		for(int i=0; i<includeArray.length; i++){
+			String include = includeArray[i];
+			if ( pathMatcher.match(include, pUri)) {
+				match = true;	
+				break;
+			}
+		}
+		if ( match ){
+			//检查includes
+			String[] excludeArray = StringUtils.tokenizeToStringArray(excludes,  Constants.SPLITER);
+			for(int i=0; i<excludeArray.length; i++){
+				String exclude = excludeArray[i];
+				if ( pathMatcher.match(exclude, pUri)) {
+					match = false;
+					break;
+				}
+			}
+						
+		}
+		return match;
 	}
 
 }

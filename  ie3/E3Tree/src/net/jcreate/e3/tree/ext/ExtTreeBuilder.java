@@ -424,13 +424,32 @@ public class ExtTreeBuilder extends AbstractWebTreeBuilder{
 		this.treeID = treeID;
 	}
 
+
+	public boolean isCreateDiv() {
+		return createDiv;
+	}
+
+	public void setCreateDiv(boolean createDiv) {
+		this.createDiv = createDiv;
+	}
+	/**
+	 * @deprecated 当时拼写错了
+	 * @see isCreateDiv
+	 * @return
+	 */
 	public boolean isCreateDive() {
 		return createDiv;
 	}
 
+	/**
+	 * @deprecated 当时拼写错误
+	 * @see setCreateDiv
+	 * @param createDive
+	 */
 	public void setCreateDive(boolean createDive) {
 		this.createDiv = createDive;
 	}
+	
 
 	public String getRootName() {
 		return rootName;

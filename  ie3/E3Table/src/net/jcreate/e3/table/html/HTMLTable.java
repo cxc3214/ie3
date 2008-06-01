@@ -32,6 +32,9 @@ public class HTMLTable extends DefaultTable implements Attributeable{
 	private String uri;
 	private String id;
 	private String style;
+	//ajax, mvc,default, 表格模式
+	private String mode;
+	private HTMLForm form;
 	
 	private String paramsFormVar;//参数form变量，如果设置了则不输出，包参数form存储到变量中，由用户自己确定位置，这样
 	                             //设置是为了解决form嵌套的问题
@@ -112,6 +115,22 @@ public class HTMLTable extends DefaultTable implements Attributeable{
 
 	public void setStyle(String style) {
 		this.style = style;
+	}
+
+	public HTMLForm getForm() {
+		return form;
+	}
+
+	public void setForm(HTMLForm form) {
+		this.form = form;
+	}
+
+	public String getMode() {
+		return mode;
+	}
+
+	public void setMode(String mode) {
+		this.mode = mode;
 	}
 
 

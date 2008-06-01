@@ -21,11 +21,7 @@
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-		<attribute>
-			<name>mode</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>		
+		
 		<attribute>
 			<name>pageSize</name>
 			<required>false</required>
@@ -306,28 +302,6 @@
 		<info></info>
 	</tag>	
 	
-	<tag>
-		<name>form</name>
-		<tagclass>net.jcreate.e3.table.html.tag.FormTag</tagclass>
-		<bodycontent>EMPTY</bodycontent>
-		<info></info>
-		<attribute>
-			<name>action</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>		
-		<attribute>
-			<name>target</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>		
-		<attribute>
-			<name>method</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>		
-		
-	</tag>	
 	
 	
 </taglib>

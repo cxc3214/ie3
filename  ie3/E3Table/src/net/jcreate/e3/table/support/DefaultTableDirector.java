@@ -39,6 +39,7 @@ import net.jcreate.e3.table.TableBuilder;
 import net.jcreate.e3.table.TableContext;
 import net.jcreate.e3.table.TableContextSupport;
 import net.jcreate.e3.table.TableDirector;
+import net.jcreate.e3.table.ajax.AjaxUtil;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -77,8 +78,8 @@ public class DefaultTableDirector implements TableDirector{
 	public void build(TableBuilder pBuilder, Table pTable) throws BuildTableException {
 		   if ( pBuilder == null || pTable == null){
 			   return;
-		   }		   
-		   
+		   }	
+
 		   setObjectWebContext(pBuilder);
 		   if ( logger.isDebugEnabled() ){
 			   logger.debug("控制参数：");
@@ -87,7 +88,6 @@ public class DefaultTableDirector implements TableDirector{
 			   logger.debug("showTopPanel=" + this.showTopPanel);
 			   logger.debug("showTopToolbar=" + this.showTopToolbar);
 			   logger.debug("showBottomToolbar=" + this.showBottomToolbar);
-			   logger.debug("showBody=" + this.showBody);
 			   logger.debug("showBody=" + this.showBody);
 		   }
 		   pBuilder.init(pTable);

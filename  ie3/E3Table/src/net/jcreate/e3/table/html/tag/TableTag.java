@@ -39,6 +39,7 @@ import net.jcreate.e3.table.creator.CollectionDataModelCreator;
 import net.jcreate.e3.table.html.AbstractHTMLTableBuilder;
 import net.jcreate.e3.table.html.HTMLBuilderFactory;
 import net.jcreate.e3.table.html.HTMLColumn;
+import net.jcreate.e3.table.html.HTMLForm;
 import net.jcreate.e3.table.html.HTMLParam;
 import net.jcreate.e3.table.html.HTMLRow;
 import net.jcreate.e3.table.html.HTMLTable;
@@ -75,6 +76,10 @@ public class TableTag extends BodyTagSupport{
 	
 	private String toolbarPosition;
 	private String toolbarShowPolicy;
+	
+	//ajax, mvc,default, 表格模式
+	private String mode;
+	
 	
 	/**
 	 * 表格ID
@@ -183,6 +188,13 @@ public class TableTag extends BodyTagSupport{
 	public void setBuilder(String builder) {
 		this.builder = builder;
 	}
+	
+	public void setForm(HTMLForm pForm){
+		if ( this.table == null ){
+			return;
+		}
+		this.table.setForm(pForm);
+	}
 
 	public String getId() {
 		return id;
@@ -217,6 +229,16 @@ public class TableTag extends BodyTagSupport{
 	}
 	
 
+	//mode
+	
+	private String getDefaultMode(){
+		String result = TableConstants.DEFAULT_MODE;
+		String configValue = MessageSourceFactory.getInstance().getMessage(TableConstants.MODE_KEY,null,getLocale());
+		if ( configValue != null ){
+			result = configValue;
+		}
+		return result;
+	}
 	
 	private int getDefaultPageSize(){
 		int result = TableConstants.DEFAULT_PAGE_SIZE;
@@ -247,6 +269,7 @@ public class TableTag extends BodyTagSupport{
 		this.toolbarPosition = this.toolbarPosition == null ? this.getDefaultToolbarPosition() : this.toolbarPosition;
 		this.toolbarShowPolicy = this.toolbarShowPolicy == null ? this.getDefaultToolbarShowPolicy() : this.toolbarShowPolicy;
 		this.skin = this.skin == null ? getDefaultSkin() : this.skin;
+		this.mode = this.mode == null ? getDefaultMode() : this.mode;
 	}
 	
 	private String getDefaultToolbarPosition(){
@@ -304,6 +327,7 @@ public class TableTag extends BodyTagSupport{
 			table.setParamsFormScope(paramsFormScope);
 			table.setParamsFormVar(paramsFormVar);
 			table.setStyle(style);
+			table.setMode(this.mode);
 			this.createdTable = true;
 			return EVAL_BODY_AGAIN;
 		}
@@ -494,6 +518,7 @@ public class TableTag extends BodyTagSupport{
 		this.paramsFormScope = null;
 		this.paramsFormVar = TableConstants.DEFAULT_PARAMSFORM_SCOPE;//默认是request;
 		this.i18n = TableConstants.DEFAULT_I18N;
+		//设置成默认值
 		setDefaultValue();
 		
 		super.release();
@@ -647,6 +672,14 @@ public class TableTag extends BodyTagSupport{
 
 	public void setStyle(String style) {
 		this.style = style;
+	}
+
+	public String getMode() {
+		return mode;
+	}
+
+	public void setMode(String mode) {
+		this.mode = mode;
 	}
 
 	

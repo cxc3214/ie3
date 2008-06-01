@@ -37,6 +37,7 @@ public class TableConstants {
   public static final String TOOLBAR_SHOW_POLICY_KEY = "e3.table.toolbarShowPolicy";
   
   public static final String SKIN_KEY = "e3.table.skin";
+  public static final String MODE_KEY = "e3.table.mode";
   /**
    * 命名空间/前缀
    */
@@ -106,6 +107,13 @@ public class TableConstants {
    * 默认状态参数，当request中存在该参数，并且起用了状态管理时，则可以恢复table状态
    */
   public static final String DEFAULT_STATE = "_e3State";
+  
+  /**
+   * 表格模式
+   */
+  public static final String MODE_AJAX = "ajax";
+  public static final String MODE_MVC = "mvc";
+  public static final String DEFAULT_MODE = MODE_MVC;
   
   /**
    * 默认皮肤

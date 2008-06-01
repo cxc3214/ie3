@@ -147,6 +147,12 @@
      .e3table tr.head  A {COLOR: #000000; TEXT-DECORATION: none}
      .e3table input.e3_go_the_page{ ${res_goPageStyle} }
     </style>   
+##更新区域标识起点    
+#if ( "ajax" == ${table.mode} ) 
+   <div style="display:inline;" id="aazone.${table.id}AjaxZone"> 
+   <script src="${contextPath}/e3/table/js/ajax.js"></script>
+#end   
+    
   <script>
      //排序
      function e3_${table.id}_sort(pSortProperty, pSortName,pSortDir){
@@ -156,7 +162,15 @@
         formObj.net_jcreate_e3_table_html_sortName.value = pSortName;        
         formObj.net_jcreate_e3_table_html_sortDir.value = pSortDir;
         formObj.net_jcreate_e3_table_html_start.value = "0";//排序时，显示第一页记录
-        formObj.submit();
+#if ( "ajax" == ${table.mode} )        
+        ajaxAnywhere.formName = "${table.id}Form";
+        ajaxAnywhere.getZonesToReload = function (url){
+           return "${table.id}AjaxZone";          
+        };
+        ajaxAnywhere.submitAJAX();
+#else
+       formObj.submit();        
+#end                
      }
      
      //跳转到指定页
@@ -164,7 +178,15 @@
         var formID = "${table.id}Form";
         var formObj = document.getElementById(formID);
         formObj.net_jcreate_e3_table_html_start.value = pStart;//修改开始记录的值.
-        formObj.submit();        
+#if ( "ajax" == ${table.mode} )        
+        ajaxAnywhere.formName = "${table.id}Form";
+        ajaxAnywhere.getZonesToReload = function (url){
+           return "${table.id}AjaxZone";          
+        };
+        ajaxAnywhere.submitAJAX();
+#else
+       formObj.submit();        
+#end                
      }
      //跳转到指定页
      function e3_${table.id}_goPage(pPosition){
@@ -185,14 +207,22 @@
         var start = ( thePage - 1)*${pageInfo.pageSize};
         //有效性判断
         formObj.net_jcreate_e3_table_html_start.value = start;//修改开始记录的值.
-        formObj.submit();        
+#if ( "ajax" == ${table.mode} )        
+        ajaxAnywhere.formName = "${table.id}Form";
+        ajaxAnywhere.getZonesToReload = function (url){
+           return "${table.id}AjaxZone";          
+        };
+        ajaxAnywhere.submitAJAX();
+#else
+       formObj.submit();        
+#end                
      }
   </script>
 
   ]]></content></template>	
   <template name="scriptEnd" ><content><![CDATA[
   ]]></content></template>	
-  
+   
 <template name="topNavigation" ><content><![CDATA[
 <tr>
     <td><table class="listPage"  cellspacing="1"  style="position:relative;top:2">
@@ -274,6 +304,10 @@
   ]]></content></template>	
   <template name="docEnd" ><content><![CDATA[
      </table>
+##更新区域标识终点     
+#if ( "ajax" == ${table.mode} )        
+     <!-- @end of zone [${table.id}AjaxZone]@ --></div>
+#end                
   ]]></content></template>	
   
 
@@ -330,7 +364,7 @@
   <!--fast模式不执行-->
   <template name="columnBegin" ><content><![CDATA[<td #if ($column.width ) width="$column.width" #end  #if ($column.headerStyle ) class="$column.headerStyleClass" #end  #if ($column.headerStyle ) style="$column.headerStyle" #end>]]></content></template>	
   <template name="column" ><content><![CDATA[
-    <td #if ($column.width ) width="$column.width" #end    #if ($column.headerStyle ) style="$column.headerStyle" #end>
+    <td #if ($column.width ) width="$column.width" #end  #if ($column.headerStyle ) class="$column.headerStyle" #end  #if ($column.headerStyle ) style="$column.headerStyle" #end>
     #if ( $column.sortable )
       <a href="javascript:e3_${table.id}_sort('${column.property}','${column.sortName}','${column.nextSortDir}')">${title}&nbsp;<IMG src="${contextPath}/e3/table/img/sort_${column.sortDir}.png"     border=0></a>    
     #else
@@ -351,7 +385,7 @@
 #set ( $rowNo = $row.rowIndex % $_e3Tools.toInt($res_colorNum) ) 
      <tr ${row.AttributesAsString} class="row${rowNo}" >
 #foreach($cell in $row.cells )     
-     <td ${cell.AttributesAsString}  #if ($cell.column.style ) style="$cell.column.style" #end >${cell.value}</td>
+     <td ${cell.AttributesAsString}  #if ($cell.column.style ) style="$cell.column.style" #end #if ($cell.column.styleClass ) style="$cell.column.styleClass" #end>${cell.value}</td>
 #end          
      </tr>
 #end  

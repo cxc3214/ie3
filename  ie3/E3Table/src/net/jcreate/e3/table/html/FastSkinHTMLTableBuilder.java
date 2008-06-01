@@ -20,14 +20,22 @@ public class FastSkinHTMLTableBuilder extends SkinHTMLTableBuilder{
 	final protected void buildHTMLColumnEnd(HTMLColumn pColumn) throws BuildTableException {
 		
 	}
-	final protected void buildHTMLBodyBegin(HTMLTable table)
+	final protected void buildHTMLBodyBegin(HTMLTable pTable)
 			throws BuildTableException {
+		Context context = new DefaultContext();
+		context.put("form", pTable.getForm());
+		context.put("table", pTable);
+		context.put("rows", pTable.getRows());		
+		context.put("webContext", this.getTableContext().getWebContext());
+		appendScript(getTemplateValue(TableConstants.BODY_BEGIN_ID, context));
 	}
+
 	
 	//在body end 里实现整个处理过程
 	final protected void buildHTMLBodyEnd(HTMLTable pTable) throws BuildTableException {
 		Context context = new DefaultContext();
 		context.put("table", pTable);
+		context.put("form", pTable.getForm());
 		context.put("rows", pTable.getRows());		
 		context.put("webContext", this.getTableContext().getWebContext());
 		appendScript(getTemplateValue(TableConstants.BODY_END_ID, context));

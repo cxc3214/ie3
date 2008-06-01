@@ -26,6 +26,7 @@ import net.jcreate.e3.table.ColumnGroup;
 import net.jcreate.e3.table.Header;
 import net.jcreate.e3.table.Row;
 import net.jcreate.e3.table.Table;
+import net.jcreate.e3.table.ajax.AjaxUtil;
 import net.jcreate.e3.table.support.EmptyTableBuilder;
 
 public abstract class AbstractHTMLTableBuilder extends EmptyTableBuilder{
@@ -46,7 +47,9 @@ public abstract class AbstractHTMLTableBuilder extends EmptyTableBuilder{
 	 *
 	 */
 	final public void init(Table pTable){
+		
 	   init( (HTMLTable)pTable );
+	   //AjaxUtil.addZonesToRefresh(tableContext.getWebContext(), ((HTMLTable)pTable).getId() + "AjaxZone");
 
 	}
    

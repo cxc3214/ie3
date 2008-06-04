@@ -21,6 +21,18 @@ public abstract class AbstractWebTreeBuilder extends TreeBuilderSupport implemen
 	
 	protected StringBuffer treeScript = null;
 	private int bufferSize = DEFAULT_BUFFER_SIZE;
+	/**
+	 * 是否引入css,如果为false,则使用用户自己设置的css.
+	 * 注意: css路径是带web context path的路径,如: /e3/e3/ext/ext-all.css,
+	 * e3是 web context path
+	 */
+	protected boolean importCss = true;
+	/**
+	 * 是否引入js,如果为false,则使用用户自己设置的js,注意:
+	 * js路径,是带web context path的路径,如: /e3/e3/ext/ext.js
+	 * e3是 web context path.
+	 */
+	protected boolean importJs = true;
 	
 	public AbstractWebTreeBuilder(){
 		
@@ -100,5 +112,25 @@ public abstract class AbstractWebTreeBuilder extends TreeBuilderSupport implemen
 
 	public void setBufferSize(int bufferSize) {
 		this.bufferSize = bufferSize;
+	}
+
+
+	public boolean isImportCss() {
+		return importCss;
+	}
+
+
+	public void setImportCss(boolean importCss) {
+		this.importCss = importCss;
+	}
+
+
+	public boolean isImportJs() {
+		return importJs;
+	}
+
+
+	public void setImportJs(boolean importJs) {
+		this.importJs = importJs;
 	}
 }

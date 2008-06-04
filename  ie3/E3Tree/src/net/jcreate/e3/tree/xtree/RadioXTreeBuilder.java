@@ -39,9 +39,13 @@ public class RadioXTreeBuilder  extends XTreeBuilder{
 	 */
 	public void buildTreeStart() throws BuildTreeException {
 		StringBuffer resouces = new StringBuffer();
+		if ( this.importJs ){
 		resouces.append("<script src='${resouceHome}/xtree.js'></script>").append(ENTER);
 		resouces.append("<script src='${resouceHome}/radioTreeItem.js'></script>").append(ENTER);
-		resouces.append("<link type='text/css' rel='stylesheet' href='${xtreeStyle}' />").append(ENTER);				
+		}
+		if ( this.importCss ){
+		   resouces.append("<link type='text/css' rel='stylesheet' href='${xtreeStyle}' />").append(ENTER);
+		}
 		Context context = new DefaultContext();
 		context.put("resouceHome", getResourceHome());
 		context.put("xtreeStyle", this.getXtreeStyle());

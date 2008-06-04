@@ -140,9 +140,13 @@ public class ExtTreeBuilder extends AbstractWebTreeBuilder{
 	 */
 	public void buildTreeStart() throws BuildTreeException {
 		StringBuffer resouces = new StringBuffer();
-		resouces.append("<link type='text/css' rel='stylesheet' href='${style}' />").append(ENTER);		
-		resouces.append("<script src='${resouceHome}/adapter/ext/ext-base.js'></script>").append(ENTER);
-		resouces.append("<script src='${resouceHome}/ext-all.js'></script>").append(ENTER);
+		if ( this.importCss ){
+		   resouces.append("<link type='text/css' rel='stylesheet' href='${style}' />").append(ENTER);
+		}
+		if ( this.importJs ){
+		  resouces.append("<script src='${resouceHome}/adapter/ext/ext-base.js'></script>").append(ENTER);
+		  resouces.append("<script src='${resouceHome}/ext-all.js'></script>").append(ENTER);
+		}
 		resouces.append(getIconStyleSectionName());
 		
 		if ( createDiv ){

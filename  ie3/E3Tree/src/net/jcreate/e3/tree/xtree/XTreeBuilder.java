@@ -69,8 +69,13 @@ public class XTreeBuilder extends AbstractWebTreeBuilder{
 	 */
 	public void buildTreeStart() throws BuildTreeException {
 		StringBuffer resouces = new StringBuffer();
-		resouces.append("<link type='text/css' rel='stylesheet' href='${xtreeStyle}' />").append(ENTER);		
-		resouces.append("<script src='${resouceHome}/xtree.js'></script>").append(ENTER);
+		if ( this.importCss ){
+		   resouces.append("<link type='text/css' rel='stylesheet' href='${xtreeStyle}' />").append(ENTER);
+		}
+		
+		if ( this.importJs ){
+		  resouces.append("<script src='${resouceHome}/xtree.js'></script>").append(ENTER);
+		}
 		
 		Context context = new DefaultContext();
 		context.put("resouceHome", getResourceHome());

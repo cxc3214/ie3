@@ -34,18 +34,28 @@ import net.jcreate.e3.tree.support.WebTreeNode;
  */
 public class CheckXTreeBuilder extends XTreeBuilder{
 	
+	protected boolean cascadeCheck = true;
+	
 	/**
 	 * 负责导入Tree所需要的js,css
 	 */
 	public void buildTreeStart() throws BuildTreeException {
 		StringBuffer resouces = new StringBuffer();
-		resouces.append("<script src='${resouceHome}/xtree.js'></script>").append(ENTER);
-		resouces.append("<script src='${resouceHome}/map.js'></script>").append(ENTER);
-		resouces.append("<script src='${resouceHome}/checkboxTreeItem.js'></script>").append(ENTER);
-		resouces.append("<link type='text/css' rel='stylesheet' href='${xtreeStyle}' />").append(ENTER);		
+		if ( this.importJs ){
+		  resouces.append("<script src='${resouceHome}/xtree.js'></script>").append(ENTER);
+		  resouces.append("<script src='${resouceHome}/map.js'></script>").append(ENTER);
+		  resouces.append("<script src='${resouceHome}/checkboxTreeItem.js'></script>").append(ENTER);
+		}
+		if ( this.importCss ){
+		   resouces.append("<link type='text/css' rel='stylesheet' href='${xtreeStyle}' />").append(ENTER);
+		}
+		resouces.append("<script>").append(ENTER);
+		resouces.append("   webFXTreeConfig.cascadeCheck = ${cascadeCheck};").append(ENTER);
+		resouces.append("</script>").append(ENTER);
 
 		Context context = new DefaultContext();
 		context.put("resouceHome", getResourceHome());
+		context.put("cascadeCheck", new Boolean(cascadeCheck));
 		context.put("xtreeStyle", this.getXtreeStyle());
 		treeScript.append(StrTemplateUtil.merge(resouces.toString(), context));		
 	}
@@ -75,6 +85,14 @@ public class CheckXTreeBuilder extends XTreeBuilder{
 		
 		treeScript.append(StrTemplateUtil.merge(node.toString(), context));
 		
+	}
+
+	public boolean isCascadeCheck() {
+		return cascadeCheck;
+	}
+
+	public void setCascadeCheck(boolean cascadeCheck) {
+		this.cascadeCheck = cascadeCheck;
 	}	
 	
 	

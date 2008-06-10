@@ -103,6 +103,7 @@ public class ColumnTag extends BodyTagSupport implements Attributeable{
 		return (TableTag) findAncestorWithClass(this, TableTag.class);
 	}
 	public int doStartTag() throws JspException {
+		this.setBodyContent(null);
 		TableTag tableTag = getTableTag();
 		if ( tableTag == null ){
 			throw new JspException("column 必须是 table的子元素");
@@ -135,10 +136,10 @@ public class ColumnTag extends BodyTagSupport implements Attributeable{
 		}
 		boolean isCreatedTable = tableTag.isCreatedTable();
 		if ( isCreatedTable == false ){//没创建表格
-			return super.doEndTag();
+			return SKIP_BODY;
 		}
 		
-		
+
 		boolean isCreatedHeader = tableTag.isCreatedHeader();
 		if ( isCreatedHeader == false ){
 			//设置column
@@ -165,24 +166,32 @@ public class ColumnTag extends BodyTagSupport implements Attributeable{
 			/**
 			 * @todo:设置其他column属性
 			 */
-			return super.doEndTag();
+			return SKIP_BODY;
 		}
 
 		BodyContent content  = this.bodyContent;
-		if ( content != null ){
-			String bodyContext = content.getString();//获取body信息 
+	    if ( content != null){
+			String bodyContext = content.getString();//获取body信息
+			/**
+			 * @fixme: 没有办法识别是没有设置bodyContent还是经过修饰处理之后bodyContent内容为空.
+			 * 现在只要发现值为""时,就使用原始的属性值.
+			 * 
+			 */
+			if ( "".equals( bodyContext ) == false ){
 			//只有不存在修饰器的时候,body context才作为修饰器进行处理.否则忽略body content的内容.
-			if ( ((CompositeCellDecorator)currCell.getCellDecorator()).getSize() == 0 ){
-				JspDecorator jsp = new JspDecorator();
-				jsp.setJsp(bodyContext);
-				content.clearBody();
-			    this.addCellDecorator(jsp);
+				//这个问题到jsp2.0可以解决
+				if ( ((CompositeCellDecorator)currCell.getCellDecorator()).getSize() == 0 ){
+					JspDecorator jsp = new JspDecorator();
+					jsp.setJsp(bodyContext);
+					content.clearBody();
+				    this.addCellDecorator(jsp);
+				}
 			}
 			super.setBodyContent(null);//tomcat5.028好象不会自动清除,所以我们显示设置为nulll					
 		}
 		
 		cleanUp();
-		return super.doEndTag();
+		return SKIP_BODY;
 	}
 
 	private void cleanUp(){
@@ -203,7 +212,7 @@ public class ColumnTag extends BodyTagSupport implements Attributeable{
 		this.style = null;
 		this.styleClass = null;
 		this.titleKey = null;
-		this.sortable = false;
+		this.sortable = TableConstants.DEFAULT_SORTABLE;;
 		super.release();
 	}
 

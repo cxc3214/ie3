@@ -195,6 +195,13 @@ public class TableTag extends BodyTagSupport{
 		}
 		this.table.setForm(pForm);
 	}
+	public HTMLForm getForm(){
+		if ( this.table == null ){
+			return null;
+		}
+		return this.table.getForm();
+ 
+	}
 
 	public String getId() {
 		return id;

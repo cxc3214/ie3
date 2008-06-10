@@ -47,6 +47,13 @@ public class NavRequest {
 	 */
 	private int pageSize;
 	
+	/**
+	 * 是否是第一次请求,当创建ext grid之类的ajax皮肤时,需要通过这个属性
+	 * 来判断是否是第一次请求，如果是第一次请求，则要生成构造grid的js脚本,
+	 * 否则只需要生成显示表格的数据.
+	 */
+	private boolean first;
+	
 	public int getPageSize() {
 		return pageSize;
 	}
@@ -96,6 +103,12 @@ public class NavRequest {
 	}
 	public void setSortName(String sortName) {
 		this.sortName = sortName;
+	}
+	public boolean isFirst() {
+		return first;
+	}
+	public void setFirst(boolean first) {
+		this.first = first;
 	}
 	
   

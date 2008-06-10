@@ -6,6 +6,7 @@ public class HTMLForm {
 	//target
 	private String target = "_self";
 	private String method = "post";
+	private String name;
 
 	public String getAction() {
 		return action;
@@ -29,5 +30,13 @@ public class HTMLForm {
 
 	public void setMethod(String method) {
 		this.method = method;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 }

@@ -11,6 +11,9 @@ public class FormTag extends TagSupport {
 	//target
 	private String target = "_self";
 	private String method = "post";
+	//表单名称
+	private String name;
+	
 	public String getAction() {
 		return action;
 	}
@@ -37,12 +40,14 @@ public class FormTag extends TagSupport {
 		if ( tableTag == null ){
 			throw new JspException("form 必须是 table的子元素");
 		}
-		HTMLForm form = new HTMLForm();
-		form.setAction(action);
-		form.setMethod(method);
-		form.setTarget(target);
-		tableTag.setForm(form);
-		
+		if ( tableTag.getForm() == null){
+			HTMLForm form = new HTMLForm();
+			form.setAction(action);
+			form.setMethod(method);
+			form.setTarget(target);
+			form.setName(name);
+			tableTag.setForm(form);
+		}
 		return super.doStartTag();
 	}
 	
@@ -50,7 +55,14 @@ public class FormTag extends TagSupport {
 		this.action = null;
 		this.target = null;
 		this.method = null;
+		this.name = null;
 		super.release();
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 

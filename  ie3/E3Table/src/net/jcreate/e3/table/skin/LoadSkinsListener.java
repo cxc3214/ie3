@@ -74,15 +74,22 @@ public class LoadSkinsListener implements ServletContextListener {
         xs.setDebug(0);
 		xs.setAutoReload(autoReload);
 		xs.setServletContext(pServletContextEvent.getServletContext());
-		xs.setConfig(SKIN_DEF_PATH);
+		String skinFile = null;
+		if ( WEB_HOME == null ){
+			skinFile = "/net/jcreate/e3/table/skin/default-skin-def.xml";//默认皮肤定义文件
+		} else { 
+			skinFile = SKIN_DEF_PATH;
+		}                                     		
+		xs.setConfig(skinFile);
 		XkinsLoader.setRealWebPath( WEB_HOME );
+		//XkinsLoader.setRealWebPath( null );
 		try{
-		  logger.info("开始装载e3.table皮肤!" + SKIN_DEF_PATH);
+		  logger.info("开始装载e3.table皮肤!" + skinFile);
 		  servletContext.setAttribute(Xkins.ATTR_SKINS, xs.loadSkins());
 		  logger.info("成功装载e3.table皮肤!");
 		}catch(Exception ex){
 			final String MSG =
-				"初始化e3.table皮肤失败!皮肤定义文件路径:" + WEB_HOME +LoadSkinsListener.SKIN_DEF_FILE;
+				"初始化e3.table皮肤失败!皮肤定义文件路径:" + WEB_HOME +skinFile;
 			logger.error(MSG, ex);
 			if ( logger.isDebugEnabled() ){
 		      ex.printStackTrace();	

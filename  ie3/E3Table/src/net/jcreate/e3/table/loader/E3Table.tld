@@ -312,6 +312,11 @@
 		<bodycontent>EMPTY</bodycontent>
 		<info></info>
 		<attribute>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>				
+		<attribute>
 			<name>action</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>

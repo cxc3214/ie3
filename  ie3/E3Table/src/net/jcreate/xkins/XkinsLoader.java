@@ -50,6 +50,7 @@ public class XkinsLoader {
 	//~ Static fields/initializers -----------------------------------------------------------------
 	private static String config = "/xkin-definition.xml";
 
+	private final Log log = LogFactory.getLog( XkinsLoader.class);
 	//~ Instance fields ----------------------------------------------------------------------------
 
 	private final String CONSTANT_CLASS_NAME = ConstantResource.class.getName();
@@ -129,7 +130,7 @@ public class XkinsLoader {
 			throws XkinsException {
 		
 		try {
-			XkinsLogger.getLogger().info("Loading Xkins from files " + XkinsLoader.getConfig() + "...");
+			log.info("Loading Xkins from files " + XkinsLoader.getConfig() + "...");
 			Iterator it = this.getConfigFiles();
 			Xkins xk = new Xkins();
 			while (it.hasNext()) {
@@ -137,11 +138,11 @@ public class XkinsLoader {
 				if (url != null) {
 					//if has servletcontext, uses this one to generate the real path, otherwise uses the url that is comming
 					setRealWebPath(this.getServletContext()!=null?this.getServletContext().getRealPath("/"):url.toString());
-					XkinsLogger.getLogger().info("Loading " + url);
+					log.info("Loading " + url);
 					xk = this.loadSkins(url.openStream(), xk);				
 					addConfigFilesTimeStamp(url);
 				} else {
-					XkinsLogger.getLogger().warn("URL not defined.");
+					log.warn("URL not defined.");
 				}
 			}
         	
@@ -163,7 +164,7 @@ public class XkinsLoader {
 					String skinName = (String)itSk.next();
 					String type = xk.getSkin(skinName).getType();
 					if(!type.startsWith(this.getSkinType())) {
-						XkinsLogger.getLogger().warn("Xkin Type " + type + " does not match with specified one: " + this.getSkinType() + ". This Skin will not be loaded.");											
+						log.warn("Xkin Type " + type + " does not match with specified one: " + this.getSkinType() + ". This Skin will not be loaded.");											
 						toRemove.add(skinName);
 					}
 				}
@@ -173,7 +174,7 @@ public class XkinsLoader {
 			}	
 
 			if(xk.getSkins().size()==0)
-			XkinsLogger.getLogger().warn("No skins are defined.");
+			log.warn("No skins are defined.");
 
 			//Me guardo el xs.
 			this.xkinsLoaded = xk;
@@ -192,16 +193,16 @@ public class XkinsLoader {
 							String tmpName = (String)itK.next(); 
 							Object obj = skPadre.getTemplate(tmpName); 
 							if(obj==null) { 
-								XkinsLogger.getLogger().warn("The template " + tmpName + " is not present in skin " + skPadre.getName() + ", that is extended by " + sk.getName());
+								log.warn("The template " + tmpName + " is not present in skin " + skPadre.getName() + ", that is extended by " + sk.getName());
 							} 
 						} 
 					} 
 				} 
 			}
-			XkinsLogger.getLogger().info("Loaded.");
+			log.info("Loaded.");
 			return xk;
 		} catch(IOException io) {
-			XkinsLogger.getLogger().error("Error loading Xkins.", io);
+			log.error("Error loading Xkins.", io);
 			throw new XkinsException("Error cargando los Xkins: " + io);
 		}
 	}
@@ -216,6 +217,9 @@ public class XkinsLoader {
 	}
 	
 	public static void addDefinitionFilesTimeStamp(File file) {
+		if ( file == null ){
+			return;
+		}
 		getDefinitionFilesTimeStamp().put(file.getPath(), new Long(file.lastModified()));
 	}
 
@@ -303,6 +307,8 @@ public class XkinsLoader {
 				digester.parse(in);
 				in.close();
 			} catch (SAXException e) {
+				System.out.println("出错:" + e.getMessage());
+				System.out.println("出错:" + e);
 				e.printStackTrace();
 			} finally {
 				if (in != null) {
@@ -327,6 +333,7 @@ public class XkinsLoader {
 			xk.addProcessors(xkLoading.getProcessors());
 			return xk;
 		} catch (Throwable thr) {
+			thr.printStackTrace();
 			throw new XkinsException(thr);
 		}
 	}
@@ -350,7 +357,7 @@ public class XkinsLoader {
 			try {
 				skin = Class.forName(className).newInstance();
 			} catch (Exception e) {
-				XkinsLogger.getLogger().error("Error instantiating Skin class. ", e);
+				log.error("Error instantiating Skin class. ", e);
 			}
 			return skin;
 		}
@@ -371,19 +378,46 @@ public class XkinsLoader {
 		}
 	}
 
+	private InputStream getSkinStream(String pSkinDefinition){
+		if ( pSkinDefinition == null ){
+			return null;
+		}
+		InputStream result = null;
+		log.info("pSkinDefinition=" + pSkinDefinition);
+		result = this.servletContext.getResourceAsStream(pSkinDefinition);
+		if ( result == null ){
+			result = XkinsLoader.class.getResourceAsStream(pSkinDefinition);
+		}
+		return result;
+	}
+	private File getSkinFile(String pSkinDefinition){
+		if ( pSkinDefinition == null ){
+			return null;
+		}
+		File result = null;
+		if ( getRealWebPath() == null ){
+			return null;
+		}
+		String path = getRealWebPath() + pSkinDefinition;
+		result = new File(path);
+		return result;
+		
+	}
+	
+	
 	/**
 	 * Carga el Skin desde la definici�n si la tiene aparte.
 	 */
 	public Skin loadDefinition(Skin skin)
 			throws XkinsException {
+		if(skin.getDefinition() == null) {
+			return null;
+		}
+		log.info("开始装载皮肤:" + skin.getSkinDefinition());
 		try {
-			if(skin.getDefinition()!=null) {				
-				String path = getRealWebPath() + skin.getSkinDefinition();
-				File defin = new File(path);
-				if(defin!=null) {
-					XkinsLogger.getLogger().info("Loading Definition from file " + defin + "...");					
-					addDefinitionFilesTimeStamp(defin);
-					InputStream in = new FileInputStream(defin);
+					log.info("Loading Definition from file " + skin.getSkinDefinition() + "...");					
+					addDefinitionFilesTimeStamp(getSkinFile(skin.getSkinDefinition()));
+					InputStream in = getSkinStream( skin.getSkinDefinition() );
 					Digester digester = new Digester();
 					URL url = this.getClass().getResource(this.dtd);
 					if (url != null) {
@@ -391,9 +425,7 @@ public class XkinsLoader {
 						//digester.setValidating(true);
 					}
 					digester.push(skin);
-			
 					this.skinDigester(digester, "");
-	
 					try {
 						// Parse the input stream to initialize our database
 						digester.parse(in);
@@ -405,7 +437,7 @@ public class XkinsLoader {
 							try {
 								in.close();
 							} catch (Exception e) {
-								XkinsLogger.getLogger().error("Error Loading skin Definition.", e);
+								log.error("Error Loading skin Definition.", e);
 							}
 						}
 					}
@@ -413,15 +445,10 @@ public class XkinsLoader {
 					xle.setXkins(skin.getXkins());
 					skin.getXkins().sendEvent(xle);
 					return skin;
-				} else {
-					XkinsLogger.getLogger().error("Definition file not found: " + path);
-				}
-			}
 		} catch (Throwable thr) {
-			XkinsLogger.getLogger().error("Error Loading Definition.", thr);			
+			log.error("Error Loading Definition.", thr);			
 			throw new XkinsException(thr.getMessage());
 		}
-		return null;
 	}
 	
 	private void skinDigester(Digester digester, String prefix) {
@@ -555,9 +582,9 @@ public class XkinsLoader {
 						while (it.hasNext()) {
 							String fileName = (String)it.next();
 							File file = new File(fileName);						
-							XkinsLogger.getLogger().info("Reloading configuration file " + fileName);														
+							log.info("Reloading configuration file " + fileName);														
 							XkinsLoader.this.loadSkins(new FileInputStream(file), XkinsLoader.this.xkinsLoaded);
-							XkinsLogger.getLogger().info("Configuration file " + fileName + " loaded.");
+							log.info("Configuration file " + fileName + " loaded.");
 						}							
 					}
 					Thread.sleep(XkinsLoader.this.getAutoReload());
@@ -565,7 +592,7 @@ public class XkinsLoader {
 					//Nada
 				} catch(Exception e) {
 					//Fallo el loadSkins...
-					XkinsLogger.getLogger().error("Error Loading Xkins", e);					
+					log.error("Error Loading Xkins", e);					
 				}
 			}			
 		}

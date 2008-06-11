@@ -53,6 +53,7 @@ public class ExtTreeBuilder extends AbstractWebTreeBuilder{
     private boolean border = false;
     //似乎否显示根节点
     private boolean rootVisible = true;
+    private String bodyStyle = null ;
     
     /**
      * 用于保存构造树用到的变量名.
@@ -168,6 +169,9 @@ public class ExtTreeBuilder extends AbstractWebTreeBuilder{
 		resouces.append("       lines:${lines},").append(ENTER);
 		resouces.append("       rootVisible:${rootVisible},").append(ENTER);		
 		resouces.append("       title:'${title}',").append(ENTER);
+		if ( bodyStyle != null ){
+		resouces.append("       bodyStyle:'${bodyStyle}',").append(ENTER);
+		}
 		resouces.append("       border: ${border},").append(ENTER);		
 	    resouces.append("       containerScroll: ${containerScroll}").append(ENTER);
 	    resouces.append("     });").append(ENTER);
@@ -178,6 +182,7 @@ public class ExtTreeBuilder extends AbstractWebTreeBuilder{
 		context.put("style", getStyle());
 		context.put("treeID", this.treeID);
 		context.put("title", this.title);
+		context.put("bodyStyle", this.bodyStyle);
 		context.put("autoScroll", this.autoScroll);
 		context.put("animate", this.animate);
 		context.put("enableDD", this.enableDD);
@@ -508,6 +513,14 @@ public class ExtTreeBuilder extends AbstractWebTreeBuilder{
 
 	public void setBorder(boolean border) {
 		this.border = border;
+	}
+
+	public String getBodyStyle() {
+		return bodyStyle;
+	}
+
+	public void setBodyStyle(String bodyStyle) {
+		this.bodyStyle = bodyStyle;
 	}
 
 

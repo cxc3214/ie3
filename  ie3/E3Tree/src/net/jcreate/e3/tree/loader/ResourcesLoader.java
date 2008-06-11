@@ -124,6 +124,9 @@ public class ResourcesLoader {
 	 * @throws LoadResourcesException
 	 */
   public static void load(final String pWebHome) throws LoadResourcesException{
+	  if ( pWebHome == null ){
+		  return;
+	  }
 	  if ( isNeedUpdate(pWebHome) == false){
 		  logger.debug("版本未发生变化，不需要导出e3.tree资源包!");
 		  return;

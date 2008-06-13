@@ -304,7 +304,36 @@
 		<tagclass>net.jcreate.e3.table.html.tag.RowTag</tagclass>
 		<bodycontent>JSP</bodycontent>
 		<info></info>
+		<attribute>
+			<name>style</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>		
 	</tag>	
+	<tag>
+		<name>addRow</name>
+		<tagclass>net.jcreate.e3.table.html.tag.AddRowTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<info></info>
+		<attribute>
+			<name>style</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>		
+	</tag>
+	
+	<tag>
+		<name>addCell</name>
+		<tagclass>net.jcreate.e3.table.html.tag.AddCellTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<info></info>
+		<attribute>
+			<name>style</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>		
+	</tag>	
+		
 	
 	<tag>
 		<name>form</name>

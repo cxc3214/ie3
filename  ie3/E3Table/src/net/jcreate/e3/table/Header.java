@@ -52,6 +52,13 @@ public interface Header {
      * @return
      */
     public Column getColumn(String property);
+    
+    /**
+     * 获取列索引
+     * @param pColumn
+     * @return
+     */
+    public int getColumnIndex(Column pColumn);
 
     /**
      * 获取指定列

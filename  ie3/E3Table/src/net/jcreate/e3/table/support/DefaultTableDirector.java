@@ -201,7 +201,8 @@ public class DefaultTableDirector implements TableDirector{
             		  if ( cell == null ){
           	    		   final String MSG = "第:" + (i+1) + "行,第:" + (j+1)+ "列单元格对象为空null";
         	    		   logger.debug(MSG);
-        	    		   throw new NullPointerException(MSG);
+        	    		   continue;
+        	    		   //throw new NullPointerException(MSG);
             		  }
             		  Column cln = pTable.getColumn(j);//获取单元格修饰器
 		    		   if ( cln == null ){

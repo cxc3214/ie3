@@ -90,7 +90,7 @@ public abstract class AbstractTableCreator implements TableCreator{
         	if ( row == null ){
         		continue;
         	}
-        	row.setRowIndex(rowIndex);
+        	//row.setRowIndex(rowIndex);
         	row.setTable(result);
         	row.setRowObject(item);
         	result.addRow(row);

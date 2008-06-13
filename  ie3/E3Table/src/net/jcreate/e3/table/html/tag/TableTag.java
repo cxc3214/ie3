@@ -22,6 +22,7 @@ package net.jcreate.e3.table.html.tag;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -46,6 +47,8 @@ import net.jcreate.e3.table.html.HTMLTable;
 import net.jcreate.e3.table.html.HTMLTableCreator;
 import net.jcreate.e3.table.html.HTMLTableHelper;
 import net.jcreate.e3.table.html.SessionStateManager;
+import net.jcreate.e3.table.html.VirtualHTMLCell;
+import net.jcreate.e3.table.html.VirtualHTMLRow;
 import net.jcreate.e3.table.i18n.I18nResourceProviderFactory;
 import net.jcreate.e3.table.message.MessageSourceFactory;
 import net.jcreate.e3.table.model.DataModelFactory;
@@ -144,6 +147,11 @@ public class TableTag extends BodyTagSupport{
 	 * 当前行对象
 	 */
 	private HTMLRow currRow = null;
+
+	/**
+	 * 虚拟行
+	 */
+	private java.util.Map virtualRows = new java.util.LinkedHashMap();
 	
 	/**
 	 * builder，用于构造Table
@@ -447,6 +455,24 @@ public class TableTag extends BodyTagSupport{
 		 } else {
 			 ;//do nothing;
 		 }
+		 
+		 /**
+		  * todo:调整顺序
+		  */
+		 
+		 java.util.Iterator keys = virtualRows.keySet().iterator();
+		 int offset=0;
+		 while( keys.hasNext() ){
+			 Object key = keys.next();
+			 List rowsList = (List)virtualRows.get(key);
+			 for(int i=0; i<rowsList.size(); i++){				 
+				 VirtualHTMLRow virtualRow = (VirtualHTMLRow)rowsList.get(i);
+				 int index = ((Integer)key).intValue();
+				 table.addRow(index+offset, virtualRow);
+				 offset++;
+			 }
+		 }
+		 
 		 AbstractHTMLTableBuilder htmlBuilder = 
 			 HTMLBuilderFactory.getInstance(builder);
 		 director.build(htmlBuilder, table);
@@ -467,8 +493,21 @@ public class TableTag extends BodyTagSupport{
 			StateInfo stateInfo = new DefaultStateInfo(this.id, sortInfo, pageInfo);
 			stateManager.saveStateInfo(stateInfo);
 		} 
+		if ( this.getBodyContent() != null ){
+		   this.getBodyContent().clearBody();
+		}
 		return super.doEndTag();
 	}
+	
+	public void addVirtualRow(VirtualHTMLRow pRow){
+		Integer key = new Integer(this.rowIndex);
+		if ( this.virtualRows.containsKey(key) == false ){
+			this.virtualRows.put(key, new ArrayList());
+		}
+		List rows = (List)this.virtualRows.get(key);
+		rows.add(pRow);
+	}
+	
 	  /**
      * clean up instance variables, but not the ones representing tag attributes.
      */
@@ -480,6 +519,7 @@ public class TableTag extends BodyTagSupport{
 		this.createdHeader = false;
 		this.columnProperties.clear();
 		this.loopTagStatus = null;
+		virtualRows.clear();
 	}
     
     private Locale getLocale(){

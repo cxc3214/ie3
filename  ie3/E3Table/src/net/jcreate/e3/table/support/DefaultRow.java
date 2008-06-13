@@ -25,12 +25,13 @@ import java.util.List;
 import java.util.Map;
 
 import net.jcreate.e3.table.Cell;
+import net.jcreate.e3.table.Column;
 import net.jcreate.e3.table.Row;
 import net.jcreate.e3.table.Table;
 
 public class DefaultRow implements Row {
 
-	private int rowIndex;
+ 
 	private Table table;
 	private List cells = new ArrayList();
 	private Map  columns = new HashMap();
@@ -46,9 +47,6 @@ public class DefaultRow implements Row {
     public Object getRowObject(){
     	return rowObject;
     }
-	public void setRowIndex(int rowIndex) {
-		this.rowIndex = rowIndex;
-	}
 
 	public boolean isOdd() {
 		if ( (this.getRowIndex()+1) % 2 == 0){
@@ -59,6 +57,7 @@ public class DefaultRow implements Row {
 	}
 
 	public boolean isFirst() {
+		int rowIndex = this.getRowIndex();
         if ( rowIndex == 0 ){
         	return true;
         }else{
@@ -68,6 +67,7 @@ public class DefaultRow implements Row {
 
 	public boolean isLast() {
 		int size = table.getRows().size();
+		int rowIndex = this.getRowIndex();
 		if ( rowIndex == (size-1) ){
 			return true;
 		}else{
@@ -81,7 +81,15 @@ public class DefaultRow implements Row {
 	
 	public void addCell(Cell pCell){
 		this.cells.add(pCell);
-		this.columns.put(pCell.getColumn().getProperty(), pCell);
+		Column column = pCell.getColumn();
+	    if ( column == null ){
+	    	return;
+	    }
+	    String property = column.getProperty();
+	    if ( property == null ){
+	    	return;
+	    }
+		this.columns.put(property, pCell);
 	}
 	
 	public Cell getCell(String pProperty){
@@ -89,7 +97,10 @@ public class DefaultRow implements Row {
     }
 
 	public int getRowIndex() {
-		return rowIndex;
+		if ( table == null ){
+			return -1;
+		}
+		return this.table.getRowIndex(this);
 	}
 
 	public Table getTable() {
@@ -103,6 +114,9 @@ public class DefaultRow implements Row {
 		this.rowObject = rowObject;
 	}
 	public Cell getCell(int pIndex) {
+		if ( pIndex > (this.cells.size()-1) ){
+			return null;
+		}
 		return (Cell)cells.get(pIndex);
 	}
 

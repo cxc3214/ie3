@@ -50,6 +50,28 @@ public class DefaultTable implements Table{
 	public String getCaptionKey() {
 		return captionKey;
 	}
+	
+	  /**
+	   * 行索引号
+	   * @param pRow 行对象
+	   * @return
+	   */
+	  public int getRowIndex(Row pRow){
+		  return this.rows.indexOf(pRow);
+	  }
+	  
+	  /**
+	   * 获取列索引
+	   * @param pColumn
+	   * @return
+	   */
+	  public int getColumnIndex(Column pColumn){
+		  if ( this.header == null ){
+			  return -1;
+		  }
+		  return this.header.getColumnIndex(pColumn);
+	  }
+	
 
 	public void setCaptionKey(String captionKey) {
 		this.captionKey = captionKey;
@@ -97,6 +119,10 @@ public class DefaultTable implements Table{
 	
 	public void addRow(Row pRow){
 		this.rows.add(pRow);
+	}
+	
+	public void addRow(int pRowIndex, Row pRow){
+		this.rows.add(pRowIndex, pRow);
 	}
 
 	public Header getHeader() {

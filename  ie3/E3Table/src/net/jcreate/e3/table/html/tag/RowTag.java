@@ -57,7 +57,7 @@ public class RowTag extends TagSupport implements Attributeable{
 		}		
 		if ( tableTag.isCreatedHeader() == false ){
 			return SKIP_BODY;
-		}
+		} 
 		currRow = tableTag.getCurrRow();
 		if ( style != null ){
 		  setAttribute("style", this.style);

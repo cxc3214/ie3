@@ -28,12 +28,13 @@ import net.jcreate.e3.table.SortInfo;
 import net.jcreate.e3.table.decorator.CompositeCellDecorator;
 import net.jcreate.e3.table.decorator.JspDecorator;
 import net.jcreate.e3.table.html.Attributeable;
+import net.jcreate.e3.table.html.Decorateable;
 import net.jcreate.e3.table.html.HTMLCell;
 import net.jcreate.e3.table.html.HTMLColumn;
 import net.jcreate.e3.table.html.HTMLRow;
 import net.jcreate.e3.table.support.TableConstants;
 
-public class ColumnTag extends BodyTagSupport implements Attributeable{
+public class ColumnTag extends BodyTagSupport implements Attributeable,  Decorateable{
 	
 	private static final long serialVersionUID = 1L;
 
@@ -136,7 +137,7 @@ public class ColumnTag extends BodyTagSupport implements Attributeable{
 		}
 		boolean isCreatedTable = tableTag.isCreatedTable();
 		if ( isCreatedTable == false ){//没创建表格
-			return SKIP_BODY;
+			return super.doEndTag();
 		}
 		
 
@@ -166,7 +167,7 @@ public class ColumnTag extends BodyTagSupport implements Attributeable{
 			/**
 			 * @todo:设置其他column属性
 			 */
-			return SKIP_BODY;
+			return super.doEndTag();
 		}
 
 		BodyContent content  = this.bodyContent;
@@ -191,7 +192,7 @@ public class ColumnTag extends BodyTagSupport implements Attributeable{
 		}
 		
 		cleanUp();
-		return SKIP_BODY;
+		return super.doEndTag();
 	}
 
 	private void cleanUp(){

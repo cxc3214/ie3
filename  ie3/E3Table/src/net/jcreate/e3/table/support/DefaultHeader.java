@@ -95,5 +95,8 @@ public class DefaultHeader implements Header{
 	public void setTable(Table pTable) {
       this.table = pTable;
 	}
+	public int getColumnIndex(Column column) {
+		return this.columns.indexOf(column);
+	}
 
 }

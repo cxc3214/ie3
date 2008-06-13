@@ -51,11 +51,6 @@ public interface Row {
       * @return
       */
      public int getRowIndex();
-     /**
-      * 设置行索引
-      * @param pRowIndex
-      */
-     public void setRowIndex(int pRowIndex);
      
      /**
       * 获取列所在表格

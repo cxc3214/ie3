@@ -25,6 +25,7 @@ import javax.servlet.jsp.tagext.TagSupport;
 import net.jcreate.e3.table.CellDecorator;
 import net.jcreate.e3.table.DecorateException;
 import net.jcreate.e3.table.decorator.DecoratorFactory;
+import net.jcreate.e3.table.html.Decorateable;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.logging.Log;
@@ -54,11 +55,10 @@ public class DecoratorTag extends TagSupport {
 	}
 
 	public int doEndTag() throws JspException {
-		ColumnTag columnTag = (ColumnTag) findAncestorWithClass(this, ColumnTag.class);
-		if ( columnTag == null ){
-			throw new JspException("decorator 必须是column的子元素!");
+		Decorateable decorateable = (Decorateable) findAncestorWithClass(this, Decorateable.class);
+		if ( decorateable != null ){
+			decorateable.addCellDecorator(cellDecorator);
 		}
-		columnTag.addCellDecorator(cellDecorator);		
 		return super.doEndTag();
 	}
 

@@ -24,6 +24,8 @@ import net.jcreate.e3.table.CellDecorator;
 import net.jcreate.e3.table.Column;
 import net.jcreate.e3.table.Row;
 
+import org.springframework.util.Assert;
+
 public class DefaultCell implements Cell{
 
 	private Object value;
@@ -80,11 +82,19 @@ public class DefaultCell implements Cell{
 	}
 
 	public int getRowIndex() {
-		return this.getRow().getRowIndex();
+		Row row = this.getRow();
+		if ( row == null ){
+			return -1;
+		}
+		return row.getRowIndex();
 	}
 
 	public int getColumnIndex() {
-		return this.getColumn().getColumnIndex();
+		if ( this.column == null ){
+			return -1;
+		} else {
+			return this.getColumn().getColumnIndex();	
+		}		
 	}
 
 	public void setRow(Row row) {
@@ -96,10 +106,12 @@ public class DefaultCell implements Cell{
 	}
 
 	public boolean isOddColumn() {
+		Assert.notNull(this.column);
 		return this.getColumn().isOdd();
 	}
 
 	public boolean isOddRow() {
+		Assert.notNull(this.row);
 		return this.getRow().isOdd();
 	}
 

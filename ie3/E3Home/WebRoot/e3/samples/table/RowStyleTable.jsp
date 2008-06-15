@@ -16,6 +16,7 @@
            items="tests"
            caption="测试"
            varStatus="testStatus"
+           skin="E3001_004"
           >         
       <e3t:column property="id"    title="用户ID"  />          
       <e3t:column property="name"  title="用户名称" />

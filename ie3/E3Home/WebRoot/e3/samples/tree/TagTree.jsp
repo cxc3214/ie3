@@ -50,6 +50,7 @@ function showSelectedNode(){
 <c:url var="userIcon" value="/e3/samples/tree/User.gif"/>
 <c:url var="subTree" value="/servlet/xtreeServlet?_actionType=loadExtSubOrgs&parentID=001"/>
 
+
 <e3:tree var="org" items="orgs" builder="ExtLoadTree" >
   <e3:node id="${org.id}" parentId="${org.parentId}" name="${org.name}"
            icon="${orgIcon}"
@@ -63,7 +64,8 @@ function showSelectedNode(){
 <td>
 
 
-<e3:tree var="org" items="orgs" sortProperty="id" reverse="true">
+
+<e3:tree var="org" items="orgs" sortProperty="id" reverse="true" >
   <c:set var="selected" value="false"/>
   <c:if test="${org.id=='1020'}">
     <c:set var="selected" value="true"/>
@@ -77,6 +79,7 @@ function showSelectedNode(){
            selected="${selected}"
   />
 </e3:tree>
+
 </td>
 </tr>
 </BODY>

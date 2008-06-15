@@ -14,6 +14,7 @@
 <e3t:table id="testTable"
            items="tests"
            caption="测试"
+           skin="E3001_004"
           >
     <e3t:group title="基础信息" >          
       <e3t:column property="id"    />          
@@ -27,7 +28,7 @@
       <e3t:column property="status"      title="状态" />                    
       <e3t:column property="description"   title="描述" />
     </e3t:group>
-      
+    
 </e3t:table>          
 
 </BODY>

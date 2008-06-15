@@ -10,7 +10,7 @@
 <BODY> 
 
 <form>
-<c:url var="uri" value="/servlet/tableServlet?_actionType=showSimpleTable" />
+<c:url var="uri" value="/servlet/tableServlet?_actionType=showExtTable" />
 <e3t:table id="userTable"
            var="user"
            varStatus="userStatus"
@@ -18,6 +18,7 @@
            caption="用户管理"
            uri="${uri}"
            pageSize="5"
+           skin="E3002"
           >
     <e3t:column property="userID"   title="用户ID" />          
     <e3t:column property="userName" title="用户名称" />            

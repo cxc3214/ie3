@@ -8,17 +8,17 @@
 <BODY> 
 
 <%
-  net.jcreate.e3.table.test.TestList tests = new net.jcreate.e3.table.test.TestList(20, false);
+  net.jcreate.e3.table.test.TestList tests = new net.jcreate.e3.table.test.TestList(50, false);
   request.setAttribute("tests", tests);
 %>
 <e3t:table id="testTable"
            items="tests"
            caption="用户列表"
-           varStatus="testStatus"
+           statusVar="testStatus"
           >
           
       <e3t:column property="no" title="序号"  sortable="false">
-        ${testStatus.count}
+        ${testStatus.globalCount}
       </e3t:column>                
 
       <e3t:column property="id"  title="用户ID"  />          

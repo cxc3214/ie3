@@ -34,14 +34,14 @@ alert('d');
   java.util.Map data111 = new java.util.HashMap();
   data111.put("id","exit");
   data111.put("parentId", "root" );
-  data111.put("name","4:返回主页");
+  data111.put("name","返回主页");
   data111.put("action", "goHome");
   datas.add( data111 );
   
   java.util.Map data112 = new java.util.HashMap();
   data112.put("id","ad");
   data112.put("parentId", "root" );
-  data112.put("name","3:赞助商");
+  data112.put("name","赞助商");
   data112.put("action", request.getContextPath() + "/e3/ad/Ad.jsp" );
   datas.add( data112 );
   
@@ -104,17 +104,45 @@ alert('d');
   java.util.Map data72 = new java.util.HashMap();
   data72.put("id","RowStyleTable");
   data72.put("parentId", "std" );
-  data72.put("name","7:设置行样式");
+  data72.put("name","8:设置行样式");
   data72.put("action", request.getContextPath() + "/e3/samples/table/RowStyleTable.jsp" );
   datas.add( data72 );
   
   java.util.Map data73 = new java.util.HashMap();
   data73.put("id","RowEventTable");
   data73.put("parentId", "std" );
-  data73.put("name","8:设置行事件");
+  data73.put("name","9:设置行事件");
   data73.put("action", request.getContextPath() + "/e3/samples/table/RowEventTable.jsp" );
   datas.add( data73 );
   
+  java.util.Map data74 = new java.util.HashMap();
+  data74.put("id","JdbcPageTable");
+  data74.put("parentId", "std" );
+  data74.put("name","10:JDBC 分页");
+  data74.put("action", request.getContextPath() + "/servlet/tableServlet?_actionType=showJdbcPageTable" );
+  datas.add( data74 );  
+  
+  java.util.Map data75 = new java.util.HashMap();
+  data75.put("id","HbnPageTable");
+  data75.put("parentId", "std" );
+  data75.put("name","11: Hibernate分页");
+  data75.put("action", request.getContextPath() + "/servlet/tableServlet?_actionType=showHbnPageTable" );
+  datas.add( data75 );
+  
+  
+  java.util.Map data76 = new java.util.HashMap();
+  data76.put("id","SelectTable");
+  data76.put("parentId", "std" );
+  data76.put("name","12: 全选/反选");
+  data76.put("action", request.getContextPath() + "/servlet/tableServlet?_actionType=showSelectAllTable" );
+  datas.add( data76 );
+  
+  java.util.Map data77 = new java.util.HashMap();
+  data77.put("id","ajaxTable");
+  data77.put("parentId", "std" );
+  data77.put("name","13: ajax表格");
+  data77.put("action", request.getContextPath() + "/servlet/tableServlet?_actionType=showAjaxTable" );
+  datas.add( data77 );  
   
   
   java.util.Map data8 = new java.util.HashMap();
@@ -144,13 +172,22 @@ alert('d');
   data11.put("action", request.getContextPath() + "/servlet/tableServlet?_actionType=showSkinTable&skin=E3001_003" );
   datas.add( data11 );
   
+    java.util.Map data12 = new java.util.HashMap();
+  data12.put("id","skin005");
+  data12.put("parentId", "skin" );
+  data12.put("name","ext皮肤");
+  data12.put("action", request.getContextPath() + "/servlet/tableServlet?_actionType=showExtTable" );
+  datas.add( data12 );
+  
+  
+  
   
   pageContext.setAttribute("datas", datas);
   
 %>
 
 
-<e3:tree var="data" items="datas" builder="extTree" >
+<e3:tree var="data" items="datas" builder="extTree" defaultSort="false">
   <e3:node id="B${data.id}" parentId="B${data.parentId}" name="${data.name}" 
            action="javascript:openURL('${data.action}')" 
   />

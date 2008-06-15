@@ -27,6 +27,11 @@ function E3TreeExtReadyHandler(pTree, pTreeID){
 function showSelectedNode(){
  var selectModel= tree.getSelectionModel();
  var selectNode = selectModel.getSelectedNode();
+ if ( selectNode == null ){
+   alert('没有选种任何节点！');
+   return;
+ }
+ 
  alert(selectNode.text + selectNode.id );   
 }
 

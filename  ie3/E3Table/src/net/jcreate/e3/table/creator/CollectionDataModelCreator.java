@@ -34,9 +34,9 @@ public class CollectionDataModelCreator extends AbstractDataModelCreator {
 		String property = pNavRequest.getSortProperty();
 		if ( property != null ){
 			String sortDir = pNavRequest.getSortDir();
-			if ( Sort.ASC.getCode().equals(sortDir) ){//升序
+			if ( Sort.ASC.getCode().equalsIgnoreCase(sortDir) ){//升序
 		       Collections.sort(allData, new BeanComparator(property));//beanutil的通用排序器
-			}else if ( Sort.DESC.getCode().equals(sortDir) ){
+			}else if ( Sort.DESC.getCode().equalsIgnoreCase(sortDir) ){
 				Collections.sort(allData, new BeanComparator(property));
 				Collections.reverse(allData);	
 			}else{

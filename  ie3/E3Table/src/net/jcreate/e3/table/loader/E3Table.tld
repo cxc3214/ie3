@@ -123,6 +123,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>statusVar</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>scope</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -311,8 +316,19 @@
 		</attribute>		
 	</tag>	
 	<tag>
-		<name>addRow</name>
-		<tagclass>net.jcreate.e3.table.html.tag.AddRowTag</tagclass>
+		<name>appendRow</name>
+		<tagclass>net.jcreate.e3.table.html.tag.AppendRowTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<info></info>
+		<attribute>
+			<name>style</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>		
+	</tag>
+	<tag>
+		<name>insertRow</name>
+		<tagclass>net.jcreate.e3.table.html.tag.InsertRowTag</tagclass>
 		<bodycontent>JSP</bodycontent>
 		<info></info>
 		<attribute>
@@ -331,7 +347,18 @@
 			<name>style</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>rowspan</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
 		</attribute>		
+		<attribute>
+			<name>colspan</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>		
+				
 	</tag>	
 		
 	

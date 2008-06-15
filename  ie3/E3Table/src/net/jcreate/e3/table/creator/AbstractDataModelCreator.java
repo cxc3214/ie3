@@ -43,6 +43,7 @@ public abstract class AbstractDataModelCreator implements DataModelCreator {
 			throw new CreateDataModelException("记录总数应该大于或等于零!");
 		}
 		DefaultPageInfo pageInfo = new DefaultPageInfo(start, totalSize, pNavRequest.getPageSize());
+		pageInfo.setExported(pNavRequest.isExported());
 		//当start大于 totalSize -1 时,需要调整start的值.
 		if ( start < 0 ){
 			start = 0;

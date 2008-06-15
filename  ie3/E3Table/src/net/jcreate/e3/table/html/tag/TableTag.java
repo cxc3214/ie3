@@ -47,7 +47,6 @@ import net.jcreate.e3.table.html.HTMLTable;
 import net.jcreate.e3.table.html.HTMLTableCreator;
 import net.jcreate.e3.table.html.HTMLTableHelper;
 import net.jcreate.e3.table.html.SessionStateManager;
-import net.jcreate.e3.table.html.VirtualHTMLCell;
 import net.jcreate.e3.table.html.VirtualHTMLRow;
 import net.jcreate.e3.table.i18n.I18nResourceProviderFactory;
 import net.jcreate.e3.table.message.MessageSourceFactory;
@@ -92,7 +91,7 @@ public class TableTag extends BodyTagSupport{
 	/**
 	 * 变量状态
 	 */
-	private String varStatus;
+	private String statusVar;
 	
 	/**
 	 * 变量名，用于存储跌代对象
@@ -151,7 +150,7 @@ public class TableTag extends BodyTagSupport{
 	/**
 	 * 虚拟行
 	 */
-	private java.util.Map virtualRows = new java.util.LinkedHashMap();
+	private java.util.Map virtualRows = new java.util.TreeMap();
 	
 	/**
 	 * builder，用于构造Table
@@ -368,17 +367,22 @@ public class TableTag extends BodyTagSupport{
 			if ( this.var != null ){
 				this.pageContext.setAttribute(this.var, this.currRow.getRowObject());
 			}
-			if (this.varStatus != null ){
+			if (this.statusVar != null ){
 				if ( loopTagStatus == null ){
 					loopTagStatus = new LoopTagStatus();
 				}
-				loopTagStatus.setCount(rowIndex+1);
+				
 				loopTagStatus.setIndex(rowIndex);
+				loopTagStatus.setCount(loopTagStatus.getIndex()+1);
+				PageInfo navInfo = this.getNavInfo();
+				loopTagStatus.setGlobalIndex(navInfo == null ? rowIndex : navInfo.getStart() + rowIndex );
+				loopTagStatus.setGlobalCount(loopTagStatus.getGlobalIndex() + 1);
 				loopTagStatus.setCurrent(this.currRow.getRowObject());
 				loopTagStatus.setFirst(this.currRow.isFirst());
 				loopTagStatus.setLast(this.currRow.isLast());
 				loopTagStatus.setOdd(this.currRow.isOdd());
-				this.pageContext.setAttribute(this.varStatus, loopTagStatus);
+				//getNavInfo
+				this.pageContext.setAttribute(this.statusVar, loopTagStatus);
 			}
 			rowIndex++;
 		}
@@ -499,8 +503,8 @@ public class TableTag extends BodyTagSupport{
 		return super.doEndTag();
 	}
 	
-	public void addVirtualRow(VirtualHTMLRow pRow){
-		Integer key = new Integer(this.rowIndex);
+	public void addVirtualRow(VirtualHTMLRow pRow, int pOffset){
+		Integer key = new Integer(this.rowIndex+ pOffset );
 		if ( this.virtualRows.containsKey(key) == false ){
 			this.virtualRows.put(key, new ArrayList());
 		}
@@ -544,7 +548,7 @@ public class TableTag extends BodyTagSupport{
 	public void release() {
 		this.id = null;
 		this.var = null;
-		this.varStatus = null;
+		this.statusVar = null;
 		this.items = null;
 		this.scope = null;
 		this.builder = null;
@@ -571,12 +575,20 @@ public class TableTag extends BodyTagSupport{
 		super.release();
 	}
 
+	/**
+	 * @deprecated use getStatusVar
+	 * @return
+	 */
 	public String getVarStatus() {
-		return varStatus;
+		return statusVar;
 	}
 
+	/**
+	 * @deprecated use setStatusVar
+	 * @param varStatus
+	 */
 	public void setVarStatus(String varStatus) {
-		this.varStatus = varStatus;
+		this.statusVar = varStatus;
 	}
 
 	public HTMLRow getCurrRow() {
@@ -727,6 +739,14 @@ public class TableTag extends BodyTagSupport{
 
 	public void setMode(String mode) {
 		this.mode = mode;
+	}
+
+	public String getStatusVar() {
+		return statusVar;
+	}
+
+	public void setStatusVar(String statusVar) {
+		this.statusVar = statusVar;
 	}
 
 	

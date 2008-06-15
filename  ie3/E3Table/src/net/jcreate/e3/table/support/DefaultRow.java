@@ -80,6 +80,14 @@ public class DefaultRow implements Row {
 	}
 	
 	public void addCell(Cell pCell){
+		if ( pCell == null ){
+			return;
+		}
+		/**
+		 * @fixme: 如果单元格在其他行，要先从其他行把他删除
+		 */
+		pCell.setRow(this);
+		//pCell.setRow(pRow)
 		this.cells.add(pCell);
 		Column column = pCell.getColumn();
 	    if ( column == null ){
@@ -94,6 +102,15 @@ public class DefaultRow implements Row {
 	
 	public Cell getCell(String pProperty){
 		return (Cell)columns.get(pProperty);
+    }
+
+    /**
+     * 获取单元格索引
+     * @param pCell
+     * @return
+     */
+    public int getCellIndex(Cell pCell){
+    	return this.cells.indexOf(pCell);
     }
 
 	public int getRowIndex() {

@@ -1,6 +1,7 @@
 package net.jcreate.e3.table.html;
 
 import net.jcreate.e3.table.BuildTableException;
+import net.jcreate.e3.table.PageInfo;
 import net.jcreate.e3.table.support.TableConstants;
 import net.jcreate.e3.templateEngine.Context;
 import net.jcreate.e3.templateEngine.support.DefaultContext;
@@ -26,7 +27,11 @@ public class FastSkinHTMLTableBuilder extends SkinHTMLTableBuilder{
 		context.put("form", pTable.getForm());
 		context.put("table", pTable);
 		context.put("rows", pTable.getRows());		
+		context.put("cols", pTable.getColumns());
 		context.put("webContext", this.getTableContext().getWebContext());
+		PageInfo pageInfo = pTable.getPageInfo();
+		context.put("pageInfo", pageInfo);		
+		
 		appendScript(getTemplateValue(TableConstants.BODY_BEGIN_ID, context));
 	}
 
@@ -36,7 +41,11 @@ public class FastSkinHTMLTableBuilder extends SkinHTMLTableBuilder{
 		Context context = new DefaultContext();
 		context.put("table", pTable);
 		context.put("form", pTable.getForm());
-		context.put("rows", pTable.getRows());		
+		context.put("rows", pTable.getRows());
+		context.put("cols", pTable.getColumns());
+		PageInfo pageInfo = pTable.getPageInfo();
+		context.put("pageInfo", pageInfo);		
+		
 		context.put("webContext", this.getTableContext().getWebContext());
 		appendScript(getTemplateValue(TableConstants.BODY_END_ID, context));
 

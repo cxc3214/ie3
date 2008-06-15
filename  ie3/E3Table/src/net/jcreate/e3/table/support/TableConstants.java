@@ -65,6 +65,8 @@ public class TableConstants {
    */
   public static final String STATE_PARAM_PREFIX = PREFIX + "_" + "stateParam_";
   
+
+  
   /**
    * 工具条显示位置
    */
@@ -161,6 +163,17 @@ public class TableConstants {
    * 用于记录 pageSize参数值
    */
   public static final String PAGE_SIZE_PARAM = PREFIX + "pageSize";
+  
+  /**
+   * 导出参数
+   */
+  public static final String EXPORTED_PARAM = PREFIX + "exported";
+  /**
+   * 刷新区域
+   */
+  public static final String REFRESH_ZONE_PARAM = PREFIX + "refreshZone";
+  
+  
   
   /**
    * 用于记录 sortColumn参数值

@@ -17,6 +17,25 @@ public class AddCellTag extends BodyTagSupport implements Attributeable, Decorat
 	
 	private String style;
 	private VirtualHTMLCell virtualCell = null;
+	private int rowspan = 1;
+	private int colspan = 1;
+	
+
+	public int getRowspan() {
+		return rowspan;
+	}
+
+	public void setRowspan(int rowspan) {
+		this.rowspan = rowspan;
+	}
+
+	public int getColspan() {
+		return colspan;
+	}
+
+	public void setColspan(int colspan) {
+		this.colspan = colspan;
+	}
 
 	public String getStyle() {
 		return style;
@@ -52,7 +71,9 @@ public class AddCellTag extends BodyTagSupport implements Attributeable, Decorat
 			return SKIP_BODY;
 		}
 		virtualCell = new VirtualHTMLCell();
-		AddRowTag rowTag = (AddRowTag) findAncestorWithClass(this, AddRowTag.class);
+		virtualCell.setRowspan(this.rowspan);
+		virtualCell.setColspan(this.colspan);
+		AppendRowTag rowTag = (AppendRowTag) findAncestorWithClass(this, AppendRowTag.class);
 		if ( rowTag != null ){
 		  rowTag.addCell(virtualCell);
 		}
@@ -95,6 +116,8 @@ public class AddCellTag extends BodyTagSupport implements Attributeable, Decorat
 
 	public void release() {
 		this.style = null;
+		this.rowspan = 1;
+		this.colspan = 1;
 		super.release();
 	}
 

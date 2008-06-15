@@ -86,6 +86,13 @@ public interface Row {
      public void addCell(Cell pCell);
      
      /**
+      * 获取单元格索引
+      * @param pCell
+      * @return
+      */
+     public int getCellIndex(Cell pCell);
+     
+     /**
       * 设置行对象
       * @param pObj
       */

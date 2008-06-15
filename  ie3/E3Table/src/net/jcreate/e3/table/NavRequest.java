@@ -48,6 +48,13 @@ public class NavRequest {
 	private int pageSize;
 	
 	/**
+	 * 表结构是否导出过.这个属性当构造ajax table的时候有用.
+	 * ajax表格的构造分2个过程.1:导出表定义 2:读数据
+	 */
+	private boolean exported = true;
+	
+	
+	/**
 	 * 是否是第一次请求,当创建ext grid之类的ajax皮肤时,需要通过这个属性
 	 * 来判断是否是第一次请求，如果是第一次请求，则要生成构造grid的js脚本,
 	 * 否则只需要生成显示表格的数据.
@@ -109,6 +116,12 @@ public class NavRequest {
 	}
 	public void setFirst(boolean first) {
 		this.first = first;
+	}
+	public boolean isExported() {
+		return exported;
+	}
+	public void setExported(boolean exported) {
+		this.exported = exported;
 	}
 	
   

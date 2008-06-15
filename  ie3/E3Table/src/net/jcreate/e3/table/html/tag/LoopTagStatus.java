@@ -43,6 +43,12 @@ public class LoopTagStatus {
 	private int count;
 	
 	/**
+	 * 所有记录的统计，从上一页开始算
+	 */
+	private int globalIndex;
+	private int globalCount;
+	
+	/**
 	 * 用来表明当前这轮迭代是否为第一次迭代
 	 */
 	private boolean first;
@@ -98,6 +104,22 @@ public class LoopTagStatus {
 
 	public void setCurrent(Object current) {
 		this.current = current;
+	}
+
+	public int getGlobalIndex() {
+		return globalIndex;
+	}
+
+	public void setGlobalIndex(int globalIndex) {
+		this.globalIndex = globalIndex;
+	}
+
+	public int getGlobalCount() {
+		return globalCount;
+	}
+
+	public void setGlobalCount(int globalCount) {
+		this.globalCount = globalCount;
 	}
 
 }

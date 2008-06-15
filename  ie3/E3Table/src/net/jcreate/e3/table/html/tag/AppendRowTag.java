@@ -7,7 +7,7 @@ import net.jcreate.e3.table.html.Attributeable;
 import net.jcreate.e3.table.html.VirtualHTMLCell;
 import net.jcreate.e3.table.html.VirtualHTMLRow;
 
-public class AddRowTag extends TagSupport implements Attributeable{
+public class AppendRowTag extends TagSupport implements Attributeable{
 	private static final long serialVersionUID = 1L;
 
 	private VirtualHTMLRow currRow = null;
@@ -47,11 +47,14 @@ public class AddRowTag extends TagSupport implements Attributeable{
 			return SKIP_BODY;
 		}
 		currRow = new VirtualHTMLRow();
-		tableTag.addVirtualRow(currRow);
+		tableTag.addVirtualRow(currRow, getOffset());
 		if ( style != null ){
 		  setAttribute("style", this.style);
 		}
 		return EVAL_BODY_INCLUDE;
+	}
+	protected int getOffset(){
+		return 0;
 	}
 	public int doEndTag() throws JspException {		
 		return super.doEndTag();

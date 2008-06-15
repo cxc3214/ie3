@@ -106,5 +106,19 @@ public interface Cell {
      * @param pDecorator
      */
     public void setCellDecorator(CellDecorator pDecorator);
+        
+    /**
+     * 获取合并行 ，默认值是1
+     * @return
+     */
+    public int getRowspan();
+    public void setRowspan(int pRowspan);
+    
+    /**
+     * 获取合并列,默认值是1
+     * @return
+     */
+    public int getColspan();
+    public void setColspan(int pColspan);
     
 }

@@ -19,9 +19,7 @@
  */
 package net.jcreate.e3.table.support;
 
-import net.jcreate.e3.table.NavRequest;
 import net.jcreate.e3.table.PageInfo;
-
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -43,6 +41,11 @@ public class DefaultPageInfo implements PageInfo{
 	 * 每页显示记录数
 	 */
 	private int pageSize = 20;
+	
+	/**
+	 * 是否已导出
+	 */
+	private boolean exported;
 	
 	public DefaultPageInfo(){
 		
@@ -192,6 +195,14 @@ public class DefaultPageInfo implements PageInfo{
 	
 	public String toString(){
 		return ToStringBuilder.reflectionToString(this);
+	}
+
+	public boolean isExported() {
+		return exported;
+	}
+
+	public void setExported(boolean exported) {
+		this.exported = exported;
 	}
 	
 

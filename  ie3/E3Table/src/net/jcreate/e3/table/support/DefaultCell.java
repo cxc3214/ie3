@@ -32,6 +32,8 @@ public class DefaultCell implements Cell{
 	private Row row;
 	private Column column;
 	private CellDecorator cellDecorator;
+	private int rowspan = 1;
+	private int colspan = 1;
 	
 	public DefaultCell(){
 		
@@ -51,8 +53,8 @@ public class DefaultCell implements Cell{
 	}	
 
 	public boolean isFirst() {
-		int rowIndex = this.getRowIndex();
-		if ( rowIndex == 0 ){
+		int cellIndex = this.row.getCellIndex(this);
+		if ( cellIndex == 0 ){
 			return true;
 		}else{
 			return false;
@@ -61,8 +63,8 @@ public class DefaultCell implements Cell{
 
 	public boolean isLast() {
 		int size = row.getCells().size();
-		int rowIndex = this.getRowIndex();		
-        if ( rowIndex == (size - 1) ){
+		int cellIndex = this.row.getCellIndex(this);		
+        if ( cellIndex == (size - 1) ){
         	return true;
         }else{
         	return false;
@@ -113,6 +115,18 @@ public class DefaultCell implements Cell{
 	public boolean isOddRow() {
 		Assert.notNull(this.row);
 		return this.getRow().isOdd();
+	}
+	public int getRowspan() {
+		return rowspan;
+	}
+	public void setRowspan(int rowspan) {
+		this.rowspan = rowspan;
+	}
+	public int getColspan() {
+		return colspan;
+	}
+	public void setColspan(int colspan) {
+		this.colspan = colspan;
 	}
 
 }

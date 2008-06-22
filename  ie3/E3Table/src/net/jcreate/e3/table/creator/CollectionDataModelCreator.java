@@ -3,9 +3,6 @@ package net.jcreate.e3.table.creator;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import org.apache.commons.beanutils.BeanComparator;
-
 import net.jcreate.e3.table.CreateDataModelException;
 import net.jcreate.e3.table.NavRequest;
 import net.jcreate.e3.table.Sort;
@@ -35,9 +32,9 @@ public class CollectionDataModelCreator extends AbstractDataModelCreator {
 		if ( property != null ){
 			String sortDir = pNavRequest.getSortDir();
 			if ( Sort.ASC.getCode().equalsIgnoreCase(sortDir) ){//升序
-		       Collections.sort(allData, new BeanComparator(property));//beanutil的通用排序器
+		       Collections.sort(allData, new CommonComparator(property));//beanutil的通用排序器
 			}else if ( Sort.DESC.getCode().equalsIgnoreCase(sortDir) ){
-				Collections.sort(allData, new BeanComparator(property));
+				Collections.sort(allData, new CommonComparator(property));
 				Collections.reverse(allData);	
 			}else{
 				;// do nothing;这种情况应该不会出现.

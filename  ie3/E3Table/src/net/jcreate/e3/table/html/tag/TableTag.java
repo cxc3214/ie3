@@ -406,6 +406,9 @@ public class TableTag extends BodyTagSupport{
 		setDefaultValue();
 		
 		Object itemsObj = this.pageContext.findAttribute(this.items);
+		if ( itemsObj == null ){
+			itemsObj = java.util.Collections.EMPTY_LIST;
+		}
 		//当items是 collection类型时，系统自动做特殊处理，这样就可以很方便实现翻页功能
 		if ( itemsObj instanceof Collection ){
 			NavRequest navRequest = HTMLTableHelper.getNavRequest(this.id, (HttpServletRequest)this.pageContext.getRequest(), pageSize);
@@ -414,7 +417,9 @@ public class TableTag extends BodyTagSupport{
 		}else{
 	   	    dataModel = DataModelFactory.getInstance(itemsObj);
 		}
-		return EVAL_BODY_INCLUDE;
+		//必须用buffered否则以后很，如果用EVAL_BODY_INCLUDE 会出现很多空格行.
+		
+		return EVAL_BODY_BUFFERED;
 	}
 	public int doEndTag() throws JspException {
 		PageInfo pageInfo = this.getNavInfo();
@@ -526,7 +531,7 @@ public class TableTag extends BodyTagSupport{
 		virtualRows.clear();
 	}
     
-    private Locale getLocale(){
+    public Locale getLocale(){
     	I18nResourceProvider i18n = I18nResourceProviderFactory.getInstance(this.i18n);
     	if ( i18n == null ){
     		return Locale.getDefault();

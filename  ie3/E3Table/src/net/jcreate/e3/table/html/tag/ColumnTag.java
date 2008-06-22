@@ -32,10 +32,15 @@ import net.jcreate.e3.table.html.Decorateable;
 import net.jcreate.e3.table.html.HTMLCell;
 import net.jcreate.e3.table.html.HTMLColumn;
 import net.jcreate.e3.table.html.HTMLRow;
+import net.jcreate.e3.table.message.MessageSourceFactory;
 import net.jcreate.e3.table.support.TableConstants;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 public class ColumnTag extends BodyTagSupport implements Attributeable,  Decorateable{
 	
+	private final Log logger = LogFactory.getLog( ColumnTag.class );
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -68,7 +73,7 @@ public class ColumnTag extends BodyTagSupport implements Attributeable,  Decorat
 	/**
 	 * 能否排序
 	 */
-	private boolean sortable = TableConstants.DEFAULT_SORTABLE;
+	private Boolean sortable = null;
 	
 	/**
 	 * 标题key,用于从消息文件中获取标题
@@ -130,6 +135,18 @@ public class ColumnTag extends BodyTagSupport implements Attributeable,  Decorat
 	}
 	private HTMLCell currCell = null;
 	
+	private boolean getDefaultSortable(){
+		boolean result = true;
+		TableTag tableTag = getTableTag();
+		String sortable = MessageSourceFactory.getInstance().getMessage(TableConstants.SORTABLE_KEY,null,tableTag.getLocale());
+		try{
+			result = Boolean.valueOf(sortable).booleanValue();
+		}catch(Exception ex){
+			logger.warn("默认排序:[" + sortable + "]不是有效布尔类型!使用默认值:" + TableConstants.DEFAULT_SORTABLE);
+		}
+		return result;
+	}
+	
 	public int doEndTag() throws JspException {
 		TableTag tableTag = getTableTag();
 		if ( tableTag == null ){
@@ -147,7 +164,7 @@ public class ColumnTag extends BodyTagSupport implements Attributeable,  Decorat
 			HTMLColumn column = (HTMLColumn)tableTag.getTable().getColumn(this.property);
 			column.setTitle(this.title);
 			column.setWidth(this.width);
-			column.setSortable(this.sortable);
+			column.setSortable(this.sortable == null ? getDefaultSortable() : this.sortable.booleanValue());
 			column.setTitleKey(this.titleKey);
 			column.setStyle(this.style);
 			column.setStyleClass(this.styleClass);
@@ -213,18 +230,19 @@ public class ColumnTag extends BodyTagSupport implements Attributeable,  Decorat
 		this.style = null;
 		this.styleClass = null;
 		this.titleKey = null;
-		this.sortable = TableConstants.DEFAULT_SORTABLE;;
+		this.sortable = null;;
 		super.release();
 	}
 
-	public boolean isSortable() {
+
+
+	public Boolean getSortable() {
 		return sortable;
 	}
 
-	public void setSortable(boolean sortable) {
+	public void setSortable(Boolean sortable) {
 		this.sortable = sortable;
 	}
-
 
 	public String getTitleKey() {
 		return titleKey;

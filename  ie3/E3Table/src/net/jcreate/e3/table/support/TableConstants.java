@@ -33,6 +33,11 @@ public class TableConstants {
    * 存储pageSize信息的key值
    */
   public static final String PAGE_SIZE_KEY = "e3.table.pageSize";
+  /**
+   * 默认排序方式
+   */
+  public static final String SORTABLE_KEY = "e3.table.sortable";
+  
   public static final String TOOLBAR_POSITION_KEY = "e3.table.toolbarPosition";
   public static final String TOOLBAR_SHOW_POLICY_KEY = "e3.table.toolbarShowPolicy";
   

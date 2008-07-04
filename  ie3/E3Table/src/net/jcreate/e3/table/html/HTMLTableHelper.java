@@ -64,7 +64,7 @@ public abstract class HTMLTableHelper {
  
 		Boolean enableStateManager =
 		 (Boolean)pWebContext.getSessionAttribute(TableConstants.ENABLED_STATE_MANAGER_PREFIX + pTableID);
-		String start = pWebContext.getParameter(TableConstants.START_PARAM);
+		String start = pWebContext.getParameter(TableConstants.START_PARAM+ "_" + pTableID);
 		if ( start == null ){//如果没有传递导航参数，就要考虑是否启用状态管理的信息.
 		if ( enableStateManager != null ){
 			if ( enableStateManager.booleanValue() == true ){
@@ -77,10 +77,10 @@ public abstract class HTMLTableHelper {
 		}
 		NavRequest result = new NavRequest();		
 		
-		String pageSize = pWebContext.getParameter(TableConstants.PAGE_SIZE_PARAM);
-		String sortColumn = pWebContext.getParameter(TableConstants.SORT_PROPERTY_PARAM);
-		String sortName = pWebContext.getParameter(TableConstants.SORT_NAME_PARAM);
-		String sortDir = pWebContext.getParameter(TableConstants.SORT_DIR_PARAM);
+		String pageSize = pWebContext.getParameter(TableConstants.PAGE_SIZE_PARAM+ "_" + pTableID);
+		String sortColumn = pWebContext.getParameter(TableConstants.SORT_PROPERTY_PARAM+ "_" + pTableID);
+		String sortName = pWebContext.getParameter(TableConstants.SORT_NAME_PARAM + "_" + pTableID);
+		String sortDir = pWebContext.getParameter(TableConstants.SORT_DIR_PARAM+ "_" + pTableID);
 		String exported = pWebContext.getParameter(TableConstants.EXPORTED_PARAM);
 		
 		/**
@@ -123,7 +123,7 @@ public abstract class HTMLTableHelper {
 	 * @return
 	 */
 	public static NavRequest getNavRequest(String pTableID, HttpServletRequest pRequest){
-		String strPageSize = MessageSourceFactory.getInstance().getMessage(TableConstants.PAGE_SIZE_KEY,null,null);
+		String strPageSize = MessageSourceFactory.getInstance().getMessage(TableConstants.PAGE_SIZE_KEY,null,String.valueOf(TableConstants.DEFAULT_PAGE_SIZE),null);
 		int pageSize = TableConstants.DEFAULT_PAGE_SIZE;
 		try{
 		  pageSize = Integer.parseInt(strPageSize);

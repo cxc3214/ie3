@@ -247,7 +247,7 @@ public class TableTag extends BodyTagSupport{
 	
 	private String getDefaultMode(){
 		String result = TableConstants.DEFAULT_MODE;
-		String configValue = MessageSourceFactory.getInstance().getMessage(TableConstants.MODE_KEY,null,getLocale());
+		String configValue = MessageSourceFactory.getInstance().getMessage(TableConstants.MODE_KEY,null,TableConstants.DEFAULT_MODE,getLocale());
 		if ( configValue != null ){
 			result = configValue;
 		}
@@ -256,7 +256,7 @@ public class TableTag extends BodyTagSupport{
 	
 	private int getDefaultPageSize(){
 		int result = TableConstants.DEFAULT_PAGE_SIZE;
-		String strPageSize = MessageSourceFactory.getInstance().getMessage(TableConstants.PAGE_SIZE_KEY,null,getLocale());
+		String strPageSize = MessageSourceFactory.getInstance().getMessage(TableConstants.PAGE_SIZE_KEY,null,TableConstants.DEFAULT_PAGE_SIZE+"",getLocale());
 		try{
 			result = Integer.parseInt(strPageSize);
 		}catch(Exception ex){
@@ -267,7 +267,7 @@ public class TableTag extends BodyTagSupport{
 	
 	private String getDefaultSkin(){
 		String result = TableConstants.DEFAULT_SKIN;
-		String configValue = MessageSourceFactory.getInstance().getMessage(TableConstants.SKIN_KEY,null,getLocale());
+		String configValue = MessageSourceFactory.getInstance().getMessage(TableConstants.SKIN_KEY,null,TableConstants.DEFAULT_SKIN,getLocale());
 		/**
 		 * 皮肤有效性校验 
 		 */
@@ -288,7 +288,7 @@ public class TableTag extends BodyTagSupport{
 	
 	private String getDefaultToolbarPosition(){
 		String result = TableConstants.DEFAULT_TOOLBAR_POSITION;
-		String configValue = MessageSourceFactory.getInstance().getMessage(TableConstants.TOOLBAR_POSITION_KEY,null,getLocale());
+		String configValue = MessageSourceFactory.getInstance().getMessage(TableConstants.TOOLBAR_POSITION_KEY,null,TableConstants.BOTH_POSITION,getLocale());
 		if ( TableConstants.TOP_POSITION.equalsIgnoreCase(configValue) ||
 			 TableConstants.BOTTOM_POSITION.equalsIgnoreCase(configValue) ||
 			 TableConstants.BOTH_POSITION.equalsIgnoreCase(configValue)){
@@ -302,7 +302,7 @@ public class TableTag extends BodyTagSupport{
 	}
 	private String getDefaultToolbarShowPolicy(){
 		String result = TableConstants.DEFAULT_TOOLBAR_SHOW_POLICY;
-		String configValue = MessageSourceFactory.getInstance().getMessage(TableConstants.TOOLBAR_SHOW_POLICY_KEY,null,getLocale());
+		String configValue = MessageSourceFactory.getInstance().getMessage(TableConstants.TOOLBAR_SHOW_POLICY_KEY,null,TableConstants.ALWAYS_POLICY,getLocale());
 		if ( TableConstants.ALWAYS_POLICY.equalsIgnoreCase(configValue) ||
 			 TableConstants.NEED_POLICY.equalsIgnoreCase(configValue) ||
 			 TableConstants.NONE_POLICY.equalsIgnoreCase(configValue)){
@@ -424,20 +424,20 @@ public class TableTag extends BodyTagSupport{
 	public int doEndTag() throws JspException {
 		PageInfo pageInfo = this.getNavInfo();
 		if ( pageInfo != null ){
-			this.table.addParam(new HTMLParam(TableConstants.START_PARAM, String.valueOf(pageInfo.getStart()) ));
-			this.table.addParam(new HTMLParam(TableConstants.PAGE_SIZE_PARAM, String.valueOf(pageInfo.getPageSize()) ));
+			this.table.addParam(new HTMLParam(TableConstants.START_PARAM + "_" + id, String.valueOf(pageInfo.getStart()) ));
+			this.table.addParam(new HTMLParam(TableConstants.PAGE_SIZE_PARAM+ "_" + id, String.valueOf(pageInfo.getPageSize()) ));
 		}
 		
 		SortInfo sortInfo = this.getSortInfo();
 		if ( sortInfo != null && StringUtils.isNotEmpty(sortInfo.getSortProperty())  ){
-				this.table.addParam(new HTMLParam(TableConstants.SORT_PROPERTY_PARAM,  sortInfo.getSortProperty()));
-				this.table.addParam(new HTMLParam(TableConstants.SORT_DIR_PARAM, sortInfo.getSortDir() ));
+				this.table.addParam(new HTMLParam(TableConstants.SORT_PROPERTY_PARAM+ "_" + id,  sortInfo.getSortProperty()));
+				this.table.addParam(new HTMLParam(TableConstants.SORT_DIR_PARAM+ "_" + id, sortInfo.getSortDir() ));
 				HTMLColumn column = (HTMLColumn)this.table.getColumn(sortInfo.getSortProperty());
-    	        this.table.addParam(new HTMLParam(TableConstants.SORT_NAME_PARAM, column.getSortName() ));
+    	        this.table.addParam(new HTMLParam(TableConstants.SORT_NAME_PARAM+ "_" + id, column.getSortName() ));
 		} else {
-			this.table.addParam(new HTMLParam(TableConstants.SORT_PROPERTY_PARAM, "" ));
-			this.table.addParam(new HTMLParam(TableConstants.SORT_NAME_PARAM, "" ));
-			this.table.addParam(new HTMLParam(TableConstants.SORT_DIR_PARAM, "" ));
+			this.table.addParam(new HTMLParam(TableConstants.SORT_PROPERTY_PARAM+ "_" + id, "" ));
+			this.table.addParam(new HTMLParam(TableConstants.SORT_NAME_PARAM+ "_" + id, "" ));
+			this.table.addParam(new HTMLParam(TableConstants.SORT_DIR_PARAM+ "_" + id, "" ));
 		}
 		 TableDirector director = getTableDirector();
 		 //显示位置

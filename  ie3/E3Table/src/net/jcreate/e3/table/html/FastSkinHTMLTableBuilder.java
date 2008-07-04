@@ -31,6 +31,8 @@ public class FastSkinHTMLTableBuilder extends SkinHTMLTableBuilder{
 		context.put("webContext", this.getTableContext().getWebContext());
 		PageInfo pageInfo = pTable.getPageInfo();
 		context.put("pageInfo", pageInfo);		
+		Tools tools = new Tools();
+		context.put("tools", tools);
 		
 		appendScript(getTemplateValue(TableConstants.BODY_BEGIN_ID, context));
 	}
@@ -45,6 +47,8 @@ public class FastSkinHTMLTableBuilder extends SkinHTMLTableBuilder{
 		context.put("cols", pTable.getColumns());
 		PageInfo pageInfo = pTable.getPageInfo();
 		context.put("pageInfo", pageInfo);		
+		Tools tools = new Tools();
+		context.put("tools", tools);
 		
 		context.put("webContext", this.getTableContext().getWebContext());
 		appendScript(getTemplateValue(TableConstants.BODY_END_ID, context));

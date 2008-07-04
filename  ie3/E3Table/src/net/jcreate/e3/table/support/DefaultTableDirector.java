@@ -109,7 +109,7 @@ public class DefaultTableDirector implements TableDirector{
 				   }
 				   MessageSource message = tableContext.getMessageSource();
 				   if ( message != null ){
-				     noDataTip = message.getMessage(TableConstants.NO_DATA_TIP_KEY, null, locale);
+				     noDataTip = message.getMessage(TableConstants.NO_DATA_TIP_KEY, null, "", locale);
 				   }
 			   }			   
 			  pTable.setNoDataTip(noDataTip);

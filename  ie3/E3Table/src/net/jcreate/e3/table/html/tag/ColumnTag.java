@@ -138,7 +138,7 @@ public class ColumnTag extends BodyTagSupport implements Attributeable,  Decorat
 	private boolean getDefaultSortable(){
 		boolean result = true;
 		TableTag tableTag = getTableTag();
-		String sortable = MessageSourceFactory.getInstance().getMessage(TableConstants.SORTABLE_KEY,null,tableTag.getLocale());
+		String sortable = MessageSourceFactory.getInstance().getMessage(TableConstants.SORTABLE_KEY,null, String.valueOf(TableConstants.DEFAULT_SORTABLE),tableTag.getLocale());
 		try{
 			result = Boolean.valueOf(sortable).booleanValue();
 		}catch(Exception ex){

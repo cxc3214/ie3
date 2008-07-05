@@ -18,6 +18,9 @@ private final static Log logger = LogFactory.getLog ( ResourcesLoader.class );
 	}
 	
 	public  static void load(final String pWebHome) throws LoadResourcesException{
+		if ( pWebHome == null ){
+			return;
+		}
 		final String sequenceFile = getSequenceFile( pWebHome );
 		java.io.File file = new java.io.File(sequenceFile);
 		if ( file.exists() ){//如果存在，则返回

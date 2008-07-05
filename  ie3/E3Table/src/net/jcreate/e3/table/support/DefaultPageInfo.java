@@ -42,10 +42,10 @@ public class DefaultPageInfo implements PageInfo{
 	 */
 	private int pageSize = 20;
 	
-	/**
-	 * 是否已导出
-	 */
-	private boolean exported;
+//	/**
+//	 * 是否已导出
+//	 */
+//	private boolean exported;
 	
 	public DefaultPageInfo(){
 		
@@ -197,13 +197,13 @@ public class DefaultPageInfo implements PageInfo{
 		return ToStringBuilder.reflectionToString(this);
 	}
 
-	public boolean isExported() {
-		return exported;
-	}
-
-	public void setExported(boolean exported) {
-		this.exported = exported;
-	}
+//	public boolean isExported() {
+//		return exported;
+//	}
+//
+//	public void setExported(boolean exported) {
+//		this.exported = exported;
+//	}
 	
 
 

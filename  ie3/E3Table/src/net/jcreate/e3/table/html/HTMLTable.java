@@ -35,6 +35,11 @@ public class HTMLTable extends DefaultTable implements Attributeable{
 	//ajax, mvc,default, 表格模式
 	private String mode;
 	private HTMLForm form;
+	/**
+	 * 表结构是否导出过.这个属性当构造ajax table的时候有用.
+	 * ajax表格的构造分2个过程.1:导出表定义 2:读数据
+	 */
+	private boolean exported = true;
 	
 	private String paramsFormVar;//参数form变量，如果设置了则不输出，包参数form存储到变量中，由用户自己确定位置，这样
 	                             //设置是为了解决form嵌套的问题
@@ -131,6 +136,14 @@ public class HTMLTable extends DefaultTable implements Attributeable{
 
 	public void setMode(String mode) {
 		this.mode = mode;
+	}
+
+	public boolean isExported() {
+		return exported;
+	}
+
+	public void setExported(boolean exported) {
+		this.exported = exported;
 	}
 
 

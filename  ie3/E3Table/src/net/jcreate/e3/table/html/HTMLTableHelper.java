@@ -81,16 +81,6 @@ public abstract class HTMLTableHelper {
 		String sortColumn = pWebContext.getParameter(TableConstants.SORT_PROPERTY_PARAM+ "_" + pTableID);
 		String sortName = pWebContext.getParameter(TableConstants.SORT_NAME_PARAM + "_" + pTableID);
 		String sortDir = pWebContext.getParameter(TableConstants.SORT_DIR_PARAM+ "_" + pTableID);
-		String exported = pWebContext.getParameter(TableConstants.EXPORTED_PARAM+ "_" + pTableID);
-		
-		/**
-		 * 是否已导出
-		 */
-		if ("true".equalsIgnoreCase(exported)){
-			result.setExported(true);
-		} else {
-			result.setExported(false);
-		}
 		
 		if ( start == null ){
 			result.setStart(0);

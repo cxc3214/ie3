@@ -135,6 +135,14 @@ public class TableTag extends BodyTagSupport{
 	 * 没有数据说提示信息key
 	 */
 	private String noDataTipKey;
+	/**
+	 * 表格宽度
+	 */
+	private String width;
+	/**
+	 * 表格高度
+	 */
+	private String height;
 	
 	
 	/**
@@ -331,7 +339,17 @@ public class TableTag extends BodyTagSupport{
 			table = (HTMLTable)creator.createTable(dataModel, (String[])this.columnProperties.toArray(new String[this.columnProperties.size()]));
 			table.setId(this.id);
 			table.setSkin(this.skin);
-		
+			table.setHeight(height);
+			table.setWidth(width);
+			HttpServletRequest request = (HttpServletRequest)this.pageContext.getRequest();
+			String strExported = request.getParameter(TableConstants.EXPORTED_PARAM+ "_" + this.id);
+			boolean exported = false;
+			if ("true".equalsIgnoreCase(strExported)){
+				exported = true;
+			} else {
+				exported = false;
+			}
+			table.setExported(exported);
 			table.setCaption(this.caption);
 			table.setUri(this.uri);
 			table.setPageInfo(this.getNavInfo());
@@ -342,6 +360,7 @@ public class TableTag extends BodyTagSupport{
 			table.setParamsFormVar(paramsFormVar);
 			table.setStyle(style);
 			table.setMode(this.mode);
+			
 			this.createdTable = true;
 			return EVAL_BODY_AGAIN;
 		}
@@ -558,6 +577,8 @@ public class TableTag extends BodyTagSupport{
 		this.scope = null;
 		this.builder = null;
 		this.style = null;
+		this.width = null;
+		this.height = null;
 	
 		this.enabledStateManager = true;
 		this.currRow = null;
@@ -752,6 +773,22 @@ public class TableTag extends BodyTagSupport{
 
 	public void setStatusVar(String statusVar) {
 		this.statusVar = statusVar;
+	}
+
+	public String getWidth() {
+		return width;
+	}
+
+	public void setWidth(String width) {
+		this.width = width;
+	}
+
+	public String getHeight() {
+		return height;
+	}
+
+	public void setHeight(String height) {
+		this.height = height;
 	}
 
 	

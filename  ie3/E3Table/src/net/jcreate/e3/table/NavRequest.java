@@ -47,11 +47,11 @@ public class NavRequest {
 	 */
 	private int pageSize;
 	
-	/**
-	 * 表结构是否导出过.这个属性当构造ajax table的时候有用.
-	 * ajax表格的构造分2个过程.1:导出表定义 2:读数据
-	 */
-	private boolean exported = true;
+//	/**
+//	 * 表结构是否导出过.这个属性当构造ajax table的时候有用.
+//	 * ajax表格的构造分2个过程.1:导出表定义 2:读数据
+//	 */
+//	private boolean exported = true;
 	
 	
 	/**
@@ -117,12 +117,12 @@ public class NavRequest {
 	public void setFirst(boolean first) {
 		this.first = first;
 	}
-	public boolean isExported() {
-		return exported;
-	}
-	public void setExported(boolean exported) {
-		this.exported = exported;
-	}
+//	public boolean isExported() {
+//		return exported;
+//	}
+//	public void setExported(boolean exported) {
+//		this.exported = exported;
+//	}
 	
   
 }

@@ -23,6 +23,29 @@ import java.util.List;
 
 public interface Table {
 	
+    /**
+     * 获取表格宽度
+     * @return
+     */
+    public String getWidth();
+    /**
+     * 设置表格宽度
+     * @param pWidth
+     */
+    public void setWidth(String pWidth);
+    
+    /**
+     * 获取高度
+     * @return
+     */
+    public String getHeight();
+    /**
+     * 设置高度
+     * @param pHeight
+     */
+    public void setHeight(String pHeight);
+    
+
 	/**
 	 * 获取标题
 	 * @return

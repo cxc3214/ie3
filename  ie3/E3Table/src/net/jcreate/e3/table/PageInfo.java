@@ -29,7 +29,7 @@ package net.jcreate.e3.table;
  */
 public interface PageInfo {
 	
-	public boolean isExported();
+//	public boolean isExported();
      /**
       * 起始记录索引号，可能发生变化，因为有可能数据库记录已经被删除了
       * @return

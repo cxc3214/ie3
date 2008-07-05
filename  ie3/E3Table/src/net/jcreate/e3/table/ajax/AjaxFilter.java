@@ -47,9 +47,8 @@ public class AjaxFilter extends AAFilter{
 		} 
         HttpServletRequest request = (HttpServletRequest) pRequest;
         HttpServletResponse response = (HttpServletResponse) pResponse;
-        request.setCharacterEncoding("UTF-8");
+        //request.setCharacterEncoding("UTF-8");
         response.setContentType("text/xml;charset=utf-8");
-
         response.setHeader("Cache-Control", "no-cache");
         response.setDateHeader("Expires", 0);
         response.setHeader("Pragma", "no-cache");

@@ -416,8 +416,8 @@ public class XkinProcessor extends ContextHolder {
      */
     public void processContent(StringWriter os) {
         if (this.templ == null) {
-			XkinsLogger.getLogger().error("Template is null or not defined in skin: " + this.skinName + "." + this.templateName);
-			throw new XkinsRuntimeException("Template is null or not defined in skin: " + this.skinName + "." + this.templateName);
+			XkinsLogger.getLogger().warn("Template is null or not defined in skin: " + this.skinName + "." + this.templateName);
+			return;
         }
 
         try {

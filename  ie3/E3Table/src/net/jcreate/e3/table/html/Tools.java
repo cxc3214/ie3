@@ -10,4 +10,26 @@ public class Tools {
 		}
 		return StringUtils.escapeJavaScript((String)pValue);
 	}
+	
+	public String width(String pWidth){
+		return width(pWidth, '\'');
+	}
+	public String width(String pWidth, char pChar){
+		if ( isNum(pWidth) ){
+			return pWidth;
+		}
+		return pChar + pWidth + pChar;
+	}
+	public boolean isNum(String pWidth){
+		if ( pWidth == null ){
+			return false;
+		}
+		boolean isNum = true;		
+		try{
+    		Double.parseDouble(pWidth);
+		}catch(Exception ex){
+			isNum = false;
+		}
+		return isNum;
+	}
 }

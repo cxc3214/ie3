@@ -54,8 +54,28 @@ public class XTreeBuilder extends AbstractWebTreeBuilder{
      * 跟节点是否展开
      */
     private boolean rootExpand = true; 
+    
+	private boolean expandAll = false;
+	private boolean collapseAll = false;
+
 
 	
+	public boolean isExpandAll() {
+		return expandAll;
+	}
+
+	public void setExpandAll(boolean expandAll) {
+		this.expandAll = expandAll;
+	}
+
+	public boolean isCollapseAll() {
+		return collapseAll;
+	}
+
+	public void setCollapseAll(boolean collapseAll) {
+		this.collapseAll = collapseAll;
+	}
+
 	public String getBehavior() {
 		return behavior;
 	}
@@ -120,6 +140,15 @@ public class XTreeBuilder extends AbstractWebTreeBuilder{
 		}
 		StringBuffer temp = new StringBuffer();
 		temp.append("   document.write(${rootScript});").append(ENTER);
+		if ( this.expandAll ){
+		  temp.append("   ${rootScript}.expandAll(); ").append(ENTER);
+		}
+		
+		if ( this.collapseAll ){
+		  temp.append("   ${rootScript}.collapseAll(); ").append(ENTER);
+		}
+		
+
 		temp.append("</script>").append(ENTER);
 		Context context = new DefaultContext(); 
 		context.put("rootScript", getNodeScriptName((WebTreeNode)pRootNode));

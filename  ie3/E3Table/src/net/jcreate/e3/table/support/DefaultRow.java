@@ -34,7 +34,10 @@ public class DefaultRow implements Row {
  
 	private Table table;
 	private List cells = new ArrayList();
-	private Map  columns = new HashMap();
+	/**
+	 * key是列名, value是单元格对象
+	 */
+	private Map  cellsMap = new HashMap();
 	private Object rowObject;
 	
 	public DefaultRow(){
@@ -90,6 +93,16 @@ public class DefaultRow implements Row {
 		//pCell.setRow(pRow)
 		this.cells.add(pCell);
 		Column column = pCell.getColumn();
+		/**
+		 * 2008-6-7,如果单元格式没带column,则根据单元格的索引号计算column.
+		 */
+		if ( column == null ){
+			int columnIndex = this.getCellIndex(pCell);
+			if ( columnIndex != -1 ){
+			   column = this.table.getColumn(columnIndex);
+			   pCell.setColumn(column);
+			}
+		}
 	    if ( column == null ){
 	    	return;
 	    }
@@ -97,11 +110,11 @@ public class DefaultRow implements Row {
 	    if ( property == null ){
 	    	return;
 	    }
-		this.columns.put(property, pCell);
+		this.cellsMap.put(property, pCell);
 	}
 	
 	public Cell getCell(String pProperty){
-		return (Cell)columns.get(pProperty);
+		return (Cell)cellsMap.get(pProperty);
     }
 
     /**

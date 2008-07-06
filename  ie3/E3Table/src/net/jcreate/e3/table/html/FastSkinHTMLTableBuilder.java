@@ -1,6 +1,7 @@
 package net.jcreate.e3.table.html;
 
 import net.jcreate.e3.table.BuildTableException;
+import net.jcreate.e3.table.Column;
 import net.jcreate.e3.table.PageInfo;
 import net.jcreate.e3.table.support.TableConstants;
 import net.jcreate.e3.templateEngine.Context;
@@ -28,6 +29,11 @@ public class FastSkinHTMLTableBuilder extends SkinHTMLTableBuilder{
 		context.put("table", pTable);
 		context.put("rows", pTable.getRows());		
 		context.put("cols", pTable.getColumns());
+		int colSize = pTable.getColumnSize();
+		if ( colSize > 0 ){
+		  Column lastColumn = pTable.getColumn(colSize-1);
+		  context.put("lastCol", lastColumn);
+		}
 		context.put("webContext", this.getTableContext().getWebContext());
 		PageInfo pageInfo = pTable.getPageInfo();
 		context.put("pageInfo", pageInfo);		
@@ -45,6 +51,12 @@ public class FastSkinHTMLTableBuilder extends SkinHTMLTableBuilder{
 		context.put("form", pTable.getForm());
 		context.put("rows", pTable.getRows());
 		context.put("cols", pTable.getColumns());
+		int colSize = pTable.getColumnSize();		
+		if ( colSize > 0 ){
+			  Column lastColumn = pTable.getColumn(colSize-1);
+			  context.put("lastCol", lastColumn);
+		}
+		
 		PageInfo pageInfo = pTable.getPageInfo();
 		context.put("pageInfo", pageInfo);		
 		Tools tools = new Tools();

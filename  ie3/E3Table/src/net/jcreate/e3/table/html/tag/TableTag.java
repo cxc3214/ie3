@@ -528,6 +528,10 @@ public class TableTag extends BodyTagSupport{
 	}
 	
 	public void addVirtualRow(VirtualHTMLRow pRow, int pOffset){
+		if ( table == null ){
+			return;
+		}
+		pRow.setTable(this.table);
 		Integer key = new Integer(this.rowIndex+ pOffset );
 		if ( this.virtualRows.containsKey(key) == false ){
 			this.virtualRows.put(key, new ArrayList());

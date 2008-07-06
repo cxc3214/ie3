@@ -30,6 +30,7 @@ public class DefaultColumn implements Column{
 	private String property;
 	private String title;	
 	private String width;
+	private boolean hidden = false;
 	/**
 	 * 标题key,用于从消息文件中获取标题
 	 */
@@ -169,6 +170,14 @@ public class DefaultColumn implements Column{
 
 	public Table getTable() {
 		return table;
+	}
+
+	public boolean isHidden() {
+		return hidden;
+	}
+
+	public void setHidden(boolean hidden) {
+		this.hidden = hidden;
 	}
 
 

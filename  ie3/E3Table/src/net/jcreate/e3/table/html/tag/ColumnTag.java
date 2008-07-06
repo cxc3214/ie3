@@ -48,6 +48,7 @@ public class ColumnTag extends BodyTagSupport implements Attributeable,  Decorat
 	 */
 	private String property;
 	private String style;
+	private boolean hidden = false;
 	/**
 	 * @deprecated
 	 */
@@ -164,6 +165,7 @@ public class ColumnTag extends BodyTagSupport implements Attributeable,  Decorat
 			HTMLColumn column = (HTMLColumn)tableTag.getTable().getColumn(this.property);
 			column.setTitle(this.title);
 			column.setWidth(this.width);
+			column.setHidden(this.hidden);
 			column.setSortable(this.sortable == null ? getDefaultSortable() : this.sortable.booleanValue());
 			column.setTitleKey(this.titleKey);
 			column.setStyle(this.style);
@@ -226,6 +228,7 @@ public class ColumnTag extends BodyTagSupport implements Attributeable,  Decorat
 		this.property = null;
 		this.title = null;
 		this.width = null;
+		this.hidden = false;
 		this.headerStyle = null;
 		this.style = null;
 		this.styleClass = null;
@@ -292,6 +295,14 @@ public class ColumnTag extends BodyTagSupport implements Attributeable,  Decorat
 
 	public void setHeaderStyle(String headerStyle) {
 		this.headerStyle = headerStyle;
+	}
+
+	public boolean isHidden() {
+		return hidden;
+	}
+
+	public void setHidden(boolean hidden) {
+		this.hidden = hidden;
 	}
 
 	

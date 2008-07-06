@@ -212,8 +212,14 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		
+		
 		<attribute>
 			<name>sortName</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>hidden</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

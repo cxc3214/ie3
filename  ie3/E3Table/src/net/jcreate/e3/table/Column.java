@@ -20,6 +20,15 @@
 package net.jcreate.e3.table;
 
 public interface Column {
+	
+	/**
+	 * 是否不显示,象ext grid之类的皮肤就要用到
+	 * @return
+	 */
+	public boolean isHidden();
+	public void setHidden(boolean hidden);
+
+	
 	/**
 	 * 是否是奇数列
 	 * @return

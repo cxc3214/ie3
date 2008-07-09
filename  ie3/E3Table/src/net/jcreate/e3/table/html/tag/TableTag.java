@@ -56,10 +56,14 @@ import net.jcreate.e3.table.support.DefaultTableContext;
 import net.jcreate.e3.table.support.DefaultTableDirector;
 import net.jcreate.e3.table.support.JspPageWebContext;
 import net.jcreate.e3.table.support.TableConstants;
+import net.jcreate.e3.table.theme.DefaultThemeFactoryBuilder;
+import net.jcreate.e3.table.theme.ThemeFactory;
+import net.jcreate.e3.table.theme.ThemeFactoryBuilder;
 import net.jcreate.e3.table.util.StringUtils;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.util.Assert;
 
 
 public class TableTag extends BodyTagSupport{
@@ -160,10 +164,6 @@ public class TableTag extends BodyTagSupport{
 	 */
 	private java.util.Map virtualRows = new java.util.TreeMap();
 	
-	/**
-	 * builder，用于构造Table
-	 */
-	private String builder = TableConstants.DEFAULT_BUILDER;
 	
 
 	private HTMLTable table;
@@ -180,6 +180,7 @@ public class TableTag extends BodyTagSupport{
 	 * table包含的列名 
 	 */
 	private ArrayList columnProperties = new ArrayList();
+	private ArrayList beanProperties = new ArrayList();
 	
 	private DataModel dataModel = null;
 	
@@ -196,13 +197,6 @@ public class TableTag extends BodyTagSupport{
 		this.i18n = i18n;
 	}
 
-	public String getBuilder() {
-		return builder;
-	}
-
-	public void setBuilder(String builder) {
-		this.builder = builder;
-	}
 	
 	public void setForm(HTMLForm pForm){
 		if ( this.table == null ){
@@ -336,7 +330,11 @@ public class TableTag extends BodyTagSupport{
 		if ( this.createdTable == false ){//没创建表格，则进行表格构造
 			HTMLTableCreator creator = new HTMLTableCreator();
 			
-			table = (HTMLTable)creator.createTable(dataModel, (String[])this.columnProperties.toArray(new String[this.columnProperties.size()]));
+			table = (HTMLTable)creator.createTable(
+					 dataModel, 
+					(String[])this.columnProperties.toArray(new String[this.columnProperties.size()]),
+					(String[])this.beanProperties.toArray(new String[this.beanProperties.size()])					
+					);
 			table.setId(this.id);
 			table.setSkin(this.skin);
 			table.setHeight(height);
@@ -440,6 +438,28 @@ public class TableTag extends BodyTagSupport{
 		
 		return EVAL_BODY_BUFFERED;
 	}
+	
+	private String getTheme(){
+		Assert.notNull(this.skin, "皮肤不能为空null");
+		int index = this.skin.indexOf("_");
+		if ( index == -1 ){
+			return this.skin;
+		} else {
+			return this.skin.substring(0, index);
+		}
+	}
+	
+	private ThemeFactory getThemeFactory(){
+		DefaultTableContext tableContext = new DefaultTableContext(
+				new JspPageWebContext(this.pageContext),
+				I18nResourceProviderFactory.getInstance(this.i18n),
+				MessageSourceFactory.getInstance()
+				);				
+		ThemeFactoryBuilder builder = new DefaultThemeFactoryBuilder( tableContext );
+		ThemeFactory result = builder.build(getTheme());
+		return result;
+		
+	}
 	public int doEndTag() throws JspException {
 		PageInfo pageInfo = this.getNavInfo();
 		if ( pageInfo != null ){
@@ -458,7 +478,9 @@ public class TableTag extends BodyTagSupport{
 			this.table.addParam(new HTMLParam(TableConstants.SORT_NAME_PARAM+ "_" + id, "" ));
 			this.table.addParam(new HTMLParam(TableConstants.SORT_DIR_PARAM+ "_" + id, "" ));
 		}
-		 TableDirector director = getTableDirector();
+		ThemeFactory themeFactory = getThemeFactory();
+		TableDirector director = themeFactory.createDirector();
+		 
 		 //显示位置
 		 director.setShowTopToolbar(
 				 TableConstants.TOP_POSITION.equalsIgnoreCase(this.toolbarPosition) ||
@@ -500,10 +522,8 @@ public class TableTag extends BodyTagSupport{
 				 offset++;
 			 }
 		 }
-		 
-		 AbstractHTMLTableBuilder htmlBuilder = 
-			 HTMLBuilderFactory.getInstance(builder);
-		 director.build(htmlBuilder, table);
+		 AbstractHTMLTableBuilder htmlBuilder = (AbstractHTMLTableBuilder)themeFactory.createBuilder();		  
+	     director.build(htmlBuilder, table);
 		 String treeScript = htmlBuilder.getTableScript();
 		 try {
 			this.pageContext.getOut().write(treeScript);
@@ -550,6 +570,7 @@ public class TableTag extends BodyTagSupport{
 		this.createdTable = false;
 		this.createdHeader = false;
 		this.columnProperties.clear();
+		this.beanProperties.clear();
 		this.loopTagStatus = null;
 		virtualRows.clear();
 	}
@@ -562,14 +583,6 @@ public class TableTag extends BodyTagSupport{
     	Locale result = i18n.resolveLocale(new JspPageWebContext(this.pageContext));
     	return result;
     }
-	protected TableDirector getTableDirector(){
-		DefaultTableContext tableContext = new DefaultTableContext(
-				new JspPageWebContext(this.pageContext),
-				I18nResourceProviderFactory.getInstance(this.i18n),
-				MessageSourceFactory.getInstance()
-				);
-		return new DefaultTableDirector( tableContext );
-	}
 
 	
     private LoopTagStatus loopTagStatus = null;
@@ -579,7 +592,6 @@ public class TableTag extends BodyTagSupport{
 		this.statusVar = null;
 		this.items = null;
 		this.scope = null;
-		this.builder = null;
 		this.style = null;
 		this.width = null;
 		this.height = null;
@@ -590,11 +602,12 @@ public class TableTag extends BodyTagSupport{
 		this.createdTable = false;
 		this.createdHeader = false;
 		this.columnProperties.clear();
+		this.beanProperties.clear();
 		this.loopTagStatus = null;
 		this.captionKey = null;
 		this.noDataTip = null;
 		this.noDataTipKey = null;		
-		this.columnProperties = null;
+
 		this.table = null;
 		this.paramsFormScope = null;
 		this.paramsFormVar = TableConstants.DEFAULT_PARAMSFORM_SCOPE;//默认是request;
@@ -629,6 +642,7 @@ public class TableTag extends BodyTagSupport{
 		return createdTable;
 	}
 
+	
     public void addColumnProperty(String pProperty){
     	if ( pProperty == null ){
     		throw new IllegalArgumentException("列名不能为空null");
@@ -639,6 +653,12 @@ public class TableTag extends BodyTagSupport{
     	this.columnProperties.add(pProperty);
     }
     
+    public void addColumnBeanProperty(String pProperty){
+    	if ( pProperty == null ){
+    		throw new IllegalArgumentException("属性不能为空null");
+    	}
+    	this.beanProperties.add(pProperty);
+    }
 
 	public boolean isCreatedHeader() {
 		return createdHeader;

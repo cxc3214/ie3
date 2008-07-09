@@ -58,7 +58,7 @@ public class Hello {
 	 datas.add(data2);
 	 
 	 TableCreator creator = new HTMLTableCreator();
-	 Table table = creator.createTable( new CollectionDataModel(datas), clns );
+	 Table table = creator.createTable( new CollectionDataModel(datas), clns, clns );
 	 
 	 DateDecorator dateDecorator = new DateDecorator();
 	 dateDecorator.setPattern("yyyy-MM-dd");

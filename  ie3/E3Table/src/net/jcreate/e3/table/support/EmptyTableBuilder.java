@@ -23,17 +23,19 @@ import net.jcreate.e3.table.BuildTableException;
 import net.jcreate.e3.table.Cell;
 import net.jcreate.e3.table.Column;
 import net.jcreate.e3.table.ColumnGroup;
+import net.jcreate.e3.table.DirectorSupport;
 import net.jcreate.e3.table.Header;
 import net.jcreate.e3.table.Row;
 import net.jcreate.e3.table.Table;
 import net.jcreate.e3.table.TableBuilder;
 import net.jcreate.e3.table.TableContext;
-import net.jcreate.e3.table.WebContext;
 import net.jcreate.e3.table.TableContextSupport;
+import net.jcreate.e3.table.TableDirector;
 
-public abstract class EmptyTableBuilder implements TableBuilder, TableContextSupport{
+public abstract class EmptyTableBuilder implements TableBuilder, TableContextSupport, DirectorSupport{
 
 	protected TableContext tableContext;
+	protected TableDirector tableDirector;
 	/**
 	 * 初始化
 	 *
@@ -190,6 +192,14 @@ public abstract class EmptyTableBuilder implements TableBuilder, TableContextSup
 
 	public void setTableContext(TableContext tableContext) {
 		this.tableContext = tableContext;
+	}
+
+	public TableDirector getTableDirector() {
+		return tableDirector;
+	}
+
+	public void setTableDirector(TableDirector tableDirector) {
+		this.tableDirector = tableDirector;
 	}
 
 

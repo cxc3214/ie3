@@ -47,6 +47,7 @@ public class ColumnTag extends BodyTagSupport implements Attributeable,  Decorat
 	 * 列名 
 	 */
 	private String property;
+	private String beanProperty;
 	private String style;
 	private boolean hidden = false;
 	/**
@@ -85,6 +86,10 @@ public class ColumnTag extends BodyTagSupport implements Attributeable,  Decorat
 		return property;
 	}
 
+	/**
+	 * @deprecated 用setName
+	 * @param property
+	 */
 	public void setProperty(String property) {
 		this.property = property;
 	}
@@ -118,6 +123,9 @@ public class ColumnTag extends BodyTagSupport implements Attributeable,  Decorat
 		boolean isCreatedTable = tableTag.isCreatedTable();
 		if ( isCreatedTable == false ){
 			tableTag.addColumnProperty(this.property);
+			//默认跟property值一样
+			tableTag.addColumnBeanProperty(this.beanProperty == null ? this.property : this.beanProperty);
+			
 			return SKIP_BODY;
 		}
 		
@@ -226,6 +234,7 @@ public class ColumnTag extends BodyTagSupport implements Attributeable,  Decorat
 	}
 	public void release() {
 		this.property = null;
+		this.beanProperty = null;
 		this.title = null;
 		this.width = null;
 		this.hidden = false;
@@ -303,6 +312,23 @@ public class ColumnTag extends BodyTagSupport implements Attributeable,  Decorat
 
 	public void setHidden(boolean hidden) {
 		this.hidden = hidden;
+	}
+
+
+	public String getBeanProperty() {
+		return beanProperty;
+	}
+
+	public void setBeanProperty(String beanProperty) {
+		this.beanProperty = beanProperty;
+	}
+
+	/**
+	 * 列名
+	 * @param name
+	 */
+	public void setName(String name) {
+		this.property = name;
 	}
 
 	

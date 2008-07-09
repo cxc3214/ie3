@@ -26,6 +26,7 @@ package net.jcreate.e3.table;
  */
 public interface TableBuilder {
 
+	
 	/**
 	 * 初始化
 	 *

@@ -32,5 +32,9 @@ public interface TableCreator {
 	 * @param pProperties 属性数组,非空 
 	 * @return 表格对象
 	 */
-    public Table createTable(final DataModel pDataModel , final String[] pProperties) throws CreateTableException;
+    public Table createTable(
+    		final DataModel pDataModel , 
+    		final String[] pProperties,
+    		final String[] pBeanProperties
+    		) throws CreateTableException;
 }

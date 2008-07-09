@@ -30,6 +30,7 @@ import net.jcreate.e3.table.Cell;
 import net.jcreate.e3.table.CellDecorator;
 import net.jcreate.e3.table.Column;
 import net.jcreate.e3.table.ColumnGroup;
+import net.jcreate.e3.table.DirectorSupport;
 import net.jcreate.e3.table.Header;
 import net.jcreate.e3.table.I18nResourceProvider;
 import net.jcreate.e3.table.MessageSource;
@@ -39,7 +40,6 @@ import net.jcreate.e3.table.TableBuilder;
 import net.jcreate.e3.table.TableContext;
 import net.jcreate.e3.table.TableContextSupport;
 import net.jcreate.e3.table.TableDirector;
-import net.jcreate.e3.table.ajax.AjaxUtil;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -81,6 +81,9 @@ public class DefaultTableDirector implements TableDirector{
 		   }	
 
 		   setObjectWebContext(pBuilder);
+		   if ( pBuilder instanceof DirectorSupport ){
+			 ((DirectorSupport)pBuilder).setTableDirector(this);
+		   }
 		   if ( logger.isDebugEnabled() ){
 			   logger.debug("控制参数：");
 			   logger.debug("showCaption=" + this.showCaption);

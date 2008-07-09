@@ -39,7 +39,12 @@ import org.apache.commons.logging.LogFactory;
 public abstract class AbstractTableCreator implements TableCreator{
 
 	private final Log logger = LogFactory.getLog( AbstractTableCreator.class );
-	public Table createTable(DataModel pDataModel, String[] pProperties) throws CreateTableException {
+    public Table createTable(
+    		final DataModel pDataModel , 
+    		final String[] pProperties,
+    		final String[] pBeanProperties
+    		) throws CreateTableException{
+
 		if (pDataModel == null || pProperties == null ){
 			return null;
 		}
@@ -95,13 +100,14 @@ public abstract class AbstractTableCreator implements TableCreator{
         	row.setRowObject(item);
         	result.addRow(row);
 
-            for(int i=0; i<pProperties.length; i++){
-            	String property = pProperties[i];
-            	Object cellValue = pDataModel.getCellValue(item, property);
+            for(int i=0; i<pBeanProperties.length; i++){
+            	String beanProperty = pBeanProperties[i];
+            	Object cellValue = pDataModel.getCellValue(item, beanProperty);
             	Cell cell = createCell();
             	cell.setRow(row);
             	cell.setValue(cellValue);
-            	cell.setColumn((Column)columnsMap.get(property));
+            	String columnName = pProperties[i];
+            	cell.setColumn((Column)columnsMap.get(columnName));
             	row.addCell(cell);
             }
         	rowIndex++;                    	

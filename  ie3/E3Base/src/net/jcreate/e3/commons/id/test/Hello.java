@@ -1,36 +1,54 @@
 package net.jcreate.e3.commons.id.test;
 
-import net.jcreate.e3.commons.id.fomater.DefaultSequenceFormater;
-import net.jcreate.e3.commons.id.generator.DefaultIDGenerator;
-import net.jcreate.e3.commons.id.prefix.DefaultPrefixGenerator;
-import net.jcreate.e3.commons.id.sequence.TimeRollingSequenceGenerator;
-import net.jcreate.e3.commons.id.sequence.DefaultSequenceGenerator;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 
 public class Hello {
+	private static final Log logger = LogFactory.getLog(Hello.class);
 public static void main(String[] args){
-	//构造生成器
-	DefaultIDGenerator generator = new DefaultIDGenerator();
-	
-	//前缀生成器，用于产生ID前缀
-	DefaultPrefixGenerator prefixGenerator = new DefaultPrefixGenerator();
-	prefixGenerator.setWithDate(false);
-	generator.setPrefixGenerator(prefixGenerator);
-	prefixGenerator.setPrefix("E3_");
-	
-	//序号生成器
-	DefaultSequenceGenerator sequenceGenerator = TimeRollingSequenceGenerator.getYearRollingSequenceGenerator();
-	sequenceGenerator.setMinValue(0);
+//	//构造生成器
+//	DefaultIDGenerator generator = new DefaultIDGenerator();
+//	
+//	//前缀生成器，用于产生ID前缀
+//	DefaultPrefixGenerator prefixGenerator = new DefaultPrefixGenerator();
+//	prefixGenerator.setWithDate(false);
+//	generator.setPrefixGenerator(prefixGenerator);
+//	prefixGenerator.setPrefix("E3_");
+//	
+//	//序号生成器
+//	DefaultSequenceGenerator sequenceGenerator = TimeRollingSequenceGenerator.getYearRollingSequenceGenerator();
+//	sequenceGenerator.setMinValue(0);
+//	sequenceGenerator.setMaxValue(9999999);
+//	sequenceGenerator.setCycle(true);
+//	sequenceGenerator.setCache(100);
+//	generator.setSequenceGenerator(sequenceGenerator);
+//	
+//	//格式化序号
+//	DefaultSequenceFormater sequenceFormater = new DefaultSequenceFormater();
+//	sequenceFormater.setPattern("0000000");
+//	generator.setSequenceFormater(sequenceFormater);
+// 	System.out.println(generator.create());
+ 	
+	net.jcreate.e3.commons.id.generator.DefaultIDGenerator generator = 
+		new net.jcreate.e3.commons.id.generator.DefaultIDGenerator();
+	net.jcreate.e3.commons.id.sequence.DefaultSequenceGenerator sequenceGenerator = 
+	net.jcreate.e3.commons.id.sequence.TimeRollingSequenceGenerator.getDayRollingSequenceGenerator();
+	sequenceGenerator.setMinValue(1000000);
 	sequenceGenerator.setMaxValue(9999999);
-	sequenceGenerator.setCycle(true);
-	sequenceGenerator.setCache(100);
 	generator.setSequenceGenerator(sequenceGenerator);
-	
-	//格式化序号
-	DefaultSequenceFormater sequenceFormater = new DefaultSequenceFormater();
-	sequenceFormater.setPattern("0000000");
-	generator.setSequenceFormater(sequenceFormater);
  	System.out.println(generator.create());
+ 	logger.debug("dddddddddddd");
+ 	
+//	net.jcreate.e3.commons.id.sequence.DefaultSequenceGenerator sequenceGenerator = 
+//		new net.jcreate.e3.commons.id.sequence.DefaultSequenceGenerator();
+//	sequenceGenerator.setMinValue(1000);
+//	sequenceGenerator.setMaxValue(9999);
+//	generator.setSequenceGenerator(sequenceGenerator);
+// 	for(int i = 0; i<100; i++ ){
+// 		System.out.println(generator.create());	
+// 	}
+ 	
 // 	while( true ){
 // 	  System.out.println(sequenceGenerator.next());
 // 	  try {

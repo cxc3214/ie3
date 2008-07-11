@@ -148,4 +148,9 @@ public final class JspPageWebContext implements WebContext {
 	public Object getBackingObject() {
 		return this.pageContext;
 	}
+
+	public String getCharacterEncoding() {
+
+		return pageContext.getRequest().getCharacterEncoding();
+	}
 }

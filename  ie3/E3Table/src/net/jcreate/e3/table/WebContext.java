@@ -72,4 +72,5 @@ public interface WebContext {
     public String getRealPath(String path);
     
     public Object getBackingObject();
+    public String getCharacterEncoding();
 }

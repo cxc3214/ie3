@@ -3,6 +3,7 @@ package net.jcreate.e3.table.html;
 import net.jcreate.e3.table.BuildTableException;
 import net.jcreate.e3.table.Column;
 import net.jcreate.e3.table.PageInfo;
+import net.jcreate.e3.table.WebContext;
 import net.jcreate.e3.table.support.TableConstants;
 import net.jcreate.e3.templateEngine.Context;
 import net.jcreate.e3.templateEngine.support.DefaultContext;
@@ -29,12 +30,18 @@ public class FastSkinHTMLTableBuilder extends SkinHTMLTableBuilder{
 		context.put("table", pTable);
 		context.put("rows", pTable.getRows());		
 		context.put("cols", pTable.getColumns());
+		context.put("params", pTable.getParams());
 		int colSize = pTable.getColumnSize();
 		if ( colSize > 0 ){
 		  Column lastColumn = pTable.getColumn(colSize-1);
 		  context.put("lastCol", lastColumn);
 		}
-		context.put("webContext", this.getTableContext().getWebContext());
+		WebContext webContext = this.getTableContext().getWebContext();
+		context.put("webContext", webContext);
+		String encoding = webContext.getCharacterEncoding();
+		if ( encoding != null ){
+			context.put("encoding", encoding);		 
+		}
 		PageInfo pageInfo = pTable.getPageInfo();
 		context.put("pageInfo", pageInfo);		
 		Tools tools = new Tools();
@@ -53,6 +60,7 @@ public class FastSkinHTMLTableBuilder extends SkinHTMLTableBuilder{
 		context.put("form", pTable.getForm());
 		context.put("rows", pTable.getRows());
 		context.put("cols", pTable.getColumns());
+		context.put("params", pTable.getParams());
 		int colSize = pTable.getColumnSize();		
 		if ( colSize > 0 ){
 			  Column lastColumn = pTable.getColumn(colSize-1);
@@ -64,9 +72,14 @@ public class FastSkinHTMLTableBuilder extends SkinHTMLTableBuilder{
 		Tools tools = new Tools();
 		context.put("tools", tools);
 		
-		context.put("webContext", this.getTableContext().getWebContext());
 		context.put("tableDirector", tableDirector);
 		
+		WebContext webContext = this.getTableContext().getWebContext();
+		context.put("webContext", webContext);
+		String encoding = webContext.getCharacterEncoding();
+		if ( encoding != null ){
+			context.put("encoding", encoding);		 
+		}
 		appendScript(getTemplateValue(TableConstants.BODY_END_ID, context));
 
 	}

@@ -150,4 +150,8 @@ public class HttpServletRequestWebContext implements WebContext {
 	public Object getBackingObject() {
 		return this.request;
 	}
+
+	public String getCharacterEncoding() {
+		return this.request.getCharacterEncoding();
+	}
 }

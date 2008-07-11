@@ -49,6 +49,8 @@ public class ExtTreeBuilder extends AbstractWebTreeBuilder{
     private boolean animate = true;
     private boolean enableDD = true;
     private boolean containerScroll = true;
+    private boolean autoHeight = false;
+    private boolean autoWidth  = false;
     //是否显示border
     private boolean border = false;
     //似乎否显示根节点
@@ -161,20 +163,30 @@ public class ExtTreeBuilder extends AbstractWebTreeBuilder{
 		resouces.append("Ext.SSL_SECURE_URL= '${resouceHome}/resources/images/default/s.gif';").append(ENTER); 
 		resouces.append("Ext.BLANK_IMAGE_URL= '${resouceHome}/resources/images/default/s.gif';").append(ENTER);
 		
-		resouces.append("${treeID} = new Ext.tree.TreePanel({").append(ENTER);
-		resouces.append("       el:'${treeID}',").append(ENTER);
-		resouces.append("       autoScroll:${autoScroll},").append(ENTER);
-		resouces.append("       animate:${animate},").append(ENTER);
-		resouces.append("       enableDD:${enableDD},").append(ENTER);
-		resouces.append("       lines:${lines},").append(ENTER);
-		resouces.append("       rootVisible:${rootVisible},").append(ENTER);		
-		resouces.append("       title:'${title}',").append(ENTER);
-		if ( bodyStyle != null ){
-		resouces.append("       bodyStyle:'${bodyStyle}',").append(ENTER);
-		}
-		resouces.append("       border: ${border},").append(ENTER);		
-	    resouces.append("       containerScroll: ${containerScroll}").append(ENTER);
-	    resouces.append("     });").append(ENTER);
+
+		    resouces.append(" var initConfig =  {").append(ENTER);
+			resouces.append("       el:'${treeID}',").append(ENTER);
+			resouces.append("       autoHeight:${autoHeight},").append(ENTER);
+			resouces.append("       autoWidth:${autoWidth},").append(ENTER);
+			resouces.append("       autoScroll:${autoScroll},").append(ENTER);
+			resouces.append("       animate:${animate},").append(ENTER);
+			resouces.append("       enableDD:${enableDD},").append(ENTER);
+			resouces.append("       lines:${lines},").append(ENTER);
+			resouces.append("       rootVisible:${rootVisible},").append(ENTER);		
+			resouces.append("       title:'${title}',").append(ENTER);
+			if ( bodyStyle != null ){
+			resouces.append("       bodyStyle:'${bodyStyle}',").append(ENTER);
+			}
+			resouces.append("       border: ${border},").append(ENTER);		
+		    resouces.append("       containerScroll: ${containerScroll}").append(ENTER);
+		    resouces.append("     };").append(ENTER);
+		    
+		//配置
+		resouces.append("if ( typeof(${treeID}ConfigHandler) == 'function' )").append(ENTER);
+		resouces.append("  ${treeID}ConfigHandler(initConfig);").append(ENTER);
+		
+		resouces.append("${treeID} = new Ext.tree.TreePanel( initConfig );").append(ENTER);
+		
 	    vars.add(this.treeID);
 	    
 		Context context = new DefaultContext();
@@ -184,6 +196,8 @@ public class ExtTreeBuilder extends AbstractWebTreeBuilder{
 		context.put("title", this.title);
 		context.put("bodyStyle", this.bodyStyle);
 		context.put("autoScroll", this.autoScroll);
+		context.put("autoHeight", this.autoHeight);
+		context.put("autoWidth", this.autoWidth);
 		context.put("animate", this.animate);
 		context.put("enableDD", this.enableDD);
 		context.put("border", this.border);
@@ -261,7 +275,16 @@ public class ExtTreeBuilder extends AbstractWebTreeBuilder{
 		StringBuffer temp = new StringBuffer();
 		temp.append("if ( typeof(E3TreeExtReadyHandler) == 'function' )").append(ENTER);
 		temp.append("  E3TreeExtReadyHandler(${treeID}, '${treeID}');").append(ENTER);
+		//render 前
+		temp.append("if ( typeof(${treeID}RenderBeforeHandler) == 'function' )").append(ENTER);
+		temp.append("  ${treeID}RenderBeforeHandler(${treeID});").append(ENTER);
+		
 		temp.append("${treeID}.render();").append(ENTER);
+		
+		//render 后
+		temp.append("if ( typeof(${treeID}RenderAfterHandler) == 'function' )").append(ENTER);
+		temp.append("  ${treeID}RenderAfterHandler(${treeID});").append(ENTER);
+		
 	    if ( rootExpand ){
 	    	temp.append("${rootName}.expand();").append(ENTER);
 	    }
@@ -270,6 +293,7 @@ public class ExtTreeBuilder extends AbstractWebTreeBuilder{
 		Context context = new DefaultContext(); 
 		context.put("treeID", this.getTreeID());
 		context.put("rootName", this.getRootName());
+
 		treeScript.append(StrTemplateUtil.merge(temp.toString(), context));		   
 	}
 	
@@ -521,6 +545,22 @@ public class ExtTreeBuilder extends AbstractWebTreeBuilder{
 
 	public void setBodyStyle(String bodyStyle) {
 		this.bodyStyle = bodyStyle;
+	}
+
+	public boolean isAutoHeight() {
+		return autoHeight;
+	}
+
+	public void setAutoHeight(boolean autoHeight) {
+		this.autoHeight = autoHeight;
+	}
+
+	public boolean isAutoWidth() {
+		return autoWidth;
+	}
+
+	public void setAutoWidth(boolean autoWidth) {
+		this.autoWidth = autoWidth;
 	}
 
 

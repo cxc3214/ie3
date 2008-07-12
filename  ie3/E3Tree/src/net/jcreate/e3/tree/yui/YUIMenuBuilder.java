@@ -64,7 +64,7 @@ public class YUIMenuBuilder extends AbstractWebTreeBuilder{
 	
 	public String getResourceHome() {
 		if ( resourceHome == null ){
-			return this.webContext.getContextPath() + "/e3/tree/yui";
+			return this.webContext.getContextPath() + "/e3/commons/yui";
 		} else {
 			return resourceHome;
 		}

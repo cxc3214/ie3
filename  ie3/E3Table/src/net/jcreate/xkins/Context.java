@@ -19,6 +19,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.PageContext;
 
@@ -36,6 +37,8 @@ public class Context {
     protected ServletResponse servletResponse = null;
     protected ServletRequest servletRequest = null;
 	protected Xkins xkins = null;
+
+
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -85,6 +88,11 @@ public class Context {
     public ServletRequest getServletRequest() {
         return servletRequest;
     }
+    
+    public HttpServletRequest getHttpServletRequest() {
+        return (HttpServletRequest)servletRequest;
+    }
+    
 
 	/**
 	 * Obtiene el response que tiene el context.
@@ -92,6 +100,9 @@ public class Context {
 	 */
 	public ServletResponse getServletResponse() {
 		return servletResponse;
+	}
+	public HttpServletResponse getHttpServletResponse() {
+		return (HttpServletResponse)servletResponse;
 	}
 
 
@@ -153,6 +164,11 @@ public class Context {
 	public Xkins getXkins() {
 		return xkins;
 	}
+	
+	public Skin getSkin(String pSkinName) {
+		return xkins.getSkin(pSkinName);
+	}
+	
 
 	/**
 	 * @param xkins
@@ -160,5 +176,6 @@ public class Context {
 	public void setXkins(Xkins xkins) {
 		this.xkins = xkins;
 	}
+
 
 }

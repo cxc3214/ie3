@@ -21,60 +21,63 @@ import java.util.Map;
 /**
  * 保存Context对象,线程安全.
  * @author 黄云辉
+ * 采用弱引用会存在问题，context何时被回收不能确定,所以有时候会出现获取context为null的情况.
+ * 所以把 WeakReference 引用删除.但是为了避免出现内存益出的情况，所以要求用到e3.table的地方
+ * 都需要配置E3TableFilter过滤器.
  *
  */
 public abstract class ContextHolder {
-	private static ContextMap contextThreaded=new ContextMap();
-	private Context context=null;
+	private static ThreadLocal contextThreaded=new ThreadLocal();
+//	private Context context=null;
 	
 	/**
 	 * @return
 	 */
-	protected static void setLocalContext(Context ctx) {
-		WeakReference wr = new WeakReference(ctx);
-		contextThreaded.set(wr);
+	public static void setContext(Context ctx) {
+		contextThreaded.set(ctx);
 	}
 	
-    public static Context getLocalContext() { 
-        WeakReference wr = (WeakReference)contextThreaded.get();            
-        return wr!=null?(Context)wr.get():null; 
+    public static Context getContext() { 
+        return (Context)contextThreaded.get();            
     } 	
-	/**
-	 * @return
-	 */
-	protected Context getContext() {
-		return context;
-	}
+    
+ 
+//	/**
+//	 * @return
+//	 */
+//	protected Context getContext() {
+//		return context;
+//	}
+//
+//	/**
+//	 * @param context
+//	 */
+//	protected void setContext(Context context) {
+//		this.context = context;
+//	}
 
-	/**
-	 * @param context
-	 */
-	protected void setContext(Context context) {
-		this.context = context;
-	}
-
-	/**
-	 * 跟用ThreadLocal效果是一样的.
-	 * @author 黄云辉
-	 *
-	 */
-	private static class ContextMap {
-	    private Map contextThreaded=new Hashtable();
-	    
-		public Object get() {
-			return this.getMap().get(this.getMapId());
-		}
-		
-		public void set(Object value) {
-			this.getMap().put(this.getMapId(), value);
-		}
-		
-		private Map getMap() {
-			return (Map)contextThreaded;
-		}
-		
-		private Object getMapId() {
-			return Thread.currentThread();
-		}	    
-	}
+//	/**
+//	 * 跟用ThreadLocal效果是一样的.
+//	 * @author 黄云辉
+//	 *
+//	 */
+//	private static class ContextMap {
+//	    private Map contextThreaded=new Hashtable();
+//	    
+//		public Object get() {
+//			return this.getMap().get(this.getMapId());
+//		}
+//		
+//		public void set(Object value) {
+//			this.getMap().put(this.getMapId(), value);
+//		}
+//		
+//		private Map getMap() {
+//			return (Map)contextThreaded;
+//		}
+//		
+//		private Object getMapId() {
+//			return Thread.currentThread();
+//		}	    
+//	}
 }

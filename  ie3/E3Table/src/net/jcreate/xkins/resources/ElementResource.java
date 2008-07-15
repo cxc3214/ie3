@@ -62,7 +62,7 @@ public class ElementResource
      * desde el context, la URL del skin, la URL del path y la URL del element.
      */
     public String getData() {
-		Context ctx = ContextHolder.getLocalContext();
+		Context ctx = ContextHolder.getContext();
         String aux = getFromOtherTemplate(ctx);
         if (aux != null) {
             return aux;

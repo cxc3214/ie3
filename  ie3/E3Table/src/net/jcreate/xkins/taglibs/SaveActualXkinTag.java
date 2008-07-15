@@ -13,6 +13,7 @@
  */
 package net.jcreate.xkins.taglibs;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
@@ -20,28 +21,6 @@ import net.jcreate.xkins.Skin;
 import net.jcreate.xkins.XkinProcessor;
 
 
-/**
- * Guarda el nombre del xkin actual para el posterior recupero. Permite, junto con RestoreActualSkin, modificar el skin
- * durante una p�gina. Por ejemplo:
- * <pre>
- *         &lt;tag:tagQueUsaXkins&gt;
- *             Texto formateado con Skins
- *         &lt;/tag:tagQueUsaXkins&gt;
- *         &lt;xkins:saveActualXkin/&gt;
- *         &lt;xkins:xkin name="skinNuevo"/&gt;
- *         &lt;tag:tagQueUsaXkins&gt;
- *             Texto formateado con Skins, pero usando un nuevo skin.
- *         &lt;/tag:tagQueUsaXkins&gt;
- *         &lt;xkins:restoreActualXkin/&gt;
- * </pre>
- * En el ejemplo, el tagQueUsaXkins aplica los templates correspondientes para formatear un texto seg�n el Skin actual.
- * Cuando se desea cambiar de Skin durante la p�gina, primero se guarda el xkin actual (saveActualXkin), se aplica el cambio
- * de skin (xkin) a "skinNuevo", se ejecuta nuevamente tagQueUsaXkins, esta vez formateando el texto seg�n el skinNuevo,
- * y finalmente recupera el skin actual mediante restoreActualXkin.
- * @see net.jcreate.xkins.taglibs.RestoreActualXkinTag
- * @see net.jcreate.xkins.taglibs.XkinTag
- * @author Guillermo Meyer
- **/
 public class SaveActualXkinTag
         extends TagSupport {
     //~ Static fields/initializers -----------------------------------------------------------------
@@ -63,17 +42,9 @@ public class SaveActualXkinTag
         this.property = property;
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
-     *
-     * @throws javax.servlet.jsp.JspTagException DOCUMENT ME!
-     * @throws JspException DOCUMENT ME!
-     */
     public int doEndTag()
             throws javax.servlet.jsp.JspTagException, JspException {
-        Object actual = XkinProcessor.getCurrentSkinName(pageContext);
+        Object actual = XkinProcessor.getCurrentSkinName((HttpServletRequest)pageContext.getRequest());
         String attr = (this.property == null) ? (Skin.ATTR_SKIN_NAME + SUFIX) : this.property;
         pageContext.getSession().setAttribute(attr, actual);
         return EVAL_PAGE;

@@ -84,9 +84,9 @@ public class ResourceTag
         Resource res = null;
         Skin skin = null;
         if (this.skinName == null) {
-            skin = XkinProcessor.getCurrentSkin(pageContext);
+            skin = XkinProcessor.getCurrentSkin();
         } else {
-            skin = XkinProcessor.getSkin(pageContext, this.skinName);
+            skin = XkinProcessor.getSkin( this.skinName);
         }
         if (this.template == null) {
             res = skin.getResource(this.name);

@@ -55,7 +55,7 @@ public class ConstantResource
      * Implementaci�n del getData abstracto. Devuelve el valor declarado en la property value.
      */
     public String getData() {
-        String aux = getFromOtherTemplate(ContextHolder.getLocalContext());
+        String aux = getFromOtherTemplate(ContextHolder.getContext());
         if (aux != null) {
             return aux;
         } else {

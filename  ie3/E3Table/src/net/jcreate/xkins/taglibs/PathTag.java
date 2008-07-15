@@ -74,9 +74,9 @@ public class PathTag
         //Obtengo el skin actual
         Path path = null;
         if (this.skinName == null) {
-            path = XkinProcessor.getCurrentSkin(pageContext).getPath(this.name);
+            path = XkinProcessor.getCurrentSkin().getPath(this.name);
         } else {
-            path = XkinProcessor.getSkin(pageContext, this.skinName).getPath(this.name);
+            path = XkinProcessor.getSkin(this.skinName).getPath(this.name);
         }
         if(path==null)
         	throw new JspException("Nonexisting path: " + this.name);

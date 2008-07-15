@@ -66,7 +66,7 @@ public class Path
      * @return
      */
 	public String getFullUrl() {
-		Context ctx = ContextHolder.getLocalContext();
+		Context ctx = ContextHolder.getContext();
 		String aux = "";	
 		boolean isAbsolute = "true".equalsIgnoreCase(this.getAbsolute());
 		if(this.getServer()==null) {

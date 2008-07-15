@@ -13,6 +13,7 @@
  */
 package net.jcreate.xkins.taglibs;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
@@ -41,7 +42,7 @@ public class XkinNameTag
     public int doEndTag()
             throws javax.servlet.jsp.JspTagException, JspException {
 		try {
-			this.pageContext.getOut().write(XkinProcessor.getCurrentSkinName(pageContext));
+			this.pageContext.getOut().write(XkinProcessor.getCurrentSkinName((HttpServletRequest)this.pageContext.getRequest()));
 		} catch (Exception e) {
 			throw new JspException("IO Error: " + e.toString());
 		}

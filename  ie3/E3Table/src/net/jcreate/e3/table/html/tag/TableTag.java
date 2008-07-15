@@ -38,7 +38,6 @@ import net.jcreate.e3.table.StateInfo;
 import net.jcreate.e3.table.TableDirector;
 import net.jcreate.e3.table.creator.CollectionDataModelCreator;
 import net.jcreate.e3.table.html.AbstractHTMLTableBuilder;
-import net.jcreate.e3.table.html.HTMLBuilderFactory;
 import net.jcreate.e3.table.html.HTMLColumn;
 import net.jcreate.e3.table.html.HTMLForm;
 import net.jcreate.e3.table.html.HTMLParam;

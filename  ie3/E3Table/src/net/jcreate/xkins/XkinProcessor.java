@@ -32,7 +32,7 @@ import net.jcreate.xkins.processor.TemplateProcessor;
  * @author 黄云辉
  *
  */
-public class XkinProcessor extends ContextHolder {
+public class XkinProcessor {
     public static final String JSP_BODY = "ar.com.koalas.xkins.XkinProcessor.bodyContent";
 
     /**
@@ -59,8 +59,6 @@ public class XkinProcessor extends ContextHolder {
      * Constructor que crea un nuevo Context().
      */
     public XkinProcessor() {
-		this.setContext(new Context());
-		XkinProcessor.setLocalContext(this.getContext());
     }
 
     /**
@@ -152,8 +150,6 @@ public class XkinProcessor extends ContextHolder {
 	        
 	        if(this.xs==null) throw new Exception("No Xkins are defined.");
 	        	
-	        this.setContext(new Context(request, response));
-			XkinProcessor.setLocalContext(this.getContext());
 	        this.skin = this.xs.getSkin(this.skinName);
 			//si es null, defaultea
 			if(this.skin==null) 
@@ -178,22 +174,6 @@ public class XkinProcessor extends ContextHolder {
 	}
 
 
-    //~ Methods ------------------------------------------------------------------------------------
-
-    public static Skin getCurrentSkin(PageContext pctx) {		
-        String skinName = XkinProcessor.getCurrentSkinName(pctx);
-        Xkins xs = (Xkins) pctx.getServletConfig().getServletContext().getAttribute(Xkins.ATTR_SKINS);
-		XkinProcessor.setLocalContext(new Context(pctx));        
-        return xs.getSkin(skinName);
-    }
-
-    public static Skin getCurrentSkin(HttpServletRequest request) {
-        String skinName = XkinProcessor.getCurrentSkinName(request);
-
-        Xkins xs = (Xkins) request.getSession().getServletContext().getAttribute(Xkins.ATTR_SKINS);
-		XkinProcessor.setLocalContext(new Context(request, null));
-        return xs.getSkin(skinName);
-    }
 
     /**
      * 设置当前皮肤
@@ -204,27 +184,7 @@ public class XkinProcessor extends ContextHolder {
         request.getSession().setAttribute(Skin.ATTR_SKIN_NAME, skinName);
     }
 
-    /**
-     * 设置当前皮肤
-     * @param pctx
-     * @return
-     */
-    public static String getCurrentSkinName(PageContext pctx) {
-        return XkinProcessor.getCurrentSkinName((HttpServletRequest) pctx.getRequest());
-    }
-
-    /**
-     * 获取当前皮肤名称
-     * @param request
-     * @return
-     */
-    public static String getCurrentSkinName(HttpServletRequest request) {
-        String skinName = (String) request.getSession().getAttribute(Skin.ATTR_SKIN_NAME);
-        if (skinName == null) {
-            skinName = getDefaultSkinName(request);
-        }
-        return skinName;
-    }
+ 
 
 
 /**
@@ -232,32 +192,30 @@ public class XkinProcessor extends ContextHolder {
  * @return
  */
     public Map getParameters() {
-        return this.getContext().getParameters();
+        return ContextHolder.getContext().getParameters();
     }
 
-/**
- * 获取皮肤对象
- * @param pctx
- * @param skinName
- * @return
- */
-    public static Skin getSkin(PageContext pctx, String skinName) {
-        Xkins xs = (Xkins) pctx.getServletConfig().getServletContext().getAttribute(Xkins.ATTR_SKINS);
-		XkinProcessor.setLocalContext(new Context(pctx));
-        return xs.getSkin(skinName);
+    public static  String getDefaultSkinName(HttpServletRequest request) {    	
+		String dsn = ((Xkins)(request).getSession().getServletContext().getAttribute(Xkins.ATTR_SKINS)).getDefaultSkinName();
+		if(dsn==null) {
+			dsn = (String)(request).getSession().getServletContext().getAttribute(Skin.ATTR_DEFAULT_SKIN_NAME);			
+		}
+    	return dsn;
     }
 
     /**
-     * 获取皮肤
+     * 获取当前皮肤名称
      * @param request
-     * @param skinName
      * @return
      */
-    public static Skin getSkin(ServletRequest request, String skinName) {
-        Xkins xs = (Xkins) ((HttpServletRequest)request).getSession().getServletContext().getAttribute(Xkins.ATTR_SKINS);
-		XkinProcessor.setLocalContext(new Context());
-        return xs.getSkin(skinName);
-    }
+    public  static String getCurrentSkinName(HttpServletRequest request) {
+        String skinName = (String) request.getSession().getAttribute(Skin.ATTR_SKIN_NAME);
+        if (skinName == null) {
+            skinName = getDefaultSkinName(request);
+        }
+        return skinName;
+    }	
+    
 
     /**
      * 设置模板对象
@@ -289,6 +247,11 @@ public class XkinProcessor extends ContextHolder {
 			throw new XkinsRuntimeException("Template " + templateName + " is not found in skin " + this.getCurrentSkin().getName() + ".");
 		} 
         return this;
+    }
+    
+    public static Skin getCurrentSkin(){
+    	HttpServletRequest servletRequest = ContextHolder.getContext().getHttpServletRequest();
+    	return ContextHolder.getContext().getSkin(getCurrentSkinName(servletRequest));
     }
 
 
@@ -334,39 +297,14 @@ public class XkinProcessor extends ContextHolder {
         this.skinName = skin.getName();
     }
 
-    /**
-     * 获取当前皮肤对象
-     * @return
-     */
-    public Skin getCurrentSkin() {
-    	if(this.skin==null) {
-	        String p_skinName = this.skinName; 
-	                
-	        if (p_skinName == null) {
-				p_skinName = (String) XkinProcessor.getLocalContext().getSession().getAttribute(Skin.ATTR_SKIN_NAME);
-				if (p_skinName == null) {
-					p_skinName = getDefaultSkinName(XkinProcessor.getLocalContext().getServletRequest());
-				}
-	        }
-	
-	        Xkins xs = (Xkins) XkinProcessor.getLocalContext().getServletContext().getAttribute(Xkins.ATTR_SKINS);
-	        Skin skin = xs.getSkin(p_skinName);
-	        if(skin==null) {
-				XkinsLogger.getLogger().error("Skin " + p_skinName + " not defined.");
-	        	throw new XkinsRuntimeException("Skin " + p_skinName + " not defined.");
-	        }
-	        return skin;
-		} else {
-			return this.skin;
-		}
-    }
+    
 
     /**
      * 设置当前皮肤
      * @param skinName
      */
     public void setCurrentSkinName(String skinName) {
-        XkinProcessor.getLocalContext().getSession().setAttribute(Skin.ATTR_SKIN_NAME, skinName);
+    	ContextHolder.getContext().getSession().setAttribute(Skin.ATTR_SKIN_NAME, skinName);
     }
 
     /**
@@ -386,8 +324,8 @@ public class XkinProcessor extends ContextHolder {
      * @param skinName
      * @return
      */
-    public Skin getSkin(String skinName) {
-        Xkins xs = (Xkins) XkinProcessor.getLocalContext().getServletContext().getAttribute(Xkins.ATTR_SKINS);
+    public static Skin getSkin(String skinName) {
+        Xkins xs = ContextHolder.getContext().getXkins();
         return xs.getSkin(skinName);
     }
 
@@ -396,7 +334,7 @@ public class XkinProcessor extends ContextHolder {
      * @return
      */
     public Xkins getXkins() {
-        Xkins xs = (Xkins) XkinProcessor.getLocalContext().getServletContext().getAttribute(Xkins.ATTR_SKINS);
+    	Xkins xs = ContextHolder.getContext().getXkins();
         return xs;
     }
 
@@ -467,9 +405,7 @@ public class XkinProcessor extends ContextHolder {
      */
     protected void process(Template input, StringWriter os)
             throws XkinsException {        
-        this.getContext().setXkins(XkinProcessor.getXkinsFromTemplate(input));
-		XkinProcessor.setLocalContext(this.getContext());
-        XkinProcessor.getTemplateProcessor(input).process(input, this.getContext(), os);
+        XkinProcessor.getTemplateProcessor(input).process(input, ContextHolder.getContext(), os);
     }
 
     

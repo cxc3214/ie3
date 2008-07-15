@@ -2,9 +2,9 @@ package net.jcreate.xkins.processor;
 
 import java.io.InputStream;
 
+import net.jcreate.xkins.ContextHolder;
 import net.jcreate.xkins.Skin;
 import net.jcreate.xkins.Template;
-import net.jcreate.xkins.XkinProcessor;
 import net.jcreate.xkins.Xkins;
 
 import org.apache.commons.collections.ExtendedProperties;
@@ -63,7 +63,7 @@ public class XkinsVelocityLoader extends ResourceLoader {
 	 * @return
 	 */
 	public Xkins getXkins() {
-		return XkinProcessor.getLocalContext().getXkins();
+		return ContextHolder.getContext().getXkins();
 	}
 
 }

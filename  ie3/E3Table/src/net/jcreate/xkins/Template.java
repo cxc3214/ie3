@@ -22,32 +22,6 @@ import java.util.Map;
 import net.jcreate.xkins.resources.Resource;
 
 
-/**
- * El template representa un modelo para ser procesado mediante el uso de par�metros y recursos.
- * Se definen templates en el archivo de definici�n. Hay N tempaltes por cada Skin. Un template puede usar
- * resources y parametros. El template tiene un content. en el content se puede escribir cualquier cosa (HTML, WML, XML, etc)
- * y puede utilizarse los comandos definidos e implementados por el TempalteProcessor que se utiliza. por ejemplo,
- * un template puede definirse de la siguiente manera en el archivo de definici�n:
- * <pre>
- *         &lt;template name="table"&gt;
- *             &lt;!-- pro:width --&gt;
- *             &lt;content&gt;&lt;![CDATA[
- *                 &lt;table border="0" cellspacing="1" cellpadding="1" bgcolor="${res:bgcolor}" width="${pro:width}"&gt;
- *                     ${jsp:bodyContent}
- *                     &lt;img src="${res:imagen}"/&gt;
- *                 &lt;/table&gt;
- *             ]]&gt;&lt;/content&gt;
- *         &lt;element name="imagen" path="images" url="/img.jpg"/&gt;
- *        &lt;constant name="bgcolor" value="#556677"/&gt;
- *         &lt;/template&gt;
- * </pre>
- *
- * Esta definici�n de template har� que el texto contenido en content se asigne a content, adem�s se agregar�
- * un resource del tipo element con nombre "imagen" y un resource del tipo constant con nombre "bgcolor". El tempalte espera
- * recibir un par�metro llamado width y el bodyContent. El procesador de Xkins reemplazar� los comandos (jsp, res, pro) por los valores correspondientes
- * y generar� el html final.
- * @author Guillermo Meyer
- */
 public class Template
         implements Cloneable {
     //~ Instance fields ----------------------------------------------------------------------------
@@ -385,7 +359,7 @@ public class Template
 	 * @return
 	 */
 	public Context getContext() {
-		return ContextHolder.getLocalContext();
+		return ContextHolder.getContext();
 	}
 
 	/**

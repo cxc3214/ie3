@@ -132,15 +132,8 @@ public class ResourcesLoader {
 		  return;
 	  }
 	  final String XTREE_RESOURCES = "net/jcreate/e3/tree/xtree/xtree.zip";
-	  final String YUI_RESOURCES = "net/jcreate/e3/tree/yui/yui.zip";
-	  final String EXT_RESOURCES= "net/jcreate/e3/tree/ext/ext.zip";
 	  logger.info("开始导出E3.Tree资源文件...");
 	  loadResource(XTREE_RESOURCES,pWebHome + "/e3/tree");
-	  logger.info("导出xtree资源文件成功!");	  
-	  loadResource(YUI_RESOURCES,pWebHome + "/e3/tree");
-	  logger.info("导出yui资源文件成功!");
-	  loadResource(EXT_RESOURCES,pWebHome + "/e3/tree");
-	  logger.info("导出ext资源文件成功!");
 	  logger.info("导出E3.Tree资源文件成功!");
 	  //必须在最后导出版本控制文件，这样可以避免导出过程出错，版本不能得到更新的情况.
 	  exportVersionFile(pWebHome);

@@ -10,8 +10,12 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import net.jcreate.e3.table.support.TableConstants;
+import net.jcreate.xkins.Context;
+import net.jcreate.xkins.ContextHolder;
+import net.jcreate.xkins.Xkins;
 
 import org.ajaxanywhere.AAFilter;
 import org.ajaxanywhere.BufferResponseWrapper;
@@ -30,6 +34,7 @@ import org.apache.commons.logging.LogFactory;
  * 屏蔽e3.table显式的依赖ajaxanywhere. 以后要换成其他实现
  * 方式，对e3.table用户没有影响，基于这样的考虑，e3.table 把
  * ajaxanywhere的源代码也打包进来，没以jar的形式发布.
+ * @deprecated 请使用net.jcreate.e3.table.E3TableFilter
  */
 public class AjaxFilter extends AAFilter{
 	
@@ -38,8 +43,26 @@ public class AjaxFilter extends AAFilter{
 	public AjaxFilter() {
 		super();
 	}
-
+	
 	public void doFilter(ServletRequest pRequest, ServletResponse pResponse,
+			FilterChain pFilterChain) throws IOException, ServletException {
+		try{
+			//构造context信息
+			Context context = new Context(pRequest, pResponse);
+			HttpServletRequest httpRequest = (HttpServletRequest)pRequest;
+			HttpSession session = httpRequest.getSession();
+			Xkins xs = (Xkins) session.getServletContext().getAttribute(Xkins.ATTR_SKINS);
+			context.setXkins(xs);			
+			ContextHolder.setContext(context);
+			//
+			executeFilter(pRequest, pResponse, pFilterChain);
+		}finally{
+			ContextHolder.setContext(null);
+		}
+	}
+	
+
+	protected void executeFilter(ServletRequest pRequest, ServletResponse pResponse,
 			FilterChain pFilterChain) throws IOException, ServletException {
 		if ( AjaxUtil.isAjaxRequest((HttpServletRequest)pRequest) == false ){
 			super.doFilter(pRequest, pResponse, pFilterChain);

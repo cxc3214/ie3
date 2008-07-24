@@ -24,8 +24,6 @@ import net.jcreate.e3.table.CellDecorator;
 import net.jcreate.e3.table.Column;
 import net.jcreate.e3.table.Row;
 
-import org.springframework.util.Assert;
-
 public class DefaultCell implements Cell{
 
 	private Object value;
@@ -108,12 +106,10 @@ public class DefaultCell implements Cell{
 	}
 
 	public boolean isOddColumn() {
-		Assert.notNull(this.column);
 		return this.getColumn().isOdd();
 	}
 
 	public boolean isOddRow() {
-		Assert.notNull(this.row);
 		return this.getRow().isOdd();
 	}
 	public int getRowspan() {

@@ -27,6 +27,7 @@ import net.jcreate.e3.table.support.TableConstants;
 public class HTMLColumn extends DefaultColumn implements Attributeable{
 	
 	private String style;
+	private String align;
 	private String styleClass;
 	private String headerStyle;
 
@@ -121,6 +122,14 @@ public class HTMLColumn extends DefaultColumn implements Attributeable{
 
 	public void setHeaderStyle(String headerStyle) {
 		this.headerStyle = headerStyle;
+	}
+
+	public String getAlign() {
+		return align;
+	}
+
+	public void setAlign(String align) {
+		this.align = align;
 	}
 
 }

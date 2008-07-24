@@ -396,7 +396,7 @@
 #set ( $rowNo = $row.rowIndex % $_e3Tools.toInt($res_colorNum) ) 
      <tr ${row.AttributesAsString} class="row${rowNo}" >
 #foreach($cell in $row.cells )     
-     <td ${cell.AttributesAsString} nowrap="true" colspan="${cell.colspan}" rowspan="${cell.rowspan}" #if ($cell.column.style ) style="$cell.column.style" #end #if ($cell.column.styleClass ) style="$cell.column.styleClass" #end>${cell.value}</td>
+     <td ${cell.AttributesAsString} nowrap="true" colspan="${cell.colspan}" rowspan="${cell.rowspan}" #if ($cell.column.style ) style="$cell.column.style" #end #if ($cell.column.styleClass ) class="$cell.column.styleClass" #end>${cell.value}</td>
 #end          
      </tr>
 #end  

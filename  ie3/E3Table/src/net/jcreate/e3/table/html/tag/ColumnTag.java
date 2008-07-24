@@ -50,6 +50,12 @@ public class ColumnTag extends BodyTagSupport implements Attributeable,  Decorat
 	private String beanProperty;
 	private String style;
 	private boolean hidden = false;
+	
+	/**
+	 * 单元格堆齐方式.
+	 */
+	private String align;
+	
 	/**
 	 * @deprecated
 	 */
@@ -174,6 +180,7 @@ public class ColumnTag extends BodyTagSupport implements Attributeable,  Decorat
 			column.setTitle(this.title);
 			column.setWidth(this.width);
 			column.setHidden(this.hidden);
+			column.setAlign(this.align);
 			column.setSortable(this.sortable == null ? getDefaultSortable() : this.sortable.booleanValue());
 			column.setTitleKey(this.titleKey);
 			column.setStyle(this.style);
@@ -241,6 +248,7 @@ public class ColumnTag extends BodyTagSupport implements Attributeable,  Decorat
 		this.headerStyle = null;
 		this.style = null;
 		this.styleClass = null;
+		this.align = null;
 		this.titleKey = null;
 		this.sortable = null;;
 		super.release();
@@ -329,6 +337,14 @@ public class ColumnTag extends BodyTagSupport implements Attributeable,  Decorat
 	 */
 	public void setName(String name) {
 		this.property = name;
+	}
+
+	public String getAlign() {
+		return align;
+	}
+
+	public void setAlign(String align) {
+		this.align = align;
 	}
 
 	

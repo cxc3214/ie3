@@ -19,6 +19,8 @@
  */
 package net.jcreate.e3.table.html;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import net.jcreate.e3.table.NavRequest;
@@ -75,8 +77,25 @@ public abstract class HTMLTableHelper {
 			}
 		}
 		}
-		NavRequest result = new NavRequest();		
-		
+		NavRequest result = new NavRequest();
+		//请求参数
+		if ( logger.isDebugEnabled() ){
+			Map params = pWebContext.getParameterMap();
+			java.util.Iterator paramKeys = params.keySet().iterator();
+			while( paramKeys.hasNext() ){
+				Object key = paramKeys.next();
+				if ( key instanceof String == false){
+					continue;
+				}
+				Object value = params.get(key);
+			
+				if ( value instanceof String[] == false){
+					continue;
+				}
+				 //数组参数未考虑
+				logger.debug((String)(key)+ "=" +((String[])value)[0] );
+			}
+		}
 		String pageSize = pWebContext.getParameter(TableConstants.PAGE_SIZE_PARAM+ "_" + pTableID);
 		String sortColumn = pWebContext.getParameter(TableConstants.SORT_PROPERTY_PARAM+ "_" + pTableID);
 		String sortName = pWebContext.getParameter(TableConstants.SORT_NAME_PARAM + "_" + pTableID);

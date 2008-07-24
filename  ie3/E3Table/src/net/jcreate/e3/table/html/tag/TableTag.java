@@ -52,17 +52,16 @@ import net.jcreate.e3.table.message.MessageSourceFactory;
 import net.jcreate.e3.table.model.DataModelFactory;
 import net.jcreate.e3.table.support.DefaultStateInfo;
 import net.jcreate.e3.table.support.DefaultTableContext;
-import net.jcreate.e3.table.support.DefaultTableDirector;
 import net.jcreate.e3.table.support.JspPageWebContext;
 import net.jcreate.e3.table.support.TableConstants;
 import net.jcreate.e3.table.theme.DefaultThemeFactoryBuilder;
 import net.jcreate.e3.table.theme.ThemeFactory;
 import net.jcreate.e3.table.theme.ThemeFactoryBuilder;
+import net.jcreate.e3.table.util.Assert;
 import net.jcreate.e3.table.util.StringUtils;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.util.Assert;
 
 
 public class TableTag extends BodyTagSupport{

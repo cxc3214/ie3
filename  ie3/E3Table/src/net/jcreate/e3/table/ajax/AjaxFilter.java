@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import net.jcreate.e3.table.support.TableConstants;
+import net.jcreate.e3.table.util.StringUtils;
 import net.jcreate.xkins.Context;
 import net.jcreate.xkins.ContextHolder;
 import net.jcreate.xkins.Xkins;
@@ -70,24 +71,25 @@ public class AjaxFilter extends AAFilter{
 		} 
         HttpServletRequest request = (HttpServletRequest) pRequest;
         HttpServletResponse response = (HttpServletResponse) pResponse;
-        //request.setCharacterEncoding("UTF-8");
         response.setContentType("text/xml;charset=utf-8");
         response.setHeader("Cache-Control", "no-cache");
         response.setDateHeader("Expires", 0);
         response.setHeader("Pragma", "no-cache");
-        
-	    BufferResponseWrapper bufferResponseWrapper = new BufferResponseWrapper(response);
-	    pFilterChain.doFilter(request, bufferResponseWrapper);
-	    String buffer = bufferResponseWrapper.getBuffer();
-	    System.err.println("原始结果:" + buffer);
-	    String refreshZone = pRequest.getParameter(TableConstants.REFRESH_ZONE_PARAM);
-	    String resultData = AjaxUtil.getAjaxData(refreshZone, buffer);
-	    System.err.println("输出结果是:" + resultData);
-	    HttpServletResponse originalResponse = bufferResponseWrapper.getOriginalResponse();
-	    PrintWriter writer = originalResponse.getWriter();
-	    writer.print(resultData);
-	    
-	    originalResponse.flushBuffer();
+        BufferResponseWrapper bufferResponseWrapper = new BufferResponseWrapper(response);
+	  //  HttpServletResponse originalResponse = bufferResponseWrapper.getOriginalResponse();
+	    PrintWriter writer = response.getWriter();        
+        try{
+	      pFilterChain.doFilter(request, bufferResponseWrapper);
+	      String buffer = bufferResponseWrapper.getBuffer();
+	      String refreshZone = pRequest.getParameter(TableConstants.REFRESH_ZONE_PARAM);
+	      String resultData = AjaxUtil.getAjaxData(refreshZone, buffer);
+	      writer.print(resultData);
+        }catch(Exception ex){
+          final String msg = ex.getMessage();
+          final String resultJson = "{ msg : '" + StringUtils.escapeJavaScript(msg) + "' }";
+          writer.print(resultJson);
+        }
+        response.flushBuffer();
 	}
 
 	public void init(FilterConfig filterConfig) throws ServletException {

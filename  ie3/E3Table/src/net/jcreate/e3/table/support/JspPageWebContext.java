@@ -126,7 +126,13 @@ public final class JspPageWebContext implements WebContext {
     public String getContextPath() {
         ServletRequest request = pageContext.getRequest();
         if (request instanceof HttpServletRequest) {
-            return ((HttpServletRequest) request).getContextPath();
+        	String contextPath =((HttpServletRequest) request).getContextPath();
+        	if ( "/".equals(contextPath) || "\\".equals(contextPath) ){
+        		return "";
+        	} else {
+        		return contextPath;	
+        	}
+             
         }
 
         throw new UnsupportedOperationException("There is no context path associated with the request.");

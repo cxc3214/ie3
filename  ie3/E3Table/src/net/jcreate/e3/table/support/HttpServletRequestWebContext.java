@@ -135,7 +135,12 @@ public class HttpServletRequestWebContext implements WebContext {
     }
 
     public String getContextPath() {
-        return request.getContextPath();
+    	String contextPath =request.getContextPath();
+    	if ( "/".equals(contextPath) || "\\".equals(contextPath) ){
+    		return "";
+    	} else {
+    		return contextPath;	
+    	}
     }
 
     public String getRealPath(String path) {

@@ -67,6 +67,12 @@ public class HTMLTable extends DefaultTable implements Attributeable{
 	}
 
 	public void setUri(String uri) {
+		if ( uri != null ){
+			if ( uri.startsWith("//") ){
+				this.uri = uri.substring(1);//截取掉多余的"/",这种情况只有当直接进入jsp页面时才会发生.
+				return;				
+			}
+		}
 		this.uri = uri;
 	}
 

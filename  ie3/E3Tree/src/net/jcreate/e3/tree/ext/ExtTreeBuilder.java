@@ -426,7 +426,14 @@ public class ExtTreeBuilder extends AbstractWebTreeBuilder{
 
 	public String getResourceHome() {
 		if ( resourceHome == null ){
-			return this.webContext.getContextPath() + "/e3/commons/ext";
+			//contxtPath,当path为"/"时,有的服务器返回空,有的会返回"/",所以在这需要做
+			//判断
+			String contextPath = this.webContext.getContextPath();
+			String basePath = "/e3/commons/ext"; 
+			if ( "/".equals(contextPath) || "\\".equals(contextPath)){
+				return basePath;
+			}
+			return  contextPath + basePath;
 		} else {
 			return resourceHome;
 		}

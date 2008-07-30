@@ -37,6 +37,7 @@ import net.jcreate.e3.tree.support.DefaultTreeDirector;
 import net.jcreate.e3.tree.support.JspPageWebContext;
 import net.jcreate.e3.tree.support.PropertyNodeComparator;
 import net.jcreate.e3.tree.support.ReverseComparator;
+import net.jcreate.e3.tree.support.WebContext;
 import net.jcreate.e3.tree.support.WebTreeBuilder;
 import net.jcreate.e3.tree.support.WebTreeNode;
 
@@ -136,7 +137,9 @@ public class TreeTag extends BodyTagSupport implements DynamicAttributes {
 	public int doEndTag() throws JspException {
 		TreeModel treeModel = NodeUtils.convert(this.nodes, this.idParentIds);
 		WebTreeBuilder treeBuilder = BuilderFactory.getInstance(this.builder);
-		treeBuilder.init( new JspPageWebContext(this.pageContext) );
+		WebContext context = new JspPageWebContext(this.pageContext) ;
+		System.out.println("context path=" +  context.getContextPath() );
+		treeBuilder.init( context );
 		java.util.Iterator keys = dynamicAttributes.keySet().iterator();
 		while( keys.hasNext() ){
 			Object key = keys.next();

@@ -18,6 +18,14 @@ public class DefaultTreeModel implements TreeModel{
      */
     private List rootNodes = new ArrayList();
     
+    public DefaultTreeModel(){
+    	
+    }
+    
+    public DefaultTreeModel(Node pRootNode){
+    	addRootNode(pRootNode);
+    }
+    
 	public Iterator getRootNodes() {
 		return rootNodes.iterator();
 	}

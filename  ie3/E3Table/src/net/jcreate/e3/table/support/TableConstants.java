@@ -178,6 +178,16 @@ public class TableConstants {
    */
   public static final String REFRESH_ZONE_PARAM = PREFIX + "refreshZone";
   
+  /**
+   * 导出类型参数
+   */
+  public static final String EXPORT_TYPE_PARAM = PREFIX +"exportType";
+  
+  /**
+   * 皮肤参数
+   */
+  public static final String SKIN_PARAM = "_e3Skin";
+  
   
   
   /**

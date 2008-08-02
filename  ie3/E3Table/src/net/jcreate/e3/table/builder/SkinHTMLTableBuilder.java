@@ -17,20 +17,27 @@
 /**
  * 欢迎加入 E3平台联盟QQ群:21523645 
  */
-package net.jcreate.e3.table.html;
+package net.jcreate.e3.table.builder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
 
 import net.jcreate.e3.table.BuildTableException;
 import net.jcreate.e3.table.PageInfo;
+import net.jcreate.e3.table.html.HTMLCell;
+import net.jcreate.e3.table.html.HTMLColumn;
+import net.jcreate.e3.table.html.HTMLColumnGroup;
+import net.jcreate.e3.table.html.HTMLHeader;
+import net.jcreate.e3.table.html.HTMLRow;
+import net.jcreate.e3.table.html.HTMLTable;
+import net.jcreate.e3.table.html.MessageHelper;
 import net.jcreate.e3.table.html.util.JspUtils;
 import net.jcreate.e3.table.support.TableConstants;
 import net.jcreate.e3.templateEngine.Context;
 import net.jcreate.e3.templateEngine.support.DefaultContext;
 import net.jcreate.xkins.XkinProcessor;
 
-public class SkinHTMLTableBuilder extends AbstractHTMLTableBuilder{
+public class SkinHTMLTableBuilder extends DefaultTextTableBuilder{
 	
 
 	

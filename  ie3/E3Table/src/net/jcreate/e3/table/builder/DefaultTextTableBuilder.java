@@ -17,7 +17,10 @@
 /**
  * 欢迎加入 E3平台联盟QQ群:21523645 
  */
-package net.jcreate.e3.table.html;
+package net.jcreate.e3.table.builder;
+
+import java.io.IOException;
+import java.io.Writer;
 
 import net.jcreate.e3.table.BuildTableException;
 import net.jcreate.e3.table.Cell;
@@ -27,9 +30,15 @@ import net.jcreate.e3.table.Header;
 import net.jcreate.e3.table.Row;
 import net.jcreate.e3.table.Table;
 import net.jcreate.e3.table.ajax.AjaxUtil;
+import net.jcreate.e3.table.html.HTMLCell;
+import net.jcreate.e3.table.html.HTMLColumn;
+import net.jcreate.e3.table.html.HTMLColumnGroup;
+import net.jcreate.e3.table.html.HTMLHeader;
+import net.jcreate.e3.table.html.HTMLRow;
+import net.jcreate.e3.table.html.HTMLTable;
 import net.jcreate.e3.table.support.EmptyTableBuilder;
 
-public abstract class AbstractHTMLTableBuilder extends EmptyTableBuilder{
+public abstract class DefaultTextTableBuilder extends EmptyTableBuilder implements TextTableBuilder{
 
    protected StringBuffer tableScript = null;
    private static final int DEFAULT_BUFFER_SIZE = 200;
@@ -37,7 +46,7 @@ public abstract class AbstractHTMLTableBuilder extends EmptyTableBuilder{
    protected HTMLTable table = null; 
    public static final String ENTER = "\n";
    
-   public AbstractHTMLTableBuilder(){
+   public DefaultTextTableBuilder(){
 	   
    }
    
@@ -287,9 +296,18 @@ public abstract class AbstractHTMLTableBuilder extends EmptyTableBuilder{
 	}
 	protected void buildHTMLHeaderEnd(HTMLHeader pHeader) throws BuildTableException {
 	}
-	public String getTableScript() {
-		return tableScript.toString().trim();
-	}
 	
+	public String getTableScript() {
+		return null;
+	}
+	public void export(Writer out) throws ExportTableException{
+		try {
+			out.write(tableScript.toString());
+		} catch (IOException e) {
+			throw new ExportTableException(e.getMessage(), e);
+
+		}
+		
+	}
 	
 }

@@ -199,4 +199,11 @@ public interface TableBuilder {
 	 */
 	public void buildBottomPanel(Table pTable) throws BuildTableException;
 	
+	/**
+	 * 获取mime类型
+	 * @return
+	 */
+	public  String getMimeType();
+	
+	
 }

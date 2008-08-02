@@ -201,6 +201,15 @@ public abstract class EmptyTableBuilder implements TableBuilder, TableContextSup
 	public void setTableDirector(TableDirector tableDirector) {
 		this.tableDirector = tableDirector;
 	}
+	/**
+	 * 获取mime类型
+	 * @return
+	 */
+	public  String getMimeType(){
+		return null;
+		
+	}
+	
 
 
 }

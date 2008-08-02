@@ -38,43 +38,17 @@ import net.jcreate.e3.table.Row;
 import net.jcreate.e3.table.Table;
 import net.jcreate.e3.table.TableBuilder;
 import net.jcreate.e3.table.TableContext;
-import net.jcreate.e3.table.TableContextSupport;
-import net.jcreate.e3.table.TableDirector;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+public class DefaultTableDirector extends AbstractTableDirector{
 
-public class DefaultTableDirector implements TableDirector{
-
-    private final Log logger = LogFactory.getLog( DefaultTableDirector.class );
-	private boolean showCaption = true;	
-	private boolean showHeader = true;
-	private boolean showTopPanel = true;	
-	private boolean showTopToolbar = true;
-	private boolean showBottomToolbar = true;
-	private boolean showBody = true;	
-	private boolean showBottomPanel = true;
-	
-	private final TableContext tableContext;
-	
-	public DefaultTableDirector(){
-		logger.debug("DefaultTableDirector未设置WebContext");
-		tableContext = null;
-	}
-	
-	public DefaultTableDirector(TableContext pTableContext){
-		tableContext = pTableContext;
+	public DefaultTableDirector() {
+		super();
 	}
 
-	private void setObjectWebContext(Object pObj){
-	      if ( pObj instanceof TableContextSupport ){
-       	   TableContextSupport contextSupport = (TableContextSupport)pObj;
-       	   if ( contextSupport.getTableContext() == null ){//未设置
-       		   contextSupport.setTableContext(this.tableContext);
-       	   }
-          }
-		
+	public DefaultTableDirector(TableContext tableContext) {
+		super(tableContext);
 	}
+
 	public void build(TableBuilder pBuilder, Table pTable) throws BuildTableException {
 		   if ( pBuilder == null || pTable == null){
 			   return;
@@ -288,52 +262,5 @@ public class DefaultTableDirector implements TableDirector{
     	}    	
     	return result;
     }
-    
-	public boolean isShowBody() {
-		return showBody;
-	}
-	public void setShowBody(boolean showBody) {
-		this.showBody = showBody;
-	}
-	public boolean isShowBottomPanel() {
-		return showBottomPanel;
-	}
-	public void setShowBottomPanel(boolean showBottomPanel) {
-		this.showBottomPanel = showBottomPanel;
-	}
-	public boolean isShowCaption() {
-		return showCaption;
-	}
-	public void setShowCaption(boolean showCaption) {
-		this.showCaption = showCaption;
-	}
-	public boolean isShowHeader() {
-		return showHeader;
-	}
-	public void setShowHeader(boolean showHeader) {
-		this.showHeader = showHeader;
-	}
-	public boolean isShowTopPanel() {
-		return showTopPanel;
-	}
-	public void setShowTopPanel(boolean showTopPanel) {
-		this.showTopPanel = showTopPanel;
-	}
-
-	public boolean isShowBottomToolbar() {
-		return showBottomToolbar;
-	}
-
-	public void setShowBottomToolbar(boolean showBottomToolbar) {
-		this.showBottomToolbar = showBottomToolbar;
-	}
-
-	public boolean isShowTopToolbar() {
-		return showTopToolbar;
-	}
-
-	public void setShowTopToolbar(boolean showTopToolbar) {
-		this.showTopToolbar = showTopToolbar;
-	}
-
+ 
 }

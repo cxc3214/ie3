@@ -1,9 +1,14 @@
-package net.jcreate.e3.table.html;
+package net.jcreate.e3.table.builder;
 
 import net.jcreate.e3.table.BuildTableException;
 import net.jcreate.e3.table.Column;
 import net.jcreate.e3.table.PageInfo;
 import net.jcreate.e3.table.WebContext;
+import net.jcreate.e3.table.html.HTMLCell;
+import net.jcreate.e3.table.html.HTMLColumn;
+import net.jcreate.e3.table.html.HTMLRow;
+import net.jcreate.e3.table.html.HTMLTable;
+import net.jcreate.e3.table.html.Tools;
 import net.jcreate.e3.table.support.TableConstants;
 import net.jcreate.e3.templateEngine.Context;
 import net.jcreate.e3.templateEngine.support.DefaultContext;

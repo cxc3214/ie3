@@ -17,13 +17,19 @@
 /**
  * 欢迎加入 E3平台联盟QQ群:21523645 
  */
-package net.jcreate.e3.table.html;
+package net.jcreate.e3.table.builder;
 
 import java.util.List;
 
 import net.jcreate.e3.table.BuildTableException;
+import net.jcreate.e3.table.html.HTMLCell;
+import net.jcreate.e3.table.html.HTMLColumn;
+import net.jcreate.e3.table.html.HTMLHeader;
+import net.jcreate.e3.table.html.HTMLParam;
+import net.jcreate.e3.table.html.HTMLRow;
+import net.jcreate.e3.table.html.HTMLTable;
 
-public class DefaultHTMLTableBuilder extends AbstractHTMLTableBuilder{
+public class DefaultHTMLTableBuilder extends DefaultTextTableBuilder{
 
 	/*
 	 <table>

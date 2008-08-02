@@ -35,9 +35,12 @@ import net.jcreate.e3.table.NavRequest;
 import net.jcreate.e3.table.PageInfo;
 import net.jcreate.e3.table.SortInfo;
 import net.jcreate.e3.table.StateInfo;
+import net.jcreate.e3.table.TableBuilder;
 import net.jcreate.e3.table.TableDirector;
+import net.jcreate.e3.table.builder.BinaryTableBuilder;
+import net.jcreate.e3.table.builder.ExportTableException;
+import net.jcreate.e3.table.builder.TextTableBuilder;
 import net.jcreate.e3.table.creator.CollectionDataModelCreator;
-import net.jcreate.e3.table.html.AbstractHTMLTableBuilder;
 import net.jcreate.e3.table.html.HTMLColumn;
 import net.jcreate.e3.table.html.HTMLForm;
 import net.jcreate.e3.table.html.HTMLParam;
@@ -419,6 +422,12 @@ public class TableTag extends BodyTagSupport{
 	public int doStartTag() throws JspException {
 		//设置默认值
 		setDefaultValue();
+		//通过参数修改皮肤名称.
+		HttpServletRequest httpRequest = (HttpServletRequest)this.pageContext.getRequest();
+		String skinName = httpRequest.getParameter(TableConstants.SKIN_PARAM);
+		if ( skinName != null ){
+			this.setSkin(skinName);
+		}
 		
 		Object itemsObj = this.pageContext.findAttribute(this.items);
 		if ( itemsObj == null ){
@@ -520,15 +529,25 @@ public class TableTag extends BodyTagSupport{
 				 offset++;
 			 }
 		 }
-		 AbstractHTMLTableBuilder htmlBuilder = (AbstractHTMLTableBuilder)themeFactory.createBuilder();		  
-	     director.build(htmlBuilder, table);
-		 String treeScript = htmlBuilder.getTableScript();
+		 TableBuilder tableBuilder = themeFactory.createBuilder();
+//		 DefaultTextTableBuilder htmlBuilder = (DefaultTextTableBuilder)		  
+	     director.build(tableBuilder, table);
+	     
+	     /**
+	      * TODO: 设置头信息
+	      */
 		 try {
-			this.pageContext.getOut().write(treeScript);
-		} catch (IOException e) {
-			logger.error(e);
-			e.printStackTrace();
-			throw new JspException("创建表格:" + this.id + "失败!", e);
+		     if ( tableBuilder instanceof TextTableBuilder ){
+		    	 TextTableBuilder textBuilder = (TextTableBuilder)tableBuilder;
+		    	 textBuilder.export(this.pageContext.getOut());
+		     } else {
+		    	 BinaryTableBuilder binaryBuilder = (BinaryTableBuilder)tableBuilder;
+		    	 try {
+					binaryBuilder.export(this.pageContext.getResponse().getOutputStream());
+				} catch (IOException e) {
+					throw new JspException(e.getMessage(), e);
+				}
+	     }
 		}finally{
 			cleanUp();
 		}

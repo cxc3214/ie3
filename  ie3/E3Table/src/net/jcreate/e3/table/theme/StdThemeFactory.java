@@ -3,7 +3,7 @@ package net.jcreate.e3.table.theme;
 import net.jcreate.e3.table.TableBuilder;
 import net.jcreate.e3.table.TableContext;
 import net.jcreate.e3.table.TableDirector;
-import net.jcreate.e3.table.html.FastSkinHTMLTableBuilder;
+import net.jcreate.e3.table.builder.FastSkinHTMLTableBuilder;
 import net.jcreate.e3.table.support.DefaultTableDirector;
 
 public class StdThemeFactory implements ThemeFactory {

@@ -16,6 +16,8 @@ public class DefaultThemeFactoryBuilder implements ThemeFactoryBuilder {
 	  
 	 private static final String STD_THEME = "E3001";
 	 private static final String EXT_THEME = "E3002";
+	 private static final String EXPORT_THEME = "E3003";
+	 
 	 public ThemeFactory build(String pTheme) throws ThemeException{
 		 logger.debug("构造主题工厂:" + pTheme);		 
 		 if ( pTheme == null ){
@@ -26,6 +28,8 @@ public class DefaultThemeFactoryBuilder implements ThemeFactoryBuilder {
 			 result = new StdThemeFactory(tableContext);			 
 		 } else if ( EXT_THEME.equals(pTheme) ){
 			 result = new ExtThemeFactory(tableContext);
+		 } else if ( EXPORT_THEME.equals(pTheme) ){
+			 result = new ExportThemeFactory(tableContext);
 		 } else {
 			 final String msg =
 				 "不支持的的主题:" + pTheme;

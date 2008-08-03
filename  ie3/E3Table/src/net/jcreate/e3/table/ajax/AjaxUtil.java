@@ -38,16 +38,5 @@ public class AjaxUtil {
 		return pResponseData.substring(beginIndex+beginTag.length(), endIndex);
 	}
 	
-	public static boolean isAjaxRequest(HttpServletRequest pRequest){
-		if ( pRequest == null ){
-			return false;
-		}
-		String refreshZone = pRequest.getParameter(TableConstants.REFRESH_ZONE_PARAM);
-		if ( refreshZone == null ){
-			return false;
-		} else {
-			return true;
-		}
-	}
 	
 }

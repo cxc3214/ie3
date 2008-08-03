@@ -4,6 +4,7 @@ import net.jcreate.e3.table.TableBuilder;
 import net.jcreate.e3.table.TableContext;
 import net.jcreate.e3.table.TableDirector;
 import net.jcreate.e3.table.builder.DefaultHTMLTableBuilder;
+import net.jcreate.e3.table.builder.FastSkinHTMLTableBuilder;
 
 public class ExportThemeFactory implements ThemeFactory {
 	
@@ -15,7 +16,7 @@ public class ExportThemeFactory implements ThemeFactory {
 		  /**
 		   * TODO: 其他builder
 		   */
-		  DefaultHTMLTableBuilder builder = new DefaultHTMLTableBuilder();
+		  FastSkinHTMLTableBuilder builder = new FastSkinHTMLTableBuilder();
 		  return builder;
 	  }
 	  

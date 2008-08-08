@@ -105,6 +105,11 @@ private String getParameterJson(HttpServletRequest pRequest){
         HttpServletRequest request = (HttpServletRequest) pRequest;
         HttpServletResponse response = (HttpServletResponse) pResponse;
 	   if ( TableUtils.isExportParamRequest(request)  ){
+	        response.setContentType("text/xml;charset=utf-8");
+	        response.setHeader("Cache-Control", "no-cache");
+	        response.setDateHeader("Expires", 0);
+	        response.setHeader("Pragma", "no-cache");
+		   
 		   PrintWriter writer = response.getWriter();
 		      String json = getParameterJson(request);
 	          final String resultJson = "{ exportTable : true, params : " + json + " }";
@@ -124,7 +129,7 @@ private String getParameterJson(HttpServletRequest pRequest){
 		if ( TableUtils.isExportTableRequest(request)  ){
 
 	        response.setContentType("application/msexcel;charset=utf-8");
-	        response.setHeader("Content-disposition","attachment; filename=e3.xls"); 
+	        response.setHeader("Content-disposition","attachment; filename=datas.xls"); 
 	        response.setHeader("Cache-Control", "no-cache");
 	        response.setDateHeader("Expires", 0);
 	        response.setHeader("Pragma", "no-cache");

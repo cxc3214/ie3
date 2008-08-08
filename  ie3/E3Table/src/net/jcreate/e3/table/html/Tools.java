@@ -11,6 +11,21 @@ public class Tools {
 		return StringUtils.escapeJavaScript((String)pValue);
 	}
 	
+	public String getUriWithoutParams(String uri){
+		if ( uri == null ){
+			return null;
+		}
+		String wh = "?";
+		int index = uri.indexOf(wh);
+		if ( index == - 1 ){
+			 return uri; 
+		} else {
+			return uri.substring(0, index);
+		}
+		
+	}
+
+	
 	public String width(String pWidth){
 		return width(pWidth, '\'');
 	}

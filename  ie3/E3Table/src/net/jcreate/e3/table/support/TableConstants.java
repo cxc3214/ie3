@@ -181,7 +181,12 @@ public class TableConstants {
   /**
    * 导出类型参数
    */
-  public static final String EXPORT_TYPE_PARAM = PREFIX +"exportType";
+  public static final String EXPORT_TABLE_PARAM = PREFIX +"exportTable";
+  
+  /**
+   * 导出参数
+   */
+  public static final String EXPORT_PARAM_PARAM = PREFIX +"exportParam";
   
   /**
    * 皮肤参数

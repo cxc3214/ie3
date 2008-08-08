@@ -31,6 +31,7 @@ import net.jcreate.e3.table.html.HTMLHeader;
 import net.jcreate.e3.table.html.HTMLRow;
 import net.jcreate.e3.table.html.HTMLTable;
 import net.jcreate.e3.table.html.MessageHelper;
+import net.jcreate.e3.table.html.Tools;
 import net.jcreate.e3.table.html.util.JspUtils;
 import net.jcreate.e3.table.support.TableConstants;
 import net.jcreate.e3.templateEngine.Context;
@@ -345,7 +346,11 @@ public class SkinHTMLTableBuilder extends DefaultTextTableBuilder{
 	}
 
 	protected void buildHTMLParamsForm(HTMLTable pTable) throws BuildTableException {
+		
 		Context context = new DefaultContext();
+		Tools tools = new Tools();
+		context.put("tools", tools);
+		
 		context.put("table", pTable);		
 		context.put("webContext", this.getTableContext().getWebContext());
 		context.put("params", pTable.getParams());

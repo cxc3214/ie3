@@ -425,7 +425,7 @@ public class TableTag extends BodyTagSupport{
 		//通过参数修改皮肤名称.
 		HttpServletRequest httpRequest = (HttpServletRequest)this.pageContext.getRequest();
 		String skinName = httpRequest.getParameter(TableConstants.SKIN_PARAM);
-		if ( skinName != null ){
+		if ( skinName != null && skinName.trim().length() != 0 ) {
 			this.setSkin(skinName);
 		}
 		

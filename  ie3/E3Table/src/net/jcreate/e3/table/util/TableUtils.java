@@ -15,17 +15,31 @@ public class TableUtils {
      * @param pRequest
      * @return
      */
-	public static boolean isExportRequest(HttpServletRequest pRequest){
+	public static boolean isExportTableRequest(HttpServletRequest pRequest){
 		if ( pRequest == null ){
 			return false;
 		}
-		String exportType = pRequest.getParameter(TableConstants.EXPORT_TYPE_PARAM);
-		if ( exportType == null ){
+		String exportTable = pRequest.getParameter(TableConstants.EXPORT_TABLE_PARAM);
+		if ( exportTable == null ){
 			return false;
 		} else {
 			return true;
 		}
 	}
+	
+    /**
+     * 是否是导出请求参数
+     * @param pRequest
+     * @return
+     */
+	public static boolean isExportParamRequest(HttpServletRequest pRequest){
+		if ( pRequest == null ){
+			return false;
+		}
+		String exportParam = pRequest.getParameter(TableConstants.EXPORT_PARAM_PARAM);
+		return "true".equalsIgnoreCase(exportParam);
+	}
+	
 
 	public static boolean isAjaxRequest(HttpServletRequest pRequest){
 		if ( pRequest == null ){

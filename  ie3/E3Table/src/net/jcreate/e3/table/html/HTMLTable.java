@@ -62,6 +62,20 @@ public class HTMLTable extends DefaultTable implements Attributeable{
 	public List getParams(){
 		return new ArrayList( this.params );
 	}
+	
+	public String getUriWithoutParams(){
+		if ( uri == null ){
+			return null;
+		}
+		String wh = "?";
+		int index = uri.indexOf(wh);
+		if ( index == - 1 ){
+			 return uri; 
+		} else {
+			return uri.substring(0, index+1);
+		}
+		
+	}
 	public String getUri() {
 		return uri;
 	}

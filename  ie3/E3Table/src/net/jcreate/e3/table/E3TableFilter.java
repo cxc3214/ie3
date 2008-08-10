@@ -56,11 +56,20 @@ public class E3TableFilter  extends AAFilter{
 		}
 	}
 	
+	/**
+	 * 构造参数数组
+	 *   [
+	 *    { a : b},
+	 *    { c : c1 },
+	 *   ]
+	 * @param pRequest
+	 * @return
+	 */
 private String getParameterJson(HttpServletRequest pRequest){
 	java.util.Enumeration paramNames = pRequest.getParameterNames();
 	StringBuffer sb = new StringBuffer();
 	final String ENTER = "\n";
-	sb.append("{ ").append(ENTER);
+	sb.append("[ ").append(ENTER);
 	while( paramNames.hasMoreElements() ){
 		Object param = paramNames.nextElement();
 		if ( param instanceof String == false){
@@ -69,17 +78,13 @@ private String getParameterJson(HttpServletRequest pRequest){
 		String paramName = (String)param;
 		String[] paramValues = pRequest.getParameterValues(paramName);
 		if ( paramValues.length != 1 ){
-			sb.append("{ ").append(ENTER);
 			for(int i=0; i<paramValues.length; i++){
-				if ( paramValues.length == (i+1) ){//最后一个参数
-					sb.append(paramName).append(" : '").append(pRequest.getParameter(paramName)).append("' ").append(ENTER);	
-				} else {
-					sb.append(paramName).append(" : '").append(pRequest.getParameter(paramName)).append("' ,").append(ENTER);
-				}
+  			  sb.append("{ ").append(paramName).append(" : '").
+  			  append(StringUtils.escapeJavaScript( paramValues[i]) ).append("'  } ,").append(ENTER);
 			}
-			sb.append(" } ,").append(ENTER);
 		} else {
-			sb.append(paramName).append(" : '").append(pRequest.getParameter(paramName)).append("' ,").append(ENTER);					
+			sb.append("{ ").append(paramName).append(" : '").
+			append(StringUtils.escapeJavaScript(pRequest.getParameter(paramName))).append("'  } ,").append(ENTER);					
 		}
 	}
 	//删除最后一个多余的空格.
@@ -87,9 +92,8 @@ private String getParameterJson(HttpServletRequest pRequest){
 	if ( last!= -1 ){
 		sb.deleteCharAt(last);				
 	}
-	sb.append(" }").append(ENTER);
+	sb.append(" ]").append(ENTER);
 	return sb.toString();
-
 }
 	/**
 	 * TODO:  这里的代码特别重要，要重点设计，优化.
@@ -113,7 +117,6 @@ private String getParameterJson(HttpServletRequest pRequest){
 		   PrintWriter writer = response.getWriter();
 		      String json = getParameterJson(request);
 	          final String resultJson = "{ exportTable : true, params : " + json + " }";
-	          System.err.println( resultJson);
 	          writer.print(resultJson);
 	          response.flushBuffer();
 		   
@@ -122,6 +125,10 @@ private String getParameterJson(HttpServletRequest pRequest){
 		    */
 		  return;   
 	   }
+	   //if ( logger.isDebugEnabled() ){
+		   String json = getParameterJson(request);
+		   logger.debug(json);
+	   //}
 			
 		/**
 		 * 进行导出数据处理.
@@ -142,7 +149,6 @@ private String getParameterJson(HttpServletRequest pRequest){
 		      String refreshZone = pRequest.getParameter(TableConstants.REFRESH_ZONE_PARAM);
 		      String resultData = AjaxUtil.getAjaxData(refreshZone, buffer);
 		      writer.print(resultData);
-		      System.err.println(resultData);
 	        }catch(Exception ex){
 	          final String msg = ex.getMessage();
 	          final String resultJson = "{ msg : '" + StringUtils.escapeJavaScript(msg) + "' }";

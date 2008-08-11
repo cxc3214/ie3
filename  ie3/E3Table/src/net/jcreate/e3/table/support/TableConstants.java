@@ -184,6 +184,22 @@ public class TableConstants {
   public static final String EXPORT_TABLE_PARAM = PREFIX +"exportTable";
   
   /**
+   * 导出bean前缀
+   */
+  public static final String EXPORT_BEAN_PREFIX = EXPORT_TABLE_PARAM + "_";
+  
+  /**
+   * 报表内容key
+   */
+  public static final String REPORT_CONTENT_KEY = "reportContent";
+  /**
+   * 报表内容类型
+   */
+  public static final String REPORT_CONTENT_TYPE_KEY = "reportContentType";
+  
+   
+  
+  /**
    * 导出参数
    */
   public static final String EXPORT_PARAM_PARAM = PREFIX +"exportParam";

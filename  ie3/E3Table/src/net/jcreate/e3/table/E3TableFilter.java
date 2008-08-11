@@ -1,7 +1,9 @@
 package net.jcreate.e3.table;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.FilterChain;
@@ -29,7 +31,7 @@ import org.apache.commons.logging.LogFactory;
 /**
  * 将来
  * @author 黄云辉
- *
+ * TODO: 这个过滤器部分代码很混乱需要重构
  */
 public class E3TableFilter  extends AAFilter{
 	
@@ -43,6 +45,7 @@ public class E3TableFilter  extends AAFilter{
 			FilterChain pFilterChain) throws IOException, ServletException {
 		try{
 			//构造context信息
+			//在这要负责把xkins对象存储起来,
 			Context context = new Context(pRequest, pResponse);
 			HttpServletRequest httpRequest = (HttpServletRequest)pRequest;
 			HttpSession session = httpRequest.getSession();
@@ -57,6 +60,8 @@ public class E3TableFilter  extends AAFilter{
 	}
 	
 	/**
+	 * 将所有请求参数封装成json数据,以便返回给客户端进行表格导出处理.
+	 * TODO: 使用json包来对json数据进行转换处理
 	 * 构造参数数组
 	 *   [
 	 *    { a : b},
@@ -109,7 +114,7 @@ private String getParameterJson(HttpServletRequest pRequest){
         HttpServletRequest request = (HttpServletRequest) pRequest;
         HttpServletResponse response = (HttpServletResponse) pResponse;
 	   if ( TableUtils.isExportParamRequest(request)  ){
-	        response.setContentType("text/xml;charset=utf-8");
+	        //response.setContentType("text/xml;charset=utf-8");
 	        response.setHeader("Cache-Control", "no-cache");
 	        response.setDateHeader("Expires", 0);
 	        response.setHeader("Pragma", "no-cache");
@@ -125,34 +130,98 @@ private String getParameterJson(HttpServletRequest pRequest){
 		    */
 		  return;   
 	   }
-	   //if ( logger.isDebugEnabled() ){
-		   String json = getParameterJson(request);
-		   logger.debug(json);
-	   //}
+	   
 			
 		/**
 		 * 进行导出数据处理.
 		 */
 		if ( TableUtils.isExportTableRequest(request)  ){
-
-	        response.setContentType("application/msexcel;charset=utf-8");
-	        response.setHeader("Content-disposition","attachment; filename=datas.xls"); 
-	        response.setHeader("Cache-Control", "no-cache");
-	        response.setDateHeader("Expires", 0);
-	        response.setHeader("Pragma", "no-cache");
-			PrintWriter writer = response.getWriter();	        
+			/**
+			 * 这是要执行导出的table id, 
+			 * @fixme: 下次把参数名修改下，叫exportTable
+			 */
+			String exportTable = pRequest.getParameter(TableConstants.REFRESH_ZONE_PARAM);
+			Map exportBeanMap = new HashMap();
+			request.setAttribute(TableConstants.EXPORT_BEAN_PREFIX + exportTable, exportBeanMap);
+	        //response.setContentType("application/msexcel;charset=utf-8");
 	        BufferResponseWrapper bufferResponseWrapper = new BufferResponseWrapper(response);
         
+	        /**
+	         * 说明:导出部分代码大部分来自displaytag
+	         */
+	        PrintWriter writer = null;
 	        try{
 		      pFilterChain.doFilter(request, bufferResponseWrapper);
-		      String buffer = bufferResponseWrapper.getBuffer();
-		      String refreshZone = pRequest.getParameter(TableConstants.REFRESH_ZONE_PARAM);
-		      String resultData = AjaxUtil.getAjaxData(refreshZone, buffer);
-		      writer.print(resultData);
+		      //String resultData = AjaxUtil.getAjaxData(exportTable, buffer);
+		        Object  exportBean = exportBeanMap.get(TableConstants.REPORT_CONTENT_KEY);
+		        if (exportBean == null)
+		        {
+		            if (logger.isDebugEnabled())
+		            {
+		            	logger.debug("Filter is enabled but exported content has not been found. Maybe an error occurred?");
+		            }
+
+		            response.setContentType(bufferResponseWrapper.getContentType());
+		            PrintWriter out = response.getWriter();
+		            out.write(bufferResponseWrapper.getBuffer());
+		            out.flush();
+		            return;
+		        }
+		        // clear headers
+		        if (!response.isCommitted())
+		        {
+		            response.reset();
+		        }
+		        
+		        response.setHeader("Content-disposition","attachment; filename=datas.xls"); 
+		        response.setHeader("Cache-Control", "no-cache");
+		        response.setDateHeader("Expires", 0);
+		        response.setHeader("Pragma", "no-cache");
+		        String contentType = (String) exportBeanMap.get(TableConstants.REPORT_CONTENT_TYPE_KEY);
+		        String characterEncoding = request.getCharacterEncoding();//bufferResponseWrapper.getCharacterEncoding();
+		        String wrappedContentType = bufferResponseWrapper.getContentType();
+
+		        if (wrappedContentType != null && wrappedContentType.indexOf("charset") > -1)
+		        { 
+		            // charset is already specified (see #921811)
+		            characterEncoding = org.apache.commons.lang.StringUtils.substringAfter(wrappedContentType, "charset=");
+		        }
+
+		        if ( contentType != null ){
+		        if (characterEncoding != null && contentType.indexOf("charset") == -1) //$NON-NLS-1$
+		        {
+		            contentType += "; charset=" + characterEncoding; //$NON-NLS-1$
+		        }
+		        }
+
+		        response.setContentType(contentType);		        
+	
+		        if ( exportBean instanceof String ){
+			        writer = response.getWriter();
+		            if (characterEncoding != null)
+		            {
+		                response.setContentLength(((String) exportBean).getBytes(characterEncoding).length);
+		            }
+		            else
+		            {
+		                response.setContentLength(((String) exportBean).getBytes().length);
+		            }			        
+			        writer.print((String)exportBean);	
+			        writer.flush();
+		        } else {
+		        	  byte[] content = (byte[]) exportBean;
+		              response.setContentLength(content.length);
+		              OutputStream out = response.getOutputStream();
+		              out.write(content);
+		              out.flush();		        	
+		        }
+		     
 	        }catch(Exception ex){
 	          final String msg = ex.getMessage();
 	          final String resultJson = "{ msg : '" + StringUtils.escapeJavaScript(msg) + "' }";
-	          writer.print(resultJson);
+	          if ( writer != null){
+	            writer.print(resultJson);
+	          }
 	        }
 	        response.flushBuffer();
 	        
@@ -164,8 +233,10 @@ private String getParameterJson(HttpServletRequest pRequest){
 		if ( TableUtils.isAjaxRequest(request) == false ){
 			super.doFilter(pRequest, pResponse, pFilterChain);
 			return;
-		} 
-        response.setContentType("text/xml;charset=utf-8");
+		}
+		
+		//下面是ajax请求.
+
         response.setHeader("Cache-Control", "no-cache");
         response.setDateHeader("Expires", 0);
         response.setHeader("Pragma", "no-cache");

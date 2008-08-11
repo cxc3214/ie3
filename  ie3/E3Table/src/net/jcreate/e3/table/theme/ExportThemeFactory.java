@@ -14,7 +14,7 @@ public class ExportThemeFactory implements ThemeFactory {
 	  }
 	  public TableBuilder createBuilder()  throws ThemeException{
 		  /**
-		   * TODO: 其他builder
+		   * TODO: 其他builder,根据skin的值，选择不同的builder.
 		   */
 		  FastSkinHTMLTableBuilder builder = new FastSkinHTMLTableBuilder();
 		  return builder;

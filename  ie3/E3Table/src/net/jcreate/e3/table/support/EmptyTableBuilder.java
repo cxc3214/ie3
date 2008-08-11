@@ -206,7 +206,7 @@ public abstract class EmptyTableBuilder implements TableBuilder, TableContextSup
 	 * @return
 	 */
 	public  String getMimeType(){
-		return null;
+		return "text/xml";
 		
 	}
 	

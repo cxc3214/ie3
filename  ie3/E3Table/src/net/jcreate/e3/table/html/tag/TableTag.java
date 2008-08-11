@@ -19,11 +19,14 @@
  */
 package net.jcreate.e3.table.html.tag;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
@@ -38,7 +41,6 @@ import net.jcreate.e3.table.StateInfo;
 import net.jcreate.e3.table.TableBuilder;
 import net.jcreate.e3.table.TableDirector;
 import net.jcreate.e3.table.builder.BinaryTableBuilder;
-import net.jcreate.e3.table.builder.ExportTableException;
 import net.jcreate.e3.table.builder.TextTableBuilder;
 import net.jcreate.e3.table.creator.CollectionDataModelCreator;
 import net.jcreate.e3.table.html.HTMLColumn;
@@ -529,25 +531,49 @@ public class TableTag extends BodyTagSupport{
 				 offset++;
 			 }
 		 }
-		 TableBuilder tableBuilder = themeFactory.createBuilder();
-//		 DefaultTextTableBuilder htmlBuilder = (DefaultTextTableBuilder)		  
+		 TableBuilder tableBuilder = themeFactory.createBuilder();	 	  
 	     director.build(tableBuilder, table);
-	     
-	     /**
-	      * TODO: 设置头信息
-	      */
+	     HttpServletRequest request = (HttpServletRequest) this.pageContext.getRequest();
 		 try {
-		     if ( tableBuilder instanceof TextTableBuilder ){
-		    	 TextTableBuilder textBuilder = (TextTableBuilder)tableBuilder;
-		    	 textBuilder.export(this.pageContext.getOut());
-		     } else {
-		    	 BinaryTableBuilder binaryBuilder = (BinaryTableBuilder)tableBuilder;
-		    	 try {
-					binaryBuilder.export(this.pageContext.getResponse().getOutputStream());
-				} catch (IOException e) {
-					throw new JspException(e.getMessage(), e);
-				}
-	     }
+		    Map exportBeanMap = (Map) request.getAttribute(TableConstants.EXPORT_BEAN_PREFIX + this.id);
+		    boolean isExport = exportBeanMap != null;
+		    if ( isExport == false ){
+		    	/**
+		    	 * TODO:设置导出头信息.
+		    	 */
+			     if ( tableBuilder instanceof TextTableBuilder ){
+			    	 TextTableBuilder textBuilder = (TextTableBuilder)tableBuilder;
+			    	 textBuilder.export(this.pageContext.getOut());
+			     } else if ( tableBuilder instanceof BinaryTableBuilder ){
+			    	 BinaryTableBuilder binaryBuilder = (BinaryTableBuilder)tableBuilder;
+			    	 try {
+						binaryBuilder.export(this.pageContext.getResponse().getOutputStream());
+					} catch (IOException e) {
+						throw new JspException(e.getMessage(), e);
+					}			    	 
+			     }else{
+			    	 throw new JspException("TableBuilder :" + tableBuilder.getClass().getName() + 
+	    			 "必须是TextTableBuilder或BinaryTableBuilder的子类.");
+		         }	    	
+		    } else {
+		    	//导出表格.
+		    	exportBeanMap.put(TableConstants.REPORT_CONTENT_TYPE_KEY, tableBuilder.getMimeType());
+			     if ( tableBuilder instanceof TextTableBuilder ){
+	                 StringWriter writer = new StringWriter();
+			    	 TextTableBuilder textBuilder = (TextTableBuilder)tableBuilder;
+			    	 textBuilder.export(writer);
+			    	 exportBeanMap.put(TableConstants.REPORT_CONTENT_KEY, writer.toString());
+			     }else if ( tableBuilder instanceof BinaryTableBuilder ){
+			    	    BinaryTableBuilder binaryBuilder = (BinaryTableBuilder)tableBuilder;
+			    		ByteArrayOutputStream stream = new ByteArrayOutputStream();
+						binaryBuilder.export( stream);
+						exportBeanMap.put(TableConstants.REPORT_CONTENT_KEY, stream.toByteArray());
+			     } else {
+			    	 throw new JspException("TableBuilder :" + tableBuilder.getClass().getName() + 
+			    			 "必须是TextTableBuilder或BinaryTableBuilder的子类.");
+		        }		    	
+		    }
+	
 		}finally{
 			cleanUp();
 		}

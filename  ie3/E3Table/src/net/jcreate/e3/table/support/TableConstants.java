@@ -184,6 +184,12 @@ public class TableConstants {
   public static final String EXPORT_TABLE_PARAM = PREFIX +"exportTable";
   
   /**
+   * 存放不导出的列,各列以逗号分割
+   */
+  public static final String EXPORT_EXCLUDES_PARAM = PREFIX + "excludes";
+  public static final String PARAM_SPLITER = ", ;";
+  
+  /**
    * 导出bean前缀
    */
   public static final String EXPORT_BEAN_PREFIX = EXPORT_TABLE_PARAM + "_";

@@ -19,8 +19,12 @@
  */
 package net.jcreate.e3.table.builder;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
+
+import org.apache.commons.lang.StringUtils;
 
 import net.jcreate.e3.table.BuildTableException;
 import net.jcreate.e3.table.PageInfo;
@@ -158,7 +162,14 @@ public class SkinHTMLTableBuilder extends DefaultTextTableBuilder{
 		}else{
 			showTitle = pColumn.getTitle();
 		}
+		String excludes = this.tableContext.getWebContext().getParameter(TableConstants.EXPORT_EXCLUDES_PARAM);
+		String[] excludeParams = StringUtils.split(excludes, TableConstants.PARAM_SPLITER);
+		List excludeList = new java.util.ArrayList();		
+		if ( excludeParams != null ){
+			excludeList = java.util.Arrays.asList(excludeParams);
+		}
 		Context context = new DefaultContext();
+		context.put("excludes", excludeList);	
 		context.put("title", showTitle);
 		context.put("column", pColumn);
 		context.put("table", pColumn.getTable());

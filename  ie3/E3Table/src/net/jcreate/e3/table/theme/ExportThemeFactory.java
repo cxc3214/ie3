@@ -3,8 +3,7 @@ package net.jcreate.e3.table.theme;
 import net.jcreate.e3.table.TableBuilder;
 import net.jcreate.e3.table.TableContext;
 import net.jcreate.e3.table.TableDirector;
-import net.jcreate.e3.table.builder.DefaultHTMLTableBuilder;
-import net.jcreate.e3.table.builder.FastSkinHTMLTableBuilder;
+import net.jcreate.e3.table.builder.HTMLExcelTableBuilder;
 
 public class ExportThemeFactory implements ThemeFactory {
 	
@@ -16,7 +15,7 @@ public class ExportThemeFactory implements ThemeFactory {
 		  /**
 		   * TODO: 其他builder,根据skin的值，选择不同的builder.
 		   */
-		  FastSkinHTMLTableBuilder builder = new FastSkinHTMLTableBuilder();
+		  HTMLExcelTableBuilder builder = new HTMLExcelTableBuilder();
 		  return builder;
 	  }
 	  

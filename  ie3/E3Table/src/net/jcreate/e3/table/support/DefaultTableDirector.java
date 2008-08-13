@@ -155,6 +155,9 @@ public class DefaultTableDirector extends AbstractTableDirector{
 		    			  String title = i18n.getMessage(titleKey, cln.getTitle(), this.tableContext.getWebContext());
 		    			  cln.setTitle(title);
 		    		   }
+//		    		   if ( buildColumnBefore(cln) == false ){
+//		    			   continue;
+//		    		   }
 		    		   pBuilder.buildColumnBegin(cln);
 		    		   pBuilder.buildColumn(cln);
 		    		   pBuilder.buildColumnEnd(cln);
@@ -202,6 +205,9 @@ public class DefaultTableDirector extends AbstractTableDirector{
 							  logger.debug(MSG, e);
 						  }
             		  }
+//            		  if ( buildCellBefore(cell) == false ){
+//            			  continue;
+//            		  }
             		  pBuilder.buildCellBegin(cell);
             		  pBuilder.buildCell(cell);
             		  pBuilder.buildCellEnd(cell);
@@ -229,6 +235,23 @@ public class DefaultTableDirector extends AbstractTableDirector{
 	       pBuilder.destory(pTable);	
 		}
 
+//	protected boolean buildColumnBefore(Column pColumn){
+//		if ( pColumn == null ){
+//			return false;
+//		}
+//      return !pColumn.isHidden();
+//	}
+//	protected boolean buildCellBefore(Cell pCell){
+//		if ( pCell == null ){
+//			return false;
+//		}
+//		if ( pCell.getColumn() == null ){
+//			return false;
+//		}
+//	     return !pCell.getColumn().isHidden();		
+//		}
+//	
+	
     private List getColumnGroups(Header pHeader){
     	if ( pHeader == null ){
     		return java.util.Collections.EMPTY_LIST;

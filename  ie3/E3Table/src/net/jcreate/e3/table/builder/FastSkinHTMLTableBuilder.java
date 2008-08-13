@@ -1,5 +1,7 @@
 package net.jcreate.e3.table.builder;
 
+import java.util.List;
+
 import net.jcreate.e3.table.BuildTableException;
 import net.jcreate.e3.table.Column;
 import net.jcreate.e3.table.PageInfo;
@@ -12,6 +14,8 @@ import net.jcreate.e3.table.html.Tools;
 import net.jcreate.e3.table.support.TableConstants;
 import net.jcreate.e3.templateEngine.Context;
 import net.jcreate.e3.templateEngine.support.DefaultContext;
+
+import org.apache.commons.lang.StringUtils;
 
 public class FastSkinHTMLTableBuilder extends SkinHTMLTableBuilder{
 	//整个body的构造过程进行合并处理.
@@ -30,7 +34,16 @@ public class FastSkinHTMLTableBuilder extends SkinHTMLTableBuilder{
 	}
 	final protected void buildHTMLBodyBegin(HTMLTable pTable)
 			throws BuildTableException {
+		
+		
+		String excludes = this.tableContext.getWebContext().getParameter(TableConstants.EXPORT_EXCLUDES_PARAM);
+		String[] excludeParams = StringUtils.split(excludes, TableConstants.PARAM_SPLITER);
+		List excludeList = new java.util.ArrayList();
+		if ( excludeParams != null ){
+			excludeList = java.util.Arrays.asList(excludeParams);
+		}
 		Context context = new DefaultContext();
+		context.put("excludes", excludeList);
 		context.put("form", pTable.getForm());
 		context.put("table", pTable);
 		context.put("rows", pTable.getRows());		

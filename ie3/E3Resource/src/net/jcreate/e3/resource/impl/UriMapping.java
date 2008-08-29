@@ -6,6 +6,7 @@ public class UriMapping implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private String charset;
+	private boolean cache = Constants.DEFAULT_CACHE_VALUE;
 	private String mimeType;
 	private String loader = Constants.DEFAULT_LOADER_NAME;	
 	private String handlers;
@@ -60,6 +61,12 @@ public class UriMapping implements Serializable{
 	}
 	public void setExcludes(String excludes) {
 		this.excludes = excludes;
+	}
+	public boolean isCache() {
+		return cache;
+	}
+	public void setCache(boolean cache) {
+		this.cache = cache;
 	}
 	
 }

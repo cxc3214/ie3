@@ -32,9 +32,10 @@ public class DefaultResourceConfigMapping implements ResourceConfigMapping {
 				String handlerNames = uriMapping.getHandlers();
 				String charset = uriMapping.getCharset();
 				String mimeType = uriMapping.getMimeType();
+				boolean cache = uriMapping.isCache();
 				String[] hanlderNameArray = StringUtils.tokenizeToStringArray(handlerNames,  Constants.SPLITER);				
 				ResourceConfig result = new 
-				   ResourceConfig(loaderName,hanlderNameArray, charset, mimeType);
+				   ResourceConfig(loaderName,hanlderNameArray, charset, mimeType, cache);
 				return result;
 			}
 			

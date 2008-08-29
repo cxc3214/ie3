@@ -6,6 +6,7 @@ import java.util.Map;
 import net.jcreate.e3.resource.ResourceException;
 import net.jcreate.e3.resource.ResourceLoader;
 import net.jcreate.e3.resource.loader.ClasspathResourceLoader;
+import net.jcreate.e3.resource.loader.DynamicResourceLoader;
 import net.jcreate.e3.resource.loader.FileResourceLoader;
 import net.jcreate.e3.resource.loader.MD5ClasspathResourceLoader;
 import net.jcreate.e3.resource.support.LoaderMapping;
@@ -19,13 +20,15 @@ public class DefaultLoaderMapping implements LoaderMapping {
     private final static FileResourceLoader file = new FileResourceLoader();
     private final static ClasspathResourceLoader classpath = new ClasspathResourceLoader();
     private final static MD5ClasspathResourceLoader md5classpath = new MD5ClasspathResourceLoader();
+    private final static DynamicResourceLoader dynamic = new DynamicResourceLoader();
+    
     private static Map loaders = new HashMap();
     
     static{
     	loaders.put("file", file);
     	loaders.put("classpath", classpath);
     	loaders.put("md5classpath", md5classpath);
-    	
+    	loaders.put("dynamic", dynamic);
     }
     
     public void put(String pLoaderName, ResourceLoader pLoader){

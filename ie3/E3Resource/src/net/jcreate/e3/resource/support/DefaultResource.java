@@ -1,5 +1,8 @@
 package net.jcreate.e3.resource.support;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 import net.jcreate.e3.resource.Resource;
 
 public class DefaultResource implements Resource{
@@ -39,6 +42,8 @@ public class DefaultResource implements Resource{
 	 * 已经过处理的数据
 	 */
 	private byte[] treatedData;//初始化值为data
+	
+	private String resourceCode = null;
 
 	public DefaultResource(String pUri, byte[] pData){
 		this.uri = pUri;
@@ -47,6 +52,7 @@ public class DefaultResource implements Resource{
 		for(int i=0;i<pData.length; i++){
 			treatedData[i] = pData[i];
 		}
+		resourceCode = null;
 	}
 	public String getCharset() {
 		return charset;
@@ -63,8 +69,44 @@ public class DefaultResource implements Resource{
 	public void setMimeType(String mimeType) {
 		this.mimeType = mimeType;
 	}
+	private static MessageDigest md = null;
+	static{
+		try {
+			md = MessageDigest.getInstance("MD5");
+		} catch (NoSuchAlgorithmException e) {
+			throw new java.lang.RuntimeException("不支持MD5算法!", e);
+		}
+	}
+	 private final static char[] hexDigits = { '0', '1', '2', '3', '4', '5',
+         '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
+	 private static String bytesToHex(byte[] bytes) {
+         StringBuffer sb = new StringBuffer();
+         int t;
+         for (int i = 0; i < 16; i++) {// 16 == bytes.length; 
 
-
+             t = bytes[i];
+             if (t < 0)
+                 t +=256;
+             sb.append(hexDigits[(t >>> 4)]);
+             sb.append(hexDigits[(t % 16)]);
+         }
+         return sb.toString();
+     } 
+	private String getMD5Code(byte[] pDatas){
+		if ( pDatas == null ){
+			return null;
+		}
+		byte[] result = md.digest(pDatas);
+		return bytesToHex(result);
+	}
+	public String getResourceCode(){
+		if ( resourceCode == null ){
+			resourceCode = getMD5Code( this.treatedData );
+		} else {
+			;
+		}
+		return resourceCode;
+	}
 	public String getUri() {
 		return uri;
 	}
@@ -88,6 +130,7 @@ public class DefaultResource implements Resource{
 	}
 	public void setTreatedData(byte[] treatedData) {
 		this.treatedData = treatedData;
+		resourceCode = null;
 	}
 	
 }

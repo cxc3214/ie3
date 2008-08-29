@@ -1,5 +1,6 @@
 package net.jcreate.e3.resource;
 
+import javax.servlet.FilterChain;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,6 +14,7 @@ public class HttpHolder {
   private static ThreadLocal requestThreadLocal = new ThreadLocal();
   private static ThreadLocal responseThreadLocal = new ThreadLocal();
   private static ServletContext servletContext = null;
+  private static ThreadLocal filterChainLocal = new ThreadLocal();
   
   private HttpHolder(){
   }
@@ -28,10 +30,18 @@ public class HttpHolder {
   public static void setServletContext(ServletContext pServletContext){
 	  servletContext =  pServletContext;
   }
+  
+  public static void setFilterChain(FilterChain pFilterChain){
+	  filterChainLocal.set( pFilterChain );
+  }  
+  
   public static ServletContext getServletContext(){
 	  return servletContext;
   }
   
+  public static FilterChain getFilterChain(){
+	  return (FilterChain)filterChainLocal.get();
+  }
   
   public static HttpServletRequest getRequest(){
 	  return (HttpServletRequest)requestThreadLocal.get();

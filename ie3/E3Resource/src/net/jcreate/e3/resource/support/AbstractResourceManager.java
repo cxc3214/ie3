@@ -3,12 +3,16 @@ package net.jcreate.e3.resource.support;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.FilterChain;
+
 import net.jcreate.e3.resource.Cache;
+import net.jcreate.e3.resource.HttpHolder;
 import net.jcreate.e3.resource.Resource;
 import net.jcreate.e3.resource.ResourceException;
 import net.jcreate.e3.resource.ResourceHandler;
 import net.jcreate.e3.resource.ResourceLoader;
 import net.jcreate.e3.resource.ResourceManager;
+import net.jcreate.e3.resource.loader.DynamicResourceLoader;
 import net.jcreate.e3.resource.loader.FileResourceLoader;
 
 import org.apache.commons.logging.Log;
@@ -30,7 +34,8 @@ public abstract class AbstractResourceManager implements ResourceManager {
 	    private LoaderMapping loaderMapping;
 	    private HandlerMapping handlerMapping;
 	    
-		private FileResourceLoader DEFAULT_LOADER = new FileResourceLoader();
+		private DynamicResourceLoader DEFAULT_LOADER = new DynamicResourceLoader();
+		private FileResourceLoader OLD_DEFAULT_LOADER = new FileResourceLoader();
 	    private final static Object LOCK = new Object();
 	    
 		/**
@@ -70,21 +75,33 @@ public abstract class AbstractResourceManager implements ResourceManager {
 	    }
 		public Resource get(String pUri) throws ResourceException {
 			ResourceConfig resourceConfig = resourceConfigMapping.mapping(pUri);
+			boolean isCache = false;
 			if ( resourceConfig == null ){
 				final String msg =
 					"没有找到资源: " + pUri + " 对应的配置项目，请检查配置文件中是否存在与之匹配的uri模式!";
 				logger.warn(msg);
 			}
+			
+			
+			
 			ResourceLoader loader = null;
 			if ( resourceConfig == null ){
-				loader = DEFAULT_LOADER;
-				logger.warn("资源:" + pUri + "没有对应的loader,采用默认的文件Loader");
+				isCache = false;//默认是不cache
+				FilterChain filterChain = HttpHolder.getFilterChain();
+				if ( filterChain == null ){//如果:是之前的ResourceServlet
+					loader = OLD_DEFAULT_LOADER;	
+				} else {
+				    loader = DEFAULT_LOADER;  
+				}
+				logger.warn("资源:" + pUri + "没有对应的loader,采用默认的Loader");
 			} else {
+				isCache = resourceConfig.isCache();
 				loader = loaderMapping.mapping(resourceConfig.getLoaderName());
 			}
 
 			
 			Resource result = cacheManager.get(pUri);
+		
 			if ( result != null ){	
 				if ( checkModified == false ){//不检查修改
 					return result;
@@ -98,12 +115,14 @@ public abstract class AbstractResourceManager implements ResourceManager {
 						keyLock = getKeyLock(pUri); 
 					}
 					synchronized(keyLock){
-						result = updateResource(loader, pUri);
+						result = loadResource(loader, pUri);
+						cacheManager.put(result);
 					}
 
 				}
 				return result;
 			}
+		
 			Object keyLock = null;
 			synchronized( LOCK ){
 				keyLock = getKeyLock(pUri); 
@@ -113,24 +132,28 @@ public abstract class AbstractResourceManager implements ResourceManager {
 				if ( result != null ){
 					return result;
 				}
-				result = updateResource(loader, pUri);				
+				result = loadResource(loader, pUri);
+				//如果cache 才需要把资源缓存起来
+				if ( isCache ){
+					cacheManager.put(result);	
+				}
+				
 				return result;
 			}
 		}
 
 		/**
-		 * 负责装载资源，调用hanlder进行资源处理，并将资源放到cache中.
+		 * 负责装载资源，调用hanlder进行资源处理，
 		 * 注意：对资源进行处理的过程中，如果有一个处理过程出错了，放弃整个处理，
 		 * 返回最原始的导入的数据.
 		 * @param pLoader
 		 * @param pUri
 		 * @return
 		 */
-		private Resource updateResource(ResourceLoader pLoader , String pUri){
+		private Resource loadResource(ResourceLoader pLoader , String pUri){
 			Resource res = pLoader.load(pUri);
 			ResourceConfig resourceConfig = resourceConfigMapping.mapping(pUri);
 			if ( resourceConfig == null ){
-				cacheManager.put(res);
 				return res;
 			}
 			String[] handlers = resourceConfig.getHandlerNames();
@@ -149,7 +172,6 @@ public abstract class AbstractResourceManager implements ResourceManager {
 					continue;
 				}
 			}
-			cacheManager.put(res);
 			return res;
 		}
 		

@@ -5,51 +5,59 @@ import java.io.OutputStream;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import net.jcreate.e3.resource.util.WebUtils;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import net.jcreate.e3.resource.util.WebUtils;
 
-/**
- * 资源servlet,负责接入静态资源请求
- * 该类的实现，参考了 http://sourceforge.net/projects/packtag 的实现
- * @author 黄云辉
- * @deprecated 请使用AbstractResourceFilter
- *
- */
-public abstract class AbstractResourceServlet extends HttpServlet{
-
+public abstract class AbstractResourceFilter implements Filter{
+	
 	private static final long serialVersionUID = 1L;
 	
+	private final Log logger = LogFactory.getLog( this.getClass() );
 	private static final long ONE_YEAR = 31536000000L;
 	private static final long TEN_YEARS = ONE_YEAR * 10L;
-	private final Log logger = LogFactory.getLog( this.getClass() );
+	
 	
 	private ResourceManager resourceManager;
-
-	protected void doPost(HttpServletRequest pRequest, HttpServletResponse pResponse) throws ServletException, IOException {
-		doGet(pRequest, pResponse);
+	
+	public void destroy() {
+		resourceManager.destroy();
+		HttpHolder.setServletContext(null);
 	}
 
-	protected void doGet(HttpServletRequest pRequest, HttpServletResponse pResponse) throws ServletException, IOException {
-		try{
-	      HttpHolder.setRequest((HttpServletRequest)pRequest);
-	      HttpHolder.setResponse((HttpServletResponse)pResponse);
-		  handle(pRequest, pResponse);
-		}finally{
-			HttpHolder.setRequest(null);
-			HttpHolder.setResponse(null);
-		}
-	}
-	private void handle(HttpServletRequest pRequest, HttpServletResponse pResponse) throws ServletException, IOException {
+	public void doFilter(ServletRequest pRequest, ServletResponse pResponse,
+			FilterChain pFilterChain) throws IOException, ServletException {
+		   try{
+		      HttpHolder.setRequest((HttpServletRequest)pRequest);
+		      HttpHolder.setResponse((HttpServletResponse)pResponse);
+		      HttpHolder.setFilterChain(pFilterChain);
+		      executeFilter(pRequest, pResponse,pFilterChain);
+			}finally{
+				HttpHolder.setRequest(null);
+				HttpHolder.setResponse(null);
+				HttpHolder.setFilterChain(null);
+			}
 		
+	}
+	
+	
+	protected void executeFilter(ServletRequest pRequest, ServletResponse pResponse,
+			FilterChain pFilterChain) throws IOException, ServletException {
+		handle((HttpServletRequest)pRequest, (HttpServletResponse)pResponse);
+	}
+	
+private void handle(HttpServletRequest pRequest, HttpServletResponse pResponse) throws ServletException, IOException {
 		final String contextPath = pRequest.getContextPath();
 		final String uri = pRequest.getRequestURI().substring(contextPath.length());
 		Resource res = resourceManager.get(uri);
@@ -58,10 +66,10 @@ public abstract class AbstractResourceServlet extends HttpServlet{
 		pResponse.setHeader("Cache-Control", "private");
 
 		// Don't let the resource expire
-		pResponse.setDateHeader("Expires", new Date().getTime() + TEN_YEARS); // Expires after ten year
+		pResponse.setDateHeader("Expires", new Date().getTime()  + TEN_YEARS); //立马过期限 
 
 		// Funny header, see here: http://en.wikipedia.org/wiki/HTTP_ETag
-		pResponse.setHeader("ETag", "E3" + Long.toString(res.getLastModified()));
+		pResponse.setHeader("ETag", "'" + "E3" + res.getResourceCode() + "'");
 		pResponse.setHeader("power-by", "E3");
 		// Check if the "If_None-Match" Header is send. When this equals to the resource, it is not
 		// modified, and hasn't to be delivered again (Status code 304: Not modifed).
@@ -69,10 +77,11 @@ public abstract class AbstractResourceServlet extends HttpServlet{
 		// (Doesn't seems to work on IE6, like always)
 		StringBuffer selfMatch = new StringBuffer();
 		selfMatch.append("E3");
-		selfMatch.append(res.getLastModified());
-		                                                    
-		if (selfMatch.toString().equals(pRequest.getHeader("If-None-Match"))) {
-			logger.debug("资源:" + uri + "未发生变化,直接使用客户端cache数据!");			
+		selfMatch.append(res.getResourceCode());
+
+		String ifNoneMatch = pRequest.getHeader("If-None-Match");
+		if (selfMatch.toString().equals(ifNoneMatch)) {
+			logger.debug("资源:" + uri + "未发生变化,直接使用客户端cache数据!");
 			pResponse.setHeader("Last-Modified", pRequest.getHeader("If-Modified-Since"));			
 			pResponse.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
 		}
@@ -85,11 +94,11 @@ public abstract class AbstractResourceServlet extends HttpServlet{
 			if ( charset != null ){
 				pResponse.setCharacterEncoding(charset);	
 			}
-			
 			Calendar cal = Calendar.getInstance(); 		
 			cal.set(Calendar.MILLISECOND, 0); 		
 			Date lastModified = cal.getTime(); 				
 			pResponse.setDateHeader("Last-Modified", lastModified.getTime() );
+
 
 			OutputStream out = pResponse.getOutputStream();			
 			
@@ -115,27 +124,19 @@ public abstract class AbstractResourceServlet extends HttpServlet{
 		}
 		
 		
-	}
+	}	
 
-	protected abstract ResourceManager createResourceManager(ServletConfig pServletConfig); 
-	
-	public void destroy() {
-		super.destroy();
-		resourceManager.destroy();
-		HttpHolder.setServletContext(null);
-	}
-
-	public void init(ServletConfig pServletConfig) throws ServletException {
-		super.init(pServletConfig);
+	private FilterConfig filterConfig = null;
+	protected abstract ResourceManager createResourceManager(FilterConfig pFilterConfig);
+	public void init(FilterConfig pFilterConfig) throws ServletException {
+	   this.filterConfig = pFilterConfig;
+	   HttpHolder.setServletContext( pFilterConfig.getServletContext() );
 		logger.info("开始E3创建资源管理器.");
-		resourceManager = createResourceManager(pServletConfig);
+		resourceManager = createResourceManager(pFilterConfig);
 		resourceManager.init();
 		logger.info("创建E3资源管理器成功.");		
-	}
-
-	public void init() throws ServletException {
-		super.init();
-		 HttpHolder.setServletContext(this.getServletContext());
+	   
+		
 	}
 
 }

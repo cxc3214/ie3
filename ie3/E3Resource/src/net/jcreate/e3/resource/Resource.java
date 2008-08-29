@@ -46,6 +46,8 @@ public interface Resource extends Serializable {
 	 */
 	public long getLastModified();
 	
+	public String getResourceCode();
+	
 	/**
 	 * 是否经过gzip压缩
 	 * @return

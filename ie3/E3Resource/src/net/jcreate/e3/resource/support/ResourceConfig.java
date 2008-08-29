@@ -1,6 +1,8 @@
 package net.jcreate.e3.resource.support;
 
 public class ResourceConfig {
+	
+	private boolean cache ;
 	private String charset;
 
 	private String mimeType;
@@ -19,6 +21,14 @@ public class ResourceConfig {
 		this.charset = pCharset;
 		this.mimeType = pMimetype;
 	}
+	public ResourceConfig(String pLoaderName, String[] pHandlerNames, String pCharset, String pMimetype, boolean pCache){
+		this.loaderName = pLoaderName;
+		this.handlerNames = pHandlerNames;
+		this.charset = pCharset;
+		this.mimeType = pMimetype;
+		this.cache = pCache;
+		
+	}
 	
 
 	public String getCharset() {
@@ -35,5 +45,8 @@ public class ResourceConfig {
 
 	public String getMimeType() {
 		return mimeType;
+	}
+	public boolean isCache() {
+		return cache;
 	}
 }

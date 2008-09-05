@@ -40,9 +40,13 @@ public class BufferResponseWrapper extends HttpServletResponseWrapper {
     	return wrappedOut.getDatas();
     }
     
-    public void flush() throws IOException {            
+    public void flushBuffer() throws IOException {
+    	flush();
+	}
+
+	public void flush() throws IOException {            
       if (wrappedWriter != null) {               
-          wrappedWriter.flush();            
+          wrappedWriter.flush();      
         }           
         wrappedOut.flush();        
     }    

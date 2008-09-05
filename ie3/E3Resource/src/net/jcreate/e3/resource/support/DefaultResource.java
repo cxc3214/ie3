@@ -1,5 +1,6 @@
 package net.jcreate.e3.resource.support;
 
+import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -92,12 +93,17 @@ public class DefaultResource implements Resource{
          }
          return sb.toString();
      } 
+	 
 	private String getMD5Code(byte[] pDatas){
 		if ( pDatas == null ){
 			return null;
 		}
-		byte[] result = md.digest(pDatas);
-		return bytesToHex(result);
+		byte[] messageDigest = md.digest(pDatas);
+		BigInteger number = new BigInteger(1, messageDigest); 	// prepend a zero to get a "proper" MD5 hash value 	
+		StringBuffer sb = new StringBuffer(48); 	
+		sb.append(number.toString(16)); 	
+		return sb.toString();
+		//return bytesToHex(result);
 	}
 	public String getResourceCode(){
 		if ( resourceCode == null ){

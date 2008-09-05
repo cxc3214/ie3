@@ -72,9 +72,10 @@ public abstract class AbstractResourceServlet extends HttpServlet{
 		selfMatch.append(res.getLastModified());
 		                                                    
 		if (selfMatch.toString().equals(pRequest.getHeader("If-None-Match"))) {
-			logger.debug("资源:" + uri + "未发生变化,直接使用客户端cache数据!");			
+			logger.debug("资源:" + uri + "未发生变化,直接使用客户端cache数据!");
+			pResponse.setStatus(HttpServletResponse.SC_NOT_MODIFIED);			
 			pResponse.setHeader("Last-Modified", pRequest.getHeader("If-Modified-Since"));			
-			pResponse.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
+
 		}
 		else {//不是来自cache
 			final String contextType = res.getMimeType();
@@ -86,9 +87,7 @@ public abstract class AbstractResourceServlet extends HttpServlet{
 				pResponse.setCharacterEncoding(charset);	
 			}
 			
-			Calendar cal = Calendar.getInstance(); 		
-			cal.set(Calendar.MILLISECOND, 0); 		
-			Date lastModified = cal.getTime(); 				
+			Date lastModified = new Date(); 				
 			pResponse.setDateHeader("Last-Modified", lastModified.getTime() );
 
 			OutputStream out = pResponse.getOutputStream();			

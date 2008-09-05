@@ -64,26 +64,46 @@ private void handle(HttpServletRequest pRequest, HttpServletResponse pResponse) 
 		//header 信息的设置是来自项目:http://sourceforge.net/projects/packtag
 		// It won't be cached by proxies, because of the Cache-Control: private header. Let the Browser cache the resource
 		pResponse.setHeader("Cache-Control", "private");
-
-		// Don't let the resource expire
-		pResponse.setDateHeader("Expires", new Date().getTime()  + TEN_YEARS); //立马过期限 
+//
+//		// Don't let the resource expire
+		pResponse.setDateHeader("Expires", new Date().getTime()  + TEN_YEARS);  
 
 		// Funny header, see here: http://en.wikipedia.org/wiki/HTTP_ETag
-		pResponse.setHeader("ETag", "'" + "E3" + res.getResourceCode() + "'");
+		//必须在引号内
+    	String token = '"' + res.getResourceCode() + '"';
+		pResponse.setHeader("ETag",  token );
 		pResponse.setHeader("power-by", "E3");
-		// Check if the "If_None-Match" Header is send. When this equals to the resource, it is not
-		// modified, and hasn't to be delivered again (Status code 304: Not modifed).
-		// This happens when someone e.g. has the resource allready loaded, and presses the reload-button.
-		// (Doesn't seems to work on IE6, like always)
-		StringBuffer selfMatch = new StringBuffer();
-		selfMatch.append("E3");
-		selfMatch.append(res.getResourceCode());
-
+		
 		String ifNoneMatch = pRequest.getHeader("If-None-Match");
-		if (selfMatch.toString().equals(ifNoneMatch)) {
+		String ifModifiedSince = pRequest.getHeader("If-Modified-Since");
+		
+		if ( logger.isDebugEnabled() ){
+			logger.debug("ifNoneMatch=" + ifNoneMatch);		
+			logger.debug("ifModifiedSince=" + ifModifiedSince);
+		}
+		
+		boolean isNotModified = true;
+		if ( token.equals(ifNoneMatch) ){//etag匹配了，内容没修改
+			isNotModified = true;
+		} else {
+			if ( res.getLastModified() != 0 ){//检查时间是否匹配，如果修改时间不是0时，因为是0时，无法判断是否修改了
+				long lastModified = pRequest.getDateHeader("If-Modified-Since");
+				if ( lastModified == res.getLastModified() ){
+					isNotModified = true;
+				} else {
+					isNotModified = false;
+				}
+			}
+		}
+
+		/**
+		 * FIXME: IE6时,当启用gzip压缩时,pRequest.getHeader("If-None-Match")返回值是null,这样就每次都会下载文件.
+		 * 性能表现就不好.
+		 */
+		if ( isNotModified ) {
 			logger.debug("资源:" + uri + "未发生变化,直接使用客户端cache数据!");
-			pResponse.setHeader("Last-Modified", pRequest.getHeader("If-Modified-Since"));			
-			pResponse.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
+			pResponse.sendError(HttpServletResponse.SC_NOT_MODIFIED); 				
+			pResponse.setHeader("Last-Modified", pRequest.getHeader("If-Modified-Since"));		
 		}
 		else {//不是来自cache
 			final String contextType = res.getMimeType();
@@ -94,19 +114,28 @@ private void handle(HttpServletRequest pRequest, HttpServletResponse pResponse) 
 			if ( charset != null ){
 				pResponse.setCharacterEncoding(charset);	
 			}
-			Calendar cal = Calendar.getInstance(); 		
-			cal.set(Calendar.MILLISECOND, 0); 		
-			Date lastModified = cal.getTime(); 				
-			pResponse.setDateHeader("Last-Modified", lastModified.getTime() );
-
-
-			OutputStream out = pResponse.getOutputStream();			
+//			Calendar cal = Calendar.getInstance(); 		
+//			cal.set(Calendar.MILLISECOND, 0); 		 
+//			Date lastModified = cal.getTime(); 		 
+			pResponse.setDateHeader("Last-Modified", res.getLastModified());
+			
+			OutputStream out = pResponse.getOutputStream();		
+			
 			
 			/**
 			 * 注意:必须在这进行gzip判断,因为数据进行gzip cache处理,但是有的客户端支持,有的不支持gzip
 			 * 所以每次都需要判断.
+			 * ie6下不启用gzip压缩.
 			 */
-			if ( WebUtils.isSupportedGzip(pRequest)){//客户端支持gzip压缩
+			boolean isSupportedGzip = WebUtils.isSupportedGzip(pRequest) ;
+			if ( isSupportedGzip ){
+				if ( WebUtils.isIE6(pRequest) ){
+					isSupportedGzip = res.getLastModified() != 0 ;//当等于0时，不支持gzip压缩,因为这种情况只能
+					                                             //通过etag来判断文件是否修改了，但是ie6起用gzip压缩时
+					                                             //etag值会丢失.
+				}
+			}
+			if ( isSupportedGzip  ){//客户端支持gzip压缩
 				if ( res.isGzip() ){//已经过gzip压缩
 					WebUtils.setGzipHeader(pResponse);//设置gzip头
 					out.write(res.getTreatedData());
@@ -120,11 +149,12 @@ private void handle(HttpServletRequest pRequest, HttpServletResponse pResponse) 
 					out.write(res.getTreatedData()); 	
 				}
 			}
-			out.flush();			
+			out.flush();
 		}
 		
 		
 	}	
+
 
 	private FilterConfig filterConfig = null;
 	protected abstract ResourceManager createResourceManager(FilterConfig pFilterConfig);

@@ -652,8 +652,8 @@ public class TableTag extends BodyTagSupport{
 		this.noDataTipKey = null;		
 
 		this.table = null;
-		this.paramsFormScope = null;
-		this.paramsFormVar = TableConstants.DEFAULT_PARAMSFORM_SCOPE;//默认是request;
+		this.paramsFormScope = TableConstants.DEFAULT_PARAMSFORM_SCOPE;//默认是request;;
+		this.paramsFormVar = null;
 		this.i18n = TableConstants.DEFAULT_I18N;
 		//设置成默认值
 		setDefaultValue();

@@ -178,6 +178,9 @@ public class TableConstants {
    */
   public static final String REFRESH_ZONE_PARAM = PREFIX + "refreshZone";
   
+  public static final String EXPORT_FILE_NAME_PARAM = PREFIX + "fileName";
+  
+  
   /**
    * 导出类型参数
    */

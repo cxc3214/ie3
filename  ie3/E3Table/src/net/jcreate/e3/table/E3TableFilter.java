@@ -180,8 +180,11 @@ private String getParameterJson(HttpServletRequest pRequest){
 		        {
 		            response.reset();
 		        }
-		        
-		        response.setHeader("Content-disposition","attachment; filename=datas.xls"); 
+		        String fileName = request.getParameter(TableConstants.EXPORT_FILE_NAME_PARAM);
+		        if ( StringUtils.isEmpty(fileName) ){
+		        	fileName = "datas.xls";
+		        }
+		        response.setHeader("Content-disposition","attachment; filename=" + fileName); 
 		        response.setHeader("Cache-Control", "no-cache");
 		        response.setDateHeader("Expires", 0);
 		        response.setHeader("Pragma", "no-cache");

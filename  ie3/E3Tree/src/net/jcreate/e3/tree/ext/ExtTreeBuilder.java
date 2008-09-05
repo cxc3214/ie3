@@ -570,6 +570,38 @@ public class ExtTreeBuilder extends AbstractWebTreeBuilder{
 		this.autoWidth = autoWidth;
 	}
 
+	public boolean isAutoScroll() {
+		return autoScroll;
+	}
+
+	public void setAutoScroll(boolean autoScroll) {
+		this.autoScroll = autoScroll;
+	}
+
+	public boolean isAnimate() {
+		return animate;
+	}
+
+	public void setAnimate(boolean animate) {
+		this.animate = animate;
+	}
+
+	public boolean isEnableDD() {
+		return enableDD;
+	}
+
+	public void setEnableDD(boolean enableDD) {
+		this.enableDD = enableDD;
+	}
+
+	public boolean isContainerScroll() {
+		return containerScroll;
+	}
+
+	public void setContainerScroll(boolean containerScroll) {
+		this.containerScroll = containerScroll;
+	}
+
 
 }
 

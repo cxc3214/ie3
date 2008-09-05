@@ -35,9 +35,12 @@ public class PropertyNodeComparator
 				  e.printStackTrace();
 				  throw new java.lang.RuntimeException("获取 " + userData.getClass().getName() + "的" + this.sortProperty  + "属性失败!", e);
 			}
+			if ( result == null ){
+				return null;
+			}
 			if ( result instanceof Comparable == false ){
-			  throw new java.lang.RuntimeException(userData.getClass().getName() + "的属性" + this.sortProperty +
-					  "没有实现接口:" + Comparable.class.getName() ) ;
+			  throw new java.lang.RuntimeException(userData.getClass().getName() + "的属性[" + this.sortProperty +
+					  "]没有实现接口:" + Comparable.class.getName() ) ;
 			}
 			return (Comparable)result;
 		}
